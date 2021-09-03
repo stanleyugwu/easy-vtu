@@ -3,12 +3,13 @@
     "name": "mobisChennix",
     "slug": "mobisChennix",
     "version": "1.0.0",
+    "entryPoint": "./src/index.js",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#A10072"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
