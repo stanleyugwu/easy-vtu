@@ -4,24 +4,27 @@ module.exports = {
     darkMode: 'class', // or 'media' or 'class'
     theme: {
       colors:{
-        black:'#333333',
-        white:'#f8f8f8',
+        black:'#151b2c',
+        white:'#fafafa',
         gray:{
           DEFAULT:'#888888',
           light:'#e5e5e5'
         }
       },
       fontFamily:{
-        sans:['Roboto','sans-serif'],
+        sans:['Nunito','Roboto','sans-serif'],
         serif:['Roboto','serif']
       },
       extend: {
         colors:{
-          primary:'#A10072',
-          accent:'#F8143C'
+          primary:'#1FC157',
+          accent:'#fcc12d'
         },
         fontFamily:{
-          robold:['Roboto-Medium','sans-serif']
+          nunitobold:['Nunito-Medium','Roboto-Medium','sans-serif']
+        },
+        fontSize:{
+          'btn':15
         }
       },
     },

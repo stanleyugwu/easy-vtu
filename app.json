@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mobisChennix",
-    "slug": "mobisChennix",
+    "name": "Easy Vtu",
+    "slug": "easy-vtu",
     "version": "1.0.0",
     "entryPoint": "./src/index.js",
     "orientation": "portrait",
@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#A10072"
+      "backgroundColor": "#047d2e"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,12 +22,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
     }
   }
 }
