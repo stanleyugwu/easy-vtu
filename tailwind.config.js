@@ -12,8 +12,8 @@ module.exports = {
         }
       },
       fontFamily:{
-        sans:['Nunito','Roboto','sans-serif'],
-        serif:['Roboto','serif']
+        sans:['Nunito','sans-serif'],
+        serif:['serif']
       },
       extend: {
         colors:{
@@ -21,7 +21,7 @@ module.exports = {
           accent:'#fcc12d'
         },
         fontFamily:{
-          nunitobold:['Nunito-Medium','Roboto-Medium','sans-serif']
+          nunitobold:['Nunito-Medium','sans-serif']
         },
         fontSize:{
           'btn':15
