@@ -10,9 +10,12 @@
   "dependencies": {
     "@digieggs/rn-country-code-picker": "^1.2.0",
     "@expo-google-fonts/nunito": "^0.2.0",
+    "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
     "@reduxjs/toolkit": "^1.6.1",
+    "axios": "^0.21.4",
+    "crypto-js": "3.1.9-1",
     "expo": "~42.0.1",
     "expo-linear-gradient": "~9.2.0",
     "expo-status-bar": "~1.0.4",
