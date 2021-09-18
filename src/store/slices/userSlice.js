@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    signedIn:false,
-    usingQuickSub:false,
-    signInCreds:{
-        emailAddress:null,
-        password:null
+    isSignedIn:false,
+    accessToken:null,
+    profile: {
+        name : null,
+        email: null,
+        phone: null,
+        password: null,
     }
 }
 
@@ -14,17 +16,20 @@ export const userSlice = createSlice({
     initialState,
     reducers:{
         signIn: (state, action) => {
-            state.signedIn = true;
-            state.signInCreds = action.payload;
+            state.isSignedIn = true;
+            state.profile = action.payload;
         },
-        useQuickSub: (state) => {
-            state.usingQuickSub = true
+        setToken: (state, action) => {
+            state.accessToken = action.payload;
         }
     }
 });
 
-export const {signIn, useQuickSub} = userSlice.actions;
+export const {signIn, setToken} = userSlice.actions;
 
-export const selectUserSignInCreds = state => state.user.signInCreds;
+export const selectUserSignInCreds = state => ({
+    email: state.user.email,
+    password: state.user.password
+});
 
 export default userSlice.reducer
