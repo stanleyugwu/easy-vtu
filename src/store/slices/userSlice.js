@@ -28,8 +28,8 @@ export const userSlice = createSlice({
 export const {signIn, setToken} = userSlice.actions;
 
 export const selectUserSignInCreds = state => ({
-    email: state.user.email,
-    password: state.user.password
+    email: state.user.profile.email,
+    password: state.user.profile.password
 });
 
 export default userSlice.reducer
