@@ -18,7 +18,7 @@ const CustomButton = (props) => {
 
     return (
         <TouchableOpacity onPress={onPress} {...containerProps} {...rest}>
-            <LinearGradient colors={gradients} start={{x:0.4,y:0.2}} end={{x:1,y:0.2}} style={tw`rounded-3xl p-1`}>
+            <LinearGradient colors={gradients} start={{x:0.4,y:0.2}} end={{x:1,y:0.2}} style={tw`rounded-3xl p-1.5`}>
                 <View 
                     style={tw`p-2 mx-auto`}
                     children={
