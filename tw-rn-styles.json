@@ -6247,7 +6247,7 @@
     "fontFamily": "Nunito"
   },
   "font-serif": {
-    "fontFamily": "Roboto"
+    "fontFamily": "serif"
   },
   "font-nunitobold": {
     "fontFamily": "Nunito-Medium"
@@ -6285,8 +6285,7 @@
     "lineHeight": 40
   },
   "text-btn": {
-    "fontSize": 15,
-    "lineHeight":24
+    "fontSize": 15
   },
   "font-thin": {
     "fontWeight": "100"
