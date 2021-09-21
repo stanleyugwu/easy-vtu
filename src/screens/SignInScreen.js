@@ -17,10 +17,10 @@ const SignInScreen = (props) => {
                 imageStyle={{resizeMode:'cover',}}
                 style={{width:'100%',height:'100%',alignItems:'center',justifyContent:'center',alignContent:'center',}}
             >
-                <View style={tw`mx-auto w-full h-full px-4`}>
+                <View style={tw`mx-auto w-full h-full px-4 mt-20`}>
                     <Image
                         source={require('../../assets/icon.png')}
-                        style={{ width: 170, height: 170, resizeMode: 'contain', alignSelf: 'center',flexGrow:0 }}
+                        style={{ width: 100, height: 100, resizeMode: 'contain', alignSelf: 'center',flexGrow:0 }}
                     />
                     <Title style={tw`text-center`}>Welcome Back!</Title>
                     <Divider style={tw`h-1 bg-primary rounded-full w-20 mx-auto mt-2`}/>
@@ -46,7 +46,7 @@ const SignInScreen = (props) => {
                             text="Sign In" 
                             containerProps={{style:tw`mt-7`}} 
                             left={<Icon name="login" size={20} color={tw.color('white')}/>}
-                            onPress={_ => dispatch(signIn({emailAddress:'stanleyugwu',password:'heyreddie'}))}
+                            onPress={_ => dispatch(signIn({name:'Stanley Ugwu',email:'stanleyugwu',phone:'08066413705',password:'heyreddie'}))}
                         />
                          <Text style={tw`text-center mt-6`}>
                             Not a member yet? <Text style={tw`text-primary`} onPress={_ => props.navigation.navigate('Sign-Up')}>
