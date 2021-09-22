@@ -13,10 +13,10 @@ const ForgotPasswordScreen = (props) => {
                 imageStyle={{resizeMode:'cover',}}
                 style={{width:'100%',height:'100%',alignItems:'center',justifyContent:'center',alignContent:'center',}}
             >
-                <View style={tw`mx-auto w-full h-full px-4`}>
+                <View style={tw`mx-auto w-full h-full px-4 mt-24`}>
                     <Image
                         source={require('../../assets/icon.png')}
-                        style={{ width: 170, height: 170, resizeMode: 'contain', alignSelf: 'center',flexGrow:0 }}
+                        style={{ width: 100, height: 100, resizeMode: 'contain', alignSelf: 'center',flexGrow:0 }}
                     />
                     <Title style={tw`text-center`}>We All Forget, Don't Worry.</Title>
                     <Divider style={tw`h-1 bg-primary rounded-full w-32 mx-auto mt-2`}/>
