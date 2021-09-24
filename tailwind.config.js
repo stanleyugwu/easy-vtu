@@ -4,7 +4,7 @@ module.exports = {
     darkMode: 'class', // or 'media' or 'class'
     theme: {
       colors:{
-        black:'#151b2c',
+        black:'#343434',
         white:'#fafafa',
         gray:{
           DEFAULT:'#888888',
@@ -17,8 +17,8 @@ module.exports = {
       },
       extend: {
         colors:{
-          primary:'#1FC157',
-          accent:'#fcc12d'
+          primary:'#2d3e61',
+          accent:'#f7b902'
         },
         fontFamily:{
           nunitobold:['Nunito-Medium','sans-serif']
