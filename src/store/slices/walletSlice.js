@@ -18,10 +18,8 @@ const walletSlice = createSlice({
             state.balance -= amount
         },
         addCard: (state, action) => {
-            state.cards.push(action.payload);
-        },
-        addCards: (state, action) => {
-            state.cards.concat(action.payload);
+            let newArray = state.cards.concat(action.payload);
+            state.cards = newArray;
         },
         removeCard: (state, action) => {
             state.cards = state.cards.filter(card => card._id !== action.payload);
@@ -44,7 +42,7 @@ const walletSlice = createSlice({
     }
 });
 
-export const {addMoney,removeMoney,addCard,addCards,removeCard,updateCard} = walletSlice.actions;
+export const {addMoney,removeMoney,addCard,removeCard,updateCard} = walletSlice.actions;
 
 export const balanceSelector = (state) => state.wallet.balance;
 export const cards = (state) => state.wallet.cards;
