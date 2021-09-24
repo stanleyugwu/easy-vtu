@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native';
 import tw from '../lib/tailwind';
 
 
-const CircleButton = ({onPress,gradient = ['#037d2e',tw.color('primary')],...rest}) => {
+const CircleButton = ({onPress,gradient = [tw.color('primary'),tw.color('primary')],...rest}) => {
     return (
         <TouchableOpacity onPress={onPress}>
             <LinearGradient 
@@ -13,7 +13,7 @@ const CircleButton = ({onPress,gradient = ['#037d2e',tw.color('primary')],...res
                 start={{x:0.4,y:0.2}} end={{x:1,y:0.2}} 
                 style={tw`rounded-full drop-shadow`}
             >
-                <IconButton 
+                <IconButton
                     {...rest}
                     animated={true}
                 />
