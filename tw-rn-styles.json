@@ -6249,8 +6249,11 @@
   "font-serif": {
     "fontFamily": "serif"
   },
-  "font-nunitobold": {
+  "font-nunitomed": {
     "fontFamily": "Nunito-Medium"
+  },
+  "font-nunitobold": {
+    "fontFamily": "Nunito-Bold"
   },
   "text-xs": {
     "fontSize": 12,

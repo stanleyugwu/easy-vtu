@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Nunito_400Regular, Nunito_600SemiBold } from '@expo-google-fonts/nunito';
+import { Nunito_400Regular, Nunito_600SemiBold, Nunito_700Bold, } from '@expo-google-fonts/nunito';
 import { useFonts } from 'expo-font';
 import LoadingScreen from '../screens/LoadingScreen';
 import App from './App';
@@ -14,6 +14,7 @@ const AppWrapper = () => {
     let [fontsLoaded] = useFonts({
         'Nunito':Nunito_400Regular,
         'Nunito-Medium':Nunito_600SemiBold,
+        'Nunito-Bold':Nunito_700Bold
     });
 
     let mockData = {
@@ -36,7 +37,7 @@ const AppWrapper = () => {
             // return
             let data = await getLocalData(true);
             console.log(data);
-            if(!data) return setAuthenticating(false);
+            if(true) return setAuthenticating(false);
             if(data && ('accessToken' in data) && ('profile' in data) && ('wallet' in data)){
                 dispatch(signIn(data.profile));
                 dispatch(setToken(data.accessToken));

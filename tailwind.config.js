@@ -21,7 +21,8 @@ module.exports = {
           accent:'#f7b902'
         },
         fontFamily:{
-          nunitobold:['Nunito-Medium','sans-serif']
+          nunitomed:['Nunito-Medium','sans-serif'],
+          nunitobold:['Nunito-Bold','sans-serif'],
         },
         fontSize:{
           'btn':15
