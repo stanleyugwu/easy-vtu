@@ -7180,10 +7180,12 @@
     "lineHeight": 40
   },
   "text-btn": {
-    "fontSize": 15
+    "fontSize": 15,
+    "lineHeight":22
   },
   "text-1.5xl": {
-    "fontSize": 22
+    "fontSize": 22,
+    "lineHeight":32
   },
   "font-thin": {
     "fontWeight": "100"
