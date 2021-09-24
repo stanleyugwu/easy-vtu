@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Image} from 'react-native';
-import {Text, Title} from 'react-native-paper';
+import {Image} from 'react-native';
+import {Text,Title} from '../../components/Type';
 import tw from '../../lib/tailwind';
 import FadeInView from '../../components/FadeInView';
 
@@ -12,7 +12,7 @@ const Splash1 = (props) => {
                 style={{width:220,height:220,flexShrink:0,flexGrow:0}}
             />
             <Title style={tw`mt-5 mb-1`}>Buy with ease</Title>
-            <Text style={tw`text-center`}>
+            <Text>
                 Very long text Very long text Very long text Very long text Very long text Very long text  
             </Text>
         </FadeInView>

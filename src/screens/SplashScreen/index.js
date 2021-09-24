@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import ScreenContainer from '../../components/CustomSafeAreaView';
-import { View, Image, TouchableOpacity } from 'react-native';
-import { Text, Title, Button, IconButton } from 'react-native-paper';
+import { View, Image, TouchableOpacity, StatusBar } from 'react-native';
 import tw from '../../lib/tailwind';
 import CircleButton from '../../components/CircleButton';
 import SlideCounterDots from '../../components/SlideCounterDots';
+import {Text} from '../../components/Type';
 import Splash1 from './Splash1';
 import Splash2 from './Splash2';
 import Splash3 from './Splash3';
@@ -14,6 +14,7 @@ const SplashScreen = (props) => {
 
     return (
         <ScreenContainer containerStyle={tw`justify-around`}>
+            <StatusBar backgroundColor={tw.color('primary')}/>
             {
                 currentSplash == 1 ? (
                     <Splash1/>
@@ -38,19 +39,19 @@ const SplashScreen = (props) => {
                         //show skip on 1, arrow afterwards, and smaller arrow in last screen
                         currentSplash == 1 ? (
                             <TouchableOpacity style={tw`ml-2 pt-2`} onPress={_ => setCurrentSplash(3)}>
-                                <Text style={tw`font-semibold uppercase text-lg text-primary`}>Skip</Text>
+                                <Text style={tw`uppercase text-xl text-accent font-nunitobold`}>Skip</Text>
                             </TouchableOpacity>
                         ) : (currentSplash == 3) ? (
                             <CircleButton 
                                 icon="arrow-left" 
-                                color="#eee" 
+                                color={tw.color('accent')} 
                                 size={25} 
                                 onPress={_ => setCurrentSplash(currentSplash-1)}
                             />
                         ) : (
                             <CircleButton 
                                 icon="arrow-left" 
-                                color="#eee" 
+                                color={tw.color('accent')} 
                                 size={35} 
                                 onPress={_ => setCurrentSplash(currentSplash-1)}
                             />
@@ -63,7 +64,7 @@ const SplashScreen = (props) => {
                         (currentSplash < 3) ? (
                             <CircleButton 
                                 icon="arrow-right" 
-                                color="#eee" 
+                                color={tw.color('accent')} 
                                 size={35} 
                                 onPress={_ => setCurrentSplash(currentSplash+1)}
                             />

@@ -1,13 +1,11 @@
 import React from 'react';
-import { Image, ScrollView, View } from 'react-native';
-import { Card, Modal, Text, Title, Divider, IconButton, TextInput } from 'react-native-paper';
+import { ScrollView, View } from 'react-native';
+import { Title} from '../components/Type';
 import ScreenContainer from '../components/CustomSafeAreaView';
 import tw from '../lib/tailwind';
 import ServiceCard from '../components/ServiceCard';
-import {AntDesign as Icon} from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import ShadowView from '../components/ShadowView';
-import FadeInView from '../components/FadeInView';
 
 const QuickSubHomeScreen = ({navigation}) => {
 
@@ -16,7 +14,7 @@ const QuickSubHomeScreen = ({navigation}) => {
             <StatusBar backgroundColor={tw.color('primary')}/>
             <View>
                 <ShadowView style={tw.style('w-full bg-primary rounded-b-full pt-6')}>
-                    <Title style={tw`text-center mt-3 mb-4 text-white font-bold`}>Quick Top-Up</Title>
+                    <Title style={tw`mt-3 mb-4 text-white`}>Quick Top-Up</Title>
                 </ShadowView>
                <ScrollView>
                 <View style={tw`mt-5 flex-row flex-wrap justify-around p-4`}>
@@ -65,8 +63,7 @@ const QuickSubHomeScreen = ({navigation}) => {
                </ScrollView>
             </View>
             <ShadowView 
-                style={tw.style('bg-primary w-40 h-40 rounded-full absolute',{left:-50, bottom:-50,opacity:0.1})} 
-                gradient={['#00ff00','green']}
+                style={tw.style('bg-accent w-40 h-40 rounded-full absolute',{left:-60, bottom:-60,opacity:0.2})}
             />
         </ScreenContainer>
     )

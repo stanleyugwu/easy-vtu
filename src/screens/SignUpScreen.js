@@ -2,9 +2,10 @@ import React, { useRef, useState } from 'react';
 import tw from '../lib/tailwind';
 import CustomButton from '../components/CustomButton';
 import { ImageBackground, View, Image, ScrollView  } from 'react-native';
-import { TextInput, Title, Divider, Text } from 'react-native-paper';
+import { TextInput, Divider } from 'react-native-paper';
 import {AntDesign as Icon} from '@expo/vector-icons';
 import PhoneInput from 'react-native-phone-input';
+import {Text,Title} from '../components/Type';
 
 const SignUpScreen = (props) => {
     const [inputs, setInputs] = useState({
@@ -28,7 +29,7 @@ const SignUpScreen = (props) => {
                         source={require('../../assets/icon.png')}
                         style={{ width: 100, height: 100, resizeMode: 'contain', alignSelf: 'center',flexGrow:0 }}
                     />
-                    <Title style={tw`text-center`}>Sign Up. It's Free</Title>
+                    <Title>Sign Up. It's Free</Title>
                     <Divider style={tw`h-1 bg-primary rounded-full w-20 mx-auto mt-2`}/>
                     <ScrollView style={tw`mt-7`}>
                         <TextInput
@@ -59,15 +60,15 @@ const SignUpScreen = (props) => {
                             label="Confirm Password" 
                             mode="flat" 
                         />
-                        <Text style={tw`text-center mt-4`}>
-                            Already a member? <Text style={tw`text-primary`} onPress={_ => props.navigation.navigate('Sign-In')}>
+                        <Text style={tw`mt-3`}>
+                            Already a member? <Text style={tw`text-accent`} onPress={_ => props.navigation.navigate('Sign-In')}>
                                 Sign In
                             </Text>
                         </Text>
                         <CustomButton 
                             text="Sign Up" 
                             containerProps={{style:tw`mt-5`}} 
-                            left={<Icon name="login" size={20} color={tw.color('white')}/>}
+                            left={<Icon name="login" size={20} color={tw.color('accent')}/>}
                         />
                     </ScrollView>
                 </View>
