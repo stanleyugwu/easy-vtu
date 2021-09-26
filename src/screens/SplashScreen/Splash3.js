@@ -10,8 +10,9 @@ const Splash3 = (props) => {
     return (
         <FadeInView style={tw`p-3 mx-auto w-full`} duration={300}>
             <Image 
-                source={require('../../../assets/splash-images/img-1.jpg')} 
-                style={{width:220,height:220,flexShrink:0,flexGrow:0,alignSelf:'center'}}
+                source={require('../../../assets/splash-images/get_started.png')} 
+                resizeMode="contain"
+                style={{width:230,height:230,flexShrink:0,flexGrow:0,alignSelf:'center'}}
             />
             <Title style={tw`my-6`}>Start Topping Up Now!</Title>
             <View style={tw`w-full mt-6`}>
