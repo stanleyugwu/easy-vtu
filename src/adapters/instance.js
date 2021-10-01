@@ -43,6 +43,14 @@ instance.interceptors.response.use((response) => {
 
     //server responded with error, return server response body
     if(error.response){
+        //transform Internal Server Error to friendlier message
+        if(error.response.status == 500){
+            return Promise.reject({
+                message:`An error occured on our side.\nPlease try again.\nReport to us if the problem persists`,
+                _error:error.response
+            })
+        }
+
         //join all errors into multi-line string if they arrive in objects and arrays
         if(error.response.data.message && typeof error.response.data.message == 'object'){
             let errorMessage = error.response.data.message;
