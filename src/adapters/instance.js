@@ -5,12 +5,12 @@ const instance = axios.create({
     baseURL:'https://easyvtu.herokuapp.com',
     timeout:8000,
     timeoutErrorMessage:'The request took too long to satisfy',
-    // headers:{
-    //     common:{
-    //         'Content-Type':'multipart/form-data'
-    //     }
-    // }
 });
+
+instance.CancelToken = axios.CancelToken;
+instance.isCancel = axios.isCancel;
+instance.Cancel = axios.Cancel;
+instance.isAxiosError = axios.isAxiosError;
 
 //Request interceptor to append Authorization header if user is logged in
 instance.interceptors.request.use((config) => {
@@ -69,19 +69,27 @@ instance.interceptors.response.use((response) => {
         return Promise.reject({...error.response.data,_error:error.response})
     }
     //Network Connection or Timeout Errors (mock server error response)
-    else if(error.request){
+    else if(error.request && !error.response){
         return Promise.reject({
             status:false, 
             message:`Request Failed!, Make Sure You're Connected To Internet`,
             _error:error.request
         })
     }
+    //Request Cancelled
+    else if(axios.isCancel(error)){
+        return Promise.reject({
+            status:false,
+            message:error.message,
+            _error:error
+        })
+    }
     //Request Config Error (mock server error response)
     else return Promise.reject({
         status:false,
         message:'Network Error!, Check Your Internet Connection',
-        _error:error.request
+        _error:error.request || error.message
     })
 })
 
-export default instance;
+export {instance as default}
