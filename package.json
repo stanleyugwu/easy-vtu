@@ -38,7 +38,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
-    "@types/react-native-phone-input": "^0.2.2"
+    "@testing-library/react-native": "^7.2.0",
+    "@types/react-native-phone-input": "^0.2.2",
+    "jest-expo": "^42.1.0",
+    "react-test-renderer": "16.13"
   },
   "private": true
 }
