@@ -39,4 +39,4 @@ const signUp = async (cancelToken, ...rest) => {
     })
 }
 
-export {signIn as default,signUp}
+export {signIn,signUp}
