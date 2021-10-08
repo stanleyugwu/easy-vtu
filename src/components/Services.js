@@ -3,7 +3,7 @@ import ServiceCard from './ServiceCard';
 import { View } from 'react-native';
 import tw from '../lib/tailwind';
 
-const Services = ({navigation}) => {
+const Services = ({navigation = {navigate:() => null}}) => {
     return (
         <View style={tw`flex-row flex-wrap justify-around p-4`}>
             <ServiceCard 
