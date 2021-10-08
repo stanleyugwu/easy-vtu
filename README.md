@@ -3,6 +3,7 @@
 <b>Making Daily Sub Easy and Fun</b>
 </div>
 <br>
+
 ### Getting Started
 **Navigate into direcory to clone into**
 ```
