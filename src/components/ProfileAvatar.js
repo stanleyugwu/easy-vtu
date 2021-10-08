@@ -4,7 +4,7 @@ import tw from '../lib/tailwind';
 import {Avatar} from 'react-native-paper';
 import {Text} from '../components/Type';
 
-const ProfileAvatar = ({imageUrl,text = 'Hello, Welcome',...rest}) => {
+const ProfileAvatar = ({imageUrl,text = 'Hello, Welcome',textStyle,...rest}) => {
     return (
         <View style={tw`flex-row justify-start items-center`} {...rest}>
             {
@@ -14,7 +14,7 @@ const ProfileAvatar = ({imageUrl,text = 'Hello, Welcome',...rest}) => {
                 <Avatar.Icon icon="account" color={tw.color('primary')} style={tw`bg-white`} accessibilityRole="imagebutton" accessibilityLabel="avatar-image" size={47}/>
                 )
             } 
-            <Text accessibilityRole="text" style={tw`ml-3 text-lg`}>{text}</Text>
+            <Text accessibilityRole="text" style={[tw.style('ml-3 text-lg'),textStyle]}>{text}</Text>
         </View>
     )
 }
