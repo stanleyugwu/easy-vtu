@@ -2,7 +2,8 @@ import React from 'react';
 import tw from '../lib/tailwind';
 import CustomButton from '../components/CustomButton';
 import { ImageBackground, View, Image, ScrollView  } from 'react-native';
-import { TextInput, Title, Divider, Text } from 'react-native-paper';
+import { TextInput,Divider} from 'react-native-paper';
+import {Text,Title} from '../components/Type';
 import {AntDesign as Icon} from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import { signIn } from '../store/slices/userSlice';
@@ -22,7 +23,7 @@ const SignInScreen = (props) => {
                         source={require('../../assets/icon.png')}
                         style={{ width: 100, height: 100, resizeMode: 'contain', alignSelf: 'center',flexGrow:0 }}
                     />
-                    <Title style={tw`text-center`}>Welcome Back!</Title>
+                    <Title>Welcome Back!</Title>
                     <Divider style={tw`h-1 bg-primary rounded-full w-20 mx-auto mt-2`}/>
                     <ScrollView style={tw`mt-9`}>
                         <TextInput
@@ -39,19 +40,19 @@ const SignInScreen = (props) => {
                             mode="flat" 
                             left={<TextInput.Icon name="key" color="black" />} 
                         />
-                        <Text style={tw`text-center text-primary`} onPress={_ => props.navigation.navigate('Forgot-Password')}>
+                        <Text style={tw`text-accent text-red-600 font-nunitobold`} onPress={_ => props.navigation.navigate('Forgot-Password')}>
                             Forgot Password?
                         </Text>
                         <CustomButton 
                             text="Sign In" 
                             containerProps={{style:tw`mt-7`}} 
-                            left={<Icon name="login" size={20} color={tw.color('white')}/>}
+                            left={<Icon name="login" size={20} color={tw.color('accent')}/>}
                             onPress={_ => dispatch(signIn({name:'Stanley Ugwu',email:'stanleyugwu',phone:'08066413705',password:'heyreddie'}))}
                         />
-                         <Text style={tw`text-center mt-6`}>
-                            Not a member yet? <Text style={tw`text-primary`} onPress={_ => props.navigation.navigate('Sign-Up')}>
+                         <Text style={tw`mt-6`}>
+                            Not a member yet? <Text style={tw`text-accent font-nunitobold`} onPress={_ => props.navigation.navigate('Sign-Up')}>
                                 Sign Up
-                            </Text>
+                        </Text>
                         </Text>
                     </ScrollView>
                 </View>

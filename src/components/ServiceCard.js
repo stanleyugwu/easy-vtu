@@ -5,7 +5,7 @@ import tw from '../lib/tailwind';
 import FadeInView from './FadeInView';
 
 const ServiceCard = (props) => {
-    const {source, title, iconWrapperProps, titleProps, wrapperProps, wrapperStyle, onPress} = props;
+    const {source = require('../../assets/service-icons/airtime.png'), title = 'MORE', iconWrapperProps, titleProps, wrapperProps, wrapperStyle, onPress = null} = props;
     return (
         <FadeInView {...wrapperProps} style={tw.style(
                 'rounded-lg w-5/12 p-0 max-w-xs',
@@ -14,12 +14,12 @@ const ServiceCard = (props) => {
                 wrapperStyle
             )}
         >
-           <TouchableOpacity style={tw`w-full p-3 items-center justify-around`} onPress={onPress}>
+           <TouchableOpacity style={tw`w-full p-3 items-center justify-around`} accessibilityRole="button" onPress={onPress}>
             <>
                 <View {...iconWrapperProps} style={tw`w-10 h-10`}>
-                    <Image source={source || require('../../assets/service-icons/airtime.png')} style={tw.style('rounded-none h-full w-full')} resizeMode="contain"/>
+                    <Image accessibilityRole="imagebutton" accessibilityLabel={title} testID="service-image" source={source} style={tw.style('rounded-none w-full h-full')} resizeMode="contain"/>
                 </View>
-                <Text {...titleProps} style={tw`text-base font-nunitobold text-center mt-2`}>{title}</Text>
+                <Text {...titleProps} accessibilityRole="text" testID="service-title" style={tw`text-base font-nunitobold text-center mt-2`}>{title}</Text>
             </>
            </TouchableOpacity>
         </FadeInView>

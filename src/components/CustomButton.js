@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
-import { TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View,} from 'react-native';
 import tw from '../lib/tailwind';
 
 const CustomButton = (props) => {
@@ -10,15 +10,16 @@ const CustomButton = (props) => {
         onPress,
         viewProps,
         left,
+        shadow = true,
         right,
         containerProps,
-        gradients = ['#037d2e',tw.color('primary')],
+        gradients = [tw.color('primary'),tw.color('primary')],
         ...rest
     } = props;
 
     return (
         <TouchableOpacity onPress={onPress} {...containerProps} {...rest}>
-            <LinearGradient colors={gradients} start={{x:0.4,y:0.2}} end={{x:1,y:0.2}} style={tw`rounded-3xl p-1.5`}>
+            <LinearGradient colors={gradients} start={{x:0.4,y:0.2}} end={{x:1,y:0.2}} style={tw.style('rounded-3xl p-2',shadow ? styles.boxShadow : null)}>
                 <View 
                     style={tw`p-2 mx-auto`}
                     children={
@@ -26,7 +27,7 @@ const CustomButton = (props) => {
                         props.children : 
                         <View style={tw`flex-row justify-center content-center items-center`}>
                             {left && left}
-                            <Text style={tw`text-white text-btn font-nunitobold uppercase ${left && 'ml-2'} ${right && 'mr-2'}`}>{text}</Text>
+                            <Text style={tw`text-accent text-btn font-nunitobold uppercase ${left && 'ml-2'} ${right && 'mr-2'}`}>{text}</Text>
                             {right && right}
                         </View>
                     }
@@ -36,6 +37,18 @@ const CustomButton = (props) => {
         </TouchableOpacity>
     )
 }
+
+const styles = StyleSheet.create({
+    boxShadow: Platform.OS == 'ios' ? {
+        shadowColor: '#171717',
+        shadowOffset: {width: 1, height: 1},
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+    } : {
+        elevation:5,
+        shadowColor:'#52006a'
+    }
+})
 
 /**
  * OLD BUTTON
