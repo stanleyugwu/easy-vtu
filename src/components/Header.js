@@ -18,6 +18,10 @@ const Header = (props) => {
         onNotificationPress = fallback,
         onAvatarPress = fallback,
         onAddCallback = fallback,
+        avatarText = "Hello Welcome",
+        avatarImgUrl = false,
+        walletBalance = "#0",
+        walletTotalCards = 0
     } = props;
 
     return (
@@ -35,11 +39,19 @@ const Header = (props) => {
             </View>
             
             <TouchableRipple onPress={onAvatarPress} accessibilityLabel="profile-icon">
-                <ProfileAvatar textStyle={tw`text-gray-light font-nunitobold`}/>
+                <ProfileAvatar 
+                    textStyle={tw`text-gray-light font-nunitobold`} 
+                    text={avatarText}
+                    imageUrl={avatarImgUrl}
+                />
             </TouchableRipple>
 
             <FadeInView slideUp={true} style={tw`w-full mt-2`}>
-                <WalletCard balance={"#30000"} totalCards={4} onAddCallback={onAddCallback}/>
+                <WalletCard 
+                    balance={walletBalance} 
+                    totalCards={walletTotalCards} 
+                    onAddCallback={onAddCallback}
+                />
             </FadeInView>
         </View>
     )
