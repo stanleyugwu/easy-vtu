@@ -5,7 +5,7 @@ import tw from '../lib/tailwind';
 import {Ionicons as Icon} from '@expo/vector-icons'
 import ShadowView from './ShadowView';
 
-const WalletCard = ({balance = '#0',totalCards = 0,onAddCallback}) => {
+const WalletCard = ({balance = '#0',totalCards = 0,onAddCallback = () => null}) => {
     return (
         <ShadowView 
             style={
@@ -29,7 +29,15 @@ const WalletCard = ({balance = '#0',totalCards = 0,onAddCallback}) => {
                         <Text accessibilityLabel="cards-added" style={tw`ml-1 items-center`}>{totalCards} Card(s)</Text>
                     </View>
                 </View>
-                <Icon name="add-circle" style={tw`p-0 m-0 self-center`} accessibilityRole="button" ellipsizeMode="middle" size={70} color={tw.color('primary')} onPress={onAddCallback}/>
+                <Icon 
+                    name="add-circle" 
+                    style={tw`p-0 m-0 self-center`} 
+                    accessibilityRole="button" 
+                    ellipsizeMode="middle" 
+                    size={75} 
+                    color={tw.color('primary')} 
+                    onPress={onAddCallback}
+                />
             </View>
         </ShadowView>
     )
