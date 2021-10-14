@@ -1,11 +1,25 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watchAll",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "collectCoverage": false,
+    "verbose": true,
+    "coverageDirectory": "./__coverages__",
+    "setupFiles": [
+      "./src/tests/jestSetUpFile.config.js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
+    ]
   },
   "dependencies": {
     "@digieggs/rn-country-code-picker": "^1.2.0",
