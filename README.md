@@ -4,8 +4,10 @@
 </div>
 <br>
 
+**EasyVtu is a virtual top-up platform with swags of features built with modern, cutting-edge, top-notch technologies; with the user in mind.**
+
 ### Getting Started
-**Navigate into direcory to clone into**
+**Navigate into directory to clone into**
 ```
 cd path/to/directory
 ```
@@ -13,7 +15,13 @@ cd path/to/directory
 ```
 git clone https://github.com/stanleyugwu/easy-vtu.git
 ```
-**Run the app**
+**Install dependencies**
+1. Expo CLI tool: 
+`npm i -g expo-cli`
+2. App dependencies:
+`npm install`
+
+**Run the app with expo**
 ```
 expo start
 ```
