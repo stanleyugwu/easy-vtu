@@ -19,7 +19,7 @@ const ServiceCard = (props) => {
                 <View {...iconWrapperProps} style={tw`w-10 h-10`}>
                     <Image accessibilityRole="imagebutton" accessibilityLabel={title} testID="service-image" source={source} style={tw.style('rounded-none w-full h-full')} resizeMode="contain"/>
                 </View>
-                <Text {...titleProps} accessibilityRole="text" testID="service-title" style={tw`text-base font-nunitobold text-center mt-2`}>{title}</Text>
+                <Text {...titleProps} accessibilityRole="text" testID="service-title" style={tw`text-black font-nunitobold text-center mt-2`}>{title}</Text>
             </>
            </TouchableOpacity>
         </FadeInView>

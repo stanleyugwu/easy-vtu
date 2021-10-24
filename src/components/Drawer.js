@@ -33,7 +33,7 @@ const DrawerItem = (props) => {
                     <View style={tw`flex-row items-center`}>
                         <Icon accessibilityLabel={iconName+' icon'} name={iconName} color={tw.color('gray-500')} size={25} testID="left-icon"/>
                         
-                        <Text accessibilityLabel={label+' menu link'} style={tw`pl-6 font-nunitobold text-lg text-gray-700`}>
+                        <Text accessibilityLabel={label+' menu link'} style={tw`pl-6 font-nunitobold text-base text-gray-700`}>
                             {label.charAt(0).toUpperCase() + label.slice(1)}
                             {/* Capitalize label */}
                         </Text>
