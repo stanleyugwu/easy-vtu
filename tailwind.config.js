@@ -1,3 +1,4 @@
+const colors = require('tailwindcss/colors');
 
 module.exports = {
     purge:['./src/**/*.{js,jsx,ts,tsx}',],
@@ -11,7 +12,8 @@ module.exports = {
           white:'#fafafa',
           gray:{
             DEFAULT:'#888888',
-            light:'#e5e5e5'
+            light:'#e5e5e5',
+            lighter:colors.gray[500]
           }
         },
         fontFamily:{
