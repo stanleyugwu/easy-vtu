@@ -14,7 +14,7 @@ const NetworkProviderButton = ({onPress,networkImageSrc,networkName,buttonStyle,
     {...rest}
   >
     <>
-      <Avatar.Image source={networkImageSrc || require('../../assets/service-icons/default_network.png')} size={38} accessibilityLabel="provider-image" accessibilityRole="image-button"/>
+      <Avatar.Image source={networkImageSrc || require('../../assets/service-icons/default_network.png')} size={38} accessibilityLabel="provider-image" accessibilityRole="imagebutton"/>
       <Text style={tw`font-nunitobold text-base pl-4`} accessibilityRole="text">{networkName || 'UNKNOWN NETWORK'}</Text>
     </>
   </TouchableRipple>
