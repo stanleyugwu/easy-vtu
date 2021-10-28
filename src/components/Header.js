@@ -46,7 +46,7 @@ const Header = (props) => {
                 />
             </TouchableRipple>
 
-            <FadeInView slideUp={true} style={tw`w-full mt-2`}>
+            <FadeInView slideUp={false} style={tw`w-full mt-2`}>
                 <WalletCard 
                     balance={walletBalance} 
                     totalCards={walletTotalCards} 
