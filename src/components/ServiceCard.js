@@ -1,41 +1,50 @@
 import React from 'react';
-import {View, StyleSheet, Platform, TouchableOpacity, Image} from 'react-native';
-import {Avatar, Text, Title} from 'react-native-paper';
+import {View, StyleSheet, Platform, Image} from 'react-native';
+import {Text} from 'react-native-paper';
+import { TouchableRipple } from 'react-native-paper';
 import tw from '../lib/tailwind';
-import FadeInView from './FadeInView';
+import FlashView from '../components/FlashView'
 
 const ServiceCard = (props) => {
-    const {source = require('../../assets/service-icons/airtime.png'), title = 'MORE', iconWrapperProps, titleProps, wrapperProps, wrapperStyle, onPress = null} = props;
+    const hexColors = ["#0000cc","#00cc00","#cc0000",tw.color('accent'),tw.color('primary')]
+    const {
+        source = require('../../assets/service-icons/airtime.png'), 
+        title = 'MORE', 
+        iconWrapperProps,
+        animate = true, 
+        animationDelay = 0,
+        titleProps, 
+        onPress = () => null
+    } = props;
+
+    const randomColorIndex = Math.floor(Math.random() * hexColors.length)
+    
     return (
-        <FadeInView {...wrapperProps} style={tw.style(
-                'rounded-lg w-5/12 p-0 max-w-xs',
-                {backgroundColor:'white'},
-                styles.boxShadow,
-                wrapperStyle
-            )}
+        <FlashView
+            delay={animationDelay}
+            bounciness={20}
+            animate={animate}
+            containerStyle={{
+                borderBottomWidth:3,
+                borderColor:hexColors[randomColorIndex]
+            }}
         >
-           <TouchableOpacity style={tw`w-full p-3 items-center justify-around`} accessibilityRole="button" onPress={onPress}>
-            <>
-                <View {...iconWrapperProps} style={tw`w-10 h-10`}>
-                    <Image accessibilityRole="imagebutton" accessibilityLabel={title} testID="service-image" source={source} style={tw.style('rounded-none w-full h-full')} resizeMode="contain"/>
-                </View>
-                <Text {...titleProps} accessibilityRole="text" testID="service-title" style={tw`text-black font-nunitobold text-center mt-2`}>{title}</Text>
-            </>
-           </TouchableOpacity>
-        </FadeInView>
+            <TouchableRipple 
+                style={tw`w-full p-3 items-center justify-around`} 
+                accessibilityRole="button" 
+                onPress={onPress}
+                rippleColor={"#0004"}
+            >
+                <>
+                    <View {...iconWrapperProps} style={tw`w-10 h-10`}>
+                        <Image accessibilityRole="imagebutton" accessibilityLabel={title} testID="service-image" source={source} style={tw.style('rounded-none w-full h-full')} resizeMode="contain"/>
+                    </View>
+                    <Text {...titleProps} accessibilityRole="text" testID="service-title" style={tw`text-gray-800 font-nunitobold text-center mt-2`}>{title}</Text>
+                </>
+            </TouchableRipple>
+        </FlashView>
     )
 }
 
-const styles = StyleSheet.create({
-    boxShadow: Platform.OS == 'ios' ? {
-        shadowColor: '#171717',
-        shadowOffset: {width: 1, height: 1},
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-    } : {
-        elevation:10,
-        shadowColor:'#52006a'
-    }
-})
 
 export default ServiceCard
