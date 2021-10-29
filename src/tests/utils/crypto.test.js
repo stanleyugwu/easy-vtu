@@ -6,7 +6,7 @@ describe('Cryptography Utility', () => {
     describe('Encryption', () => {
         it(`given ${string}, returns an encrypted string`, () => {
             expect(encrypted).toContain('U2FsdGVkX');
-            expect(typeof encrypted).toBe('string');
+            expect(encrypted).toEqual(expect.any(String));
             expect(encrypted.length).toBeGreaterThan(15);
         });
 
