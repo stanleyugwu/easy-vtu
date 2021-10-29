@@ -19,7 +19,7 @@ describe(
         it('given an image src of a network provider, renders the image', () => {
             const imgSrc = require('../../../assets/service-icons/default_network.png');
             const {getByA11yRole} = render(<NetworkProviderButton networkImageSrc={imgSrc}/>);
-            const avatar = getByA11yRole('image-button');
+            const avatar = getByA11yRole('imagebutton');
             expect(avatar.props.children[1].props.source).toBe(imgSrc)
             expect(renderer.create(<NetworkProviderButton/>).toJSON()).toMatchSnapshot()
         })
