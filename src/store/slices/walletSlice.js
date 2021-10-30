@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+export const initialState = {
     balance: 0,
     cards:[]
 }
@@ -10,19 +10,37 @@ const walletSlice = createSlice({
     initialState,
     reducers:{
         addMoney: (state,action) => {
-            let amount = action.payload || 0;
-            state.balance += amount;
+            let amount = action.payload;
+            if(!amount || typeof amount !== 'number' || amount < 0) return
+            state.balance += action.payload;
         },
         removeMoney: (state, action) => {
-            let amount = action.payload || 0;
+            let amount = action.payload;
+            if(
+                !amount || 
+                typeof amount !== 'number' ||
+                amount < 0 || 
+                amount > state.balance 
+            ) return
             state.balance -= amount
         },
         addCard: (state, action) => {
-            let newArray = state.cards.concat(action.payload);
+            let cards = action.payload;
+
+            //assert card is an array or object
+            if(
+                !cards || 
+                (!(cards instanceof Array) && !(cards instanceof Object)) ||
+                (cards instanceof Array && !cards.length)
+            ) return
+
+            let newArray = state.cards.concat(cards);
             state.cards = newArray;
         },
         removeCard: (state, action) => {
-            state.cards = state.cards.filter(card => card._id !== action.payload);
+            let cardId = action.payload;
+            if(!cardId || typeof cardId !== 'string') return
+            state.cards = state.cards.filter(card => card._id !== cardId);
         },
         updateCard: (state, action) => {
             let cardId = action.payload.cardId;
