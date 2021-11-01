@@ -58,7 +58,7 @@ FlashView.defaultProps = {
     containerProps:null
 }
 
-FlashView.PropTypes = {
+FlashView.propTypes = {
     animate:PropTypes.bool,
     delay:PropTypes.number,
     bounciness:PropTypes.number,
