@@ -7,22 +7,22 @@ import {Ionicons as Icon} from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 
 /**
+ * @param {Object} props
+ * @property {Object} props.containerStyle component wrapper element style
+ * @property {Object} props.containerProps component wrapper element props
+ * @property {String} props.fieldTitle title label to show as input field label
+ * @property {String} props.fieldSubTitle sub title to show under fieldTitle 
+ * @property {Boolean} props.renderInput determines whether to render TextInput or Touchable
+ * @property {Object} props.textInputRef ref object to assign TextInput ref to
+ * @property {Object} props.textInputStyle style to apply to TextInput
+ * @property {Object} props.textInputProps extra props for TextInput 
+ * @property @callback props.onTextInputChange callback to invoke with text value as argument, when TextInput value changes 
  * 
- * @param {Object} containerStyle component wrapper element style
- * @param {Object} containerProps component wrapper element props
- * @param {String} fieldTitle title label to show as input field label
- * @param {String} fieldSubTitle sub title to show under fieldTitle 
- * @param {Boolean} renderInput determines whether to render TextInput or Touchable
- * @param {Object} textInputRef ref object to assign TextInput ref to
- * @param {Object} textInputStyle style to apply to TextInput
- * @param {Object} textInputProps extra props for TextInput 
- * @param @callback onTextInputChange callback to invoke with text value as argument, when TextInput value changes 
- * 
- * @param {Object} btnStyle style for input field wrapper button
- * @param @callback onBtnPress callback to invoke when input field wrapper button is presses
- * @param @function leftItem a function that'll be called to return a React Node to be rendered left of wrapper button
- * @param {String} btnLabel text to show inside wrapper button
- * @param {String} rightIconName name of icon to be rendered at the right of wrapper button
+ * @property {Object} props.btnStyle style for input field wrapper button
+ * @property @callback props.onBtnPress callback to invoke when input field wrapper button is presses
+ * @property @function props.leftItem a function that'll be called to return a React Node to be rendered left of wrapper button
+ * @property {String} props.btnLabel text to show inside wrapper button
+ * @property {String} props.rightIconName name of icon to be rendered at the right of wrapper button
  * @returns 
  */
 const InputField = (props) => {
@@ -36,9 +36,15 @@ const InputField = (props) => {
                 {props.fieldTitle}
             </Text>
             
-            <Text style={tw`text-sm text-left text-gray-lighter pb-1`}>
-                {props.fieldSubTitle}
-            </Text>
+           {
+               props.fieldSubTitle 
+               ? (
+                    <Text style={tw`text-sm text-left text-gray-lighter pb-1`}>
+                        {props.fieldSubTitle}
+                    </Text>
+               ) 
+               : null
+           }
 
             {
                 props.renderInput ? 
@@ -83,22 +89,36 @@ const InputField = (props) => {
 }
 
 InputField.propTypes = {
+    /** style for component `View` wrapper */
     containerStyle:PropTypes.object,
+    /** props for component `View` wrapper */
     containerProps:PropTypes.object,
+    /** title label to show as input field label */
     fieldTitle:PropTypes.string.isRequired,
+    /** sub title to show under fieldTitle */
     fieldSubTitle:PropTypes.string,
+    /** determines whether to render TextInput or Touchable */
     renderInput:PropTypes.bool.isRequired,
+    /** ref object to assign TextInput ref to */
     textInputRef:PropTypes.exact({
         current:PropTypes.any
     }),
+    /** style to apply to TextInput */
     textInputStyle:PropTypes.object,
+    /** props for TextInput */
     textInputProps:PropTypes.object,
+    /** callback to invoke with text value as argument, when TextInput value changes */
     onTextInputChange:PropTypes.func.isRequired,
+    /** style for input field wrapper button */
     btnStyle:PropTypes.object,
+    /** callback to invoke when input field wrapper button is presses */
     onBtnPress:PropTypes.func,
+    /** a function that returns a React Node to be rendered left of wrapper button */
     leftItem:PropTypes.func,
+    /** text to show inside wrapper button */
     btnLabel:PropTypes.string,
-    rightIconName:PropTypes.oneOfType([Boolean,String])
+    /** name of icon to be rendered at the right of wrapper button */
+    rightIconName:PropTypes.oneOfType([PropTypes.bool,PropTypes.string])
 }
 
 const defaultFn = () => null
