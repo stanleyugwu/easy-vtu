@@ -8,11 +8,11 @@ import PropTypes from 'prop-types';
  * @description Renders a pressable button, having a label text, and a radio button 
  * 
  * @param {*} props 
- * @param {Object} buttonStyle style to apply to wrapper button wrapper component
- * @param @callback onPress callback to invoke on wrapper button press
- * @param {Object} restOfProps props to be applied to button wrapper component
- * @param {String} label text to show in selector button
- * @param {Boolean} checked determine whether radio is checked or uncheckes
+ * @property {Object} buttonStyle style to apply to wrapper button wrapper component
+ * @property @callback onPress callback to invoke on wrapper button press
+ * @property {Object} restOfProps props to be applied to button wrapper component
+ * @property {String} label text to show in selector button
+ * @property {Boolean} checked determine whether radio is checked or uncheckes
  * @returns 
  */
 
@@ -27,11 +27,12 @@ const RadioSelectorButton = (props) => {
             {...props.restOfProps}
         >
             <>
-                <Text style={tw`font-nunitobold pl-5`}>
+                <Text style={tw`font-nunitobold pl-5`} accessibilityLabel="button text">
                     {props.label}
                 </Text>
                 <RadioButton
                 value="SELF"
+                accessibilityLabel="radio input"
                 status={props.checked ? 'checked' : 'unchecked'}
                 onPress={props.onPress}
                 />
@@ -42,10 +43,15 @@ const RadioSelectorButton = (props) => {
 
 let pt = PropTypes;
 RadioSelectorButton.propTypes = {
+    /** style for wrapper button */
     buttonStyle:pt.object,
+    /** callback that's called when button is pressed */
     onPress:pt.func,
+    /** extra props for wrapper button*/
     restOfProps:pt.object,
+    /** label text for the button */
     label:pt.string.isRequired,
+    /** Determines whether the radio input for the button is checked or not */
     checked:pt.bool.isRequired
 }
 
