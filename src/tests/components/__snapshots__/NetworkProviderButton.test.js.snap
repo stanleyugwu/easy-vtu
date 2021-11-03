@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`
+    NetworkProviderButton component.
+    This component renders a ui pressable card that shows a network provider's image and name
+     given an image src of a network provider, renders the image 1`] = `
+<View
+  accessibilityLabel="network provider button"
+  accessibilityRole="button"
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      false,
+      Object {
+        "alignItems": "center",
+        "borderBottomColor": "rgba(229, 231, 235, 1)",
+        "borderBottomWidth": 1,
+        "borderLeftColor": "rgba(229, 231, 235, 1)",
+        "borderLeftWidth": 1,
+        "borderRightColor": "rgba(229, 231, 235, 1)",
+        "borderRightWidth": 1,
+        "borderTopColor": "rgba(229, 231, 235, 1)",
+        "borderTopWidth": 1,
+        "flexDirection": "row",
+        "justifyContent": "flex-start",
+        "marginTop": 16,
+        "paddingBottom": 8,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 8,
+        "width": "100%",
+      },
+    ]
+  }
+>
+  <View
+    accessibilityLabel="provider-image"
+    accessibilityRole="imagebutton"
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#6200ee",
+          "borderRadius": 19,
+          "height": 38,
+          "width": 38,
+        },
+        undefined,
+      ]
+    }
+  >
+    <Image
+      source={1}
+      style={
+        Object {
+          "borderRadius": 19,
+          "height": 38,
+          "width": 38,
+        }
+      }
+    />
+  </View>
+  <Text
+    accessibilityRole="text"
+    style={
+      Array [
+        Object {
+          "color": "rgba(52, 52, 52, 1)",
+          "fontFamily": "Nunito-Medium",
+          "fontSize": 16,
+          "lineHeight": 24,
+          "textAlign": "center",
+        },
+        Object {
+          "fontFamily": "Nunito-Bold",
+          "fontSize": 16,
+          "lineHeight": 24,
+          "paddingLeft": 16,
+        },
+      ]
+    }
+  >
+    UNKNOWN NETWORK
+  </Text>
+</View>
+`;

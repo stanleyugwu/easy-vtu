@@ -5,6 +5,7 @@ import tw from '../lib/tailwind';
 
 const NetworkProviderButton = ({onPress,networkImageSrc,networkName,buttonStyle,...rest}) => (
   <TouchableRipple
+    accessibilityLabel="network provider button"
     accessibilityRole="button"
     borderless={false}
     rippleColor="#000e"
