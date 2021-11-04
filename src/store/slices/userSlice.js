@@ -31,6 +31,9 @@ export const userSlice = createSlice({
             state.isSignedIn = true;
             state.profile = profile
         },
+        signInForTest: (state, action) => {
+            state.isSignedIn = true;
+        },
         setToken: (state, action) => {
             let token = action.payload;
             if(!token || typeof token !== 'string' || !token.trim().length) return
@@ -39,7 +42,7 @@ export const userSlice = createSlice({
     }
 });
 
-export const {signIn, setToken} = userSlice.actions;
+export const {signIn, setToken, signInForTest} = userSlice.actions;
 
 export const selectUserSignInCreds = state => ({
     email: state.user.profile.email,
