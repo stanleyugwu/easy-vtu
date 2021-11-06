@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 /**
  * @param {Object} props
  * @property {Object} props.containerStyle component wrapper element style
+ * @property {String} props.accessibilityLabel A11Y label for wrapper element
  * @property {Object} props.containerProps component wrapper element props
  * @property {String} props.fieldTitle title label to show as input field label
  * @property {String} props.fieldSubTitle sub title to show under fieldTitle 
@@ -30,6 +31,7 @@ const InputField = (props) => {
     return (
         <View 
             style={tw.style('border-l-2 border-primary pl-2 p-2 pr-0 mt-8',props.containerStyle)}
+            accessibilityLabel={props.accessibilityLabel}
             {...props.containerProps}
         >
             <Text style={tw`text-left font-nunitobold text-black mb-1.5`}>
@@ -62,6 +64,7 @@ const InputField = (props) => {
                     <TouchableRipple
                         rippleColor="#000e"
                         centered={false}
+                        accessibilityLabel={props.accessibilityLabel+" button"}
                         style={tw.style('bg-gray-light flex-row w-full py-3 px-2.5 justify-between items-center border border-gray-400 mt-1',props.btnStyle)}
                         onPress={props.onBtnPress}
                     >
@@ -91,6 +94,8 @@ const InputField = (props) => {
 InputField.propTypes = {
     /** style for component `View` wrapper */
     containerStyle:PropTypes.object,
+    /** accessibility label for `View` wrapper element */
+    accessibilityLabel:PropTypes.string.isRequired,
     /** props for component `View` wrapper */
     containerProps:PropTypes.object,
     /** title label to show as input field label */
@@ -124,6 +129,7 @@ InputField.propTypes = {
 const defaultFn = () => null
 
 InputField.defaultProps = {
+    accessibilityLabel:"input field wrapper",
     containerStyle:null,
     containerProps:{},
     fieldTitle:"NONE",
