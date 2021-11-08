@@ -62,7 +62,7 @@ const HomeScreen = ({navigation}) => {
     const [isShown, setIsShown] = useState(false);
 
     useEffect(() => {
-        setTimeout(() => setIsShown(true), 600);
+        setTimeout(() => setIsShown(true), 300);
     }, [])
 
     //function to open side drawer
