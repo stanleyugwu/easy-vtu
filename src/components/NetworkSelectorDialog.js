@@ -51,8 +51,8 @@ const NetworkSelectorDialog = (props) => {
             dismissable={true}
             onDismiss={props.onDialogDismiss}
         >
-            <Dialog.Title style={tw`text-lg text-gray-lighter`}>
-                SELECT NETWORK
+            <Dialog.Title style={tw`text-lg text-black`}>
+                SELECT NETWORK:
             </Dialog.Title>
             
             <Dialog.Actions style={tw`flex-col`}>

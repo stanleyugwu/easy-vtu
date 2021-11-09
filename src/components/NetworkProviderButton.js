@@ -11,12 +11,12 @@ const NetworkProviderButton = ({onPress,networkImageSrc,networkName,buttonStyle,
     rippleColor="#000e"
     centered={false}
     onPress={onPress}
-    style={tw.style('flex-row w-full p-2 justify-start items-center border border-gray-200 mt-4',buttonStyle)}
+    style={tw.style('flex-row bg-primary justify-between rounded-full w-full p-2 items-center mt-4',buttonStyle)}
     {...rest}
   >
     <>
+      <Text style={tw`font-nunitobold text-base pl-4 text-accent`} accessibilityRole="text">{networkName || 'UNKNOWN NETWORK'}</Text>
       <Avatar.Image source={networkImageSrc || require('../../assets/service-icons/default_network.png')} size={38} accessibilityLabel="provider-image" accessibilityRole="imagebutton"/>
-      <Text style={tw`font-nunitobold text-base pl-4`} accessibilityRole="text">{networkName || 'UNKNOWN NETWORK'}</Text>
     </>
   </TouchableRipple>
 );
