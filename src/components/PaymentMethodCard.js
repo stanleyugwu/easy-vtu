@@ -7,30 +7,32 @@ import ShadowView from './ShadowView';
 
 const PaymentMethodCard = ({label,iconName,onPress, containerStyle}) => {
     return (
-        <TouchableRipple
+        <ShadowView style={tw`rounded-full flex-row border border-gray-lighter justify-center items-center bg-primary my-2`}>
+            <TouchableRipple
             rippleColor="#0004"
-            borderless={false}
+            borderless={true}
             onPress={onPress}
             style={
                 tw.style(
-                    'rounded-full flex-row justify-center bg-primary my-2 w-full border border-gray-lighter p-3',
+                    'flex-row justify-between w-full p-3',
                     containerStyle
                 )
             }
             accessibilityRole="button"
         >
-            <ShadowView style={tw`flex-row justify-center items-center bg-primary`}>
+            <>
+                <Text style={tw`text-base text-btn font-nunitobold uppercase text-accent ml-3`} accessibilityLabel="payment-method-label">
+                    {label || 'PAY FROM WALLET'}
+                </Text>
                 <Icon 
                     name={iconName || 'wallet-sharp'} 
                     accessibilityLabel="payment-method-icon" 
                     size={25}
                     color={tw.color('accent')}
                 />
-                <Text style={tw`text-base text-btn font-nunitobold uppercase text-accent ml-3`} accessibilityLabel="payment-method-label">
-                    {label || 'PAY FROM WALLET'}
-                </Text>
-            </ShadowView>
+            </>
         </TouchableRipple>
+       </ShadowView>
     )
 }
 
