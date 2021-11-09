@@ -4,7 +4,7 @@ import NetworkSelectorDialog from '../../components/NetworkSelectorDialog';
 describe('<NetworkSelectorDialog/> component', () => {
     it('renders a modal showing 4 network provider options to select from', () => {
         const {getAllByA11yLabel, container} = render(<NetworkSelectorDialog visible={true} />);
-        expect(container.children[0].props.children[0].props.children).toBe('SELECT NETWORK')
+        expect(container.children[0].props.children[0].props.children).toBe('SELECT NETWORK:')
         expect(getAllByA11yLabel('network provider button').length).toBe(4); 
     });
 
