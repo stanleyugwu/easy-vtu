@@ -20,19 +20,21 @@ const RadioSelectorButton = (props) => {
     return (
         <TouchableRipple
             style={tw.style(
-                'flex-row items-center justify-between border border-gray-300 w-full p-2 my-2',
+                'flex-row rounded-full items-center justify-between border border-gray-300 w-full p-2 my-2 bg-primary',
                 props.buttonStyle
             )}
             onPress={props.onPress}
             {...props.restOfProps}
         >
             <>
-                <Text style={tw`font-nunitobold pl-5`} accessibilityLabel="button text">
+                <Text style={tw`font-nunitobold pl-5 text-accent`} accessibilityLabel="button text">
                     {props.label}
                 </Text>
                 <RadioButton
                 value="SELF"
                 accessibilityLabel="radio input"
+                color={tw.color("accent")}
+                uncheckedColor={tw.color('accent')}
                 status={props.checked ? 'checked' : 'unchecked'}
                 onPress={props.onPress}
                 />
