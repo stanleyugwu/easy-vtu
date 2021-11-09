@@ -14,7 +14,6 @@ import PropTypes from 'prop-types';
  * @property {String} props.fieldTitle title label to show as input field label
  * @property {String} props.fieldSubTitle sub title to show under fieldTitle 
  * @property {Boolean} props.renderInput determines whether to render TextInput or Touchable
- * @property {Object} props.textInputRef ref object to assign TextInput ref to
  * @property {Object} props.textInputStyle style to apply to TextInput
  * @property {Object} props.textInputProps extra props for TextInput 
  * @property @callback props.onTextInputChange callback to invoke with text value as argument, when TextInput value changes 
@@ -26,7 +25,20 @@ import PropTypes from 'prop-types';
  * @property {String} props.rightIconName name of icon to be rendered at the right of wrapper button
  * @returns 
  */
-const InputField = (props) => {
+
+/**
+ * formats words or sentence to title case
+ * @param {String} str 
+ * @returns titlecased version of the supplied string or sentence
+ */
+const titleCase = (str = "") => {
+    return str.split(' ')
+        .map(word => word[0].toUpperCase()+word.substr(1)
+        .toLowerCase())
+        .join(' ');
+}
+
+const InputField = React.forwardRef((props,ref) => {
 
     return (
         <View 
@@ -42,7 +54,7 @@ const InputField = (props) => {
                props.fieldSubTitle 
                ? (
                     <Text style={tw`text-sm text-left text-gray-lighter pb-1`}>
-                        {props.fieldSubTitle}
+                        {titleCase(props.fieldSubTitle)}
                     </Text>
                ) 
                : null
@@ -52,10 +64,10 @@ const InputField = (props) => {
                 props.renderInput ? 
                 (
                     <TextInput
-                        ref={props.textInputRef}
+                        ref={ref}
                         mode="outlined"
-                        style={tw.style('bg-gray-light',props.textInputStyle)}
-                        outlineColor={tw.color("gray-lighter")}
+                        style={tw.style('bg-blue-50',props.textInputStyle)}
+                        outlineColor={tw.color("gray-400")}
                         onChangeText={(v) => props.onTextInputChange(v)}
                         {...props.textInputProps}
                     />
@@ -64,13 +76,14 @@ const InputField = (props) => {
                     <TouchableRipple
                         rippleColor="#000e"
                         centered={false}
+                        ref={ref}
                         accessibilityLabel={props.accessibilityLabel+" button"}
-                        style={tw.style('bg-gray-light flex-row w-full py-3 px-2.5 justify-between items-center border border-gray-400 mt-1',props.btnStyle)}
+                        style={tw.style('rounded-md bg-blue-50 flex-row w-full py-3 px-2.5 justify-between items-center border border-gray-400 mt-1',props.btnStyle)}
                         onPress={props.onBtnPress}
                     >
                         <>
                             {props.leftItem()}
-                            <Text style={tw`font-nunitobold text-base`}>
+                            <Text style={tw`font-nunitobold text-base text-gray-600`}>
                                 {props.btnLabel}
                             </Text>
                             
@@ -89,7 +102,7 @@ const InputField = (props) => {
             }
         </View>
     )
-}
+});
 
 InputField.propTypes = {
     /** style for component `View` wrapper */
@@ -104,10 +117,6 @@ InputField.propTypes = {
     fieldSubTitle:PropTypes.string,
     /** determines whether to render TextInput or Touchable */
     renderInput:PropTypes.bool.isRequired,
-    /** ref object to assign TextInput ref to */
-    textInputRef:PropTypes.exact({
-        current:PropTypes.any
-    }),
     /** style to apply to TextInput */
     textInputStyle:PropTypes.object,
     /** props for TextInput */
