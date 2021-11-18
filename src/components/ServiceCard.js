@@ -1,15 +1,17 @@
 import React from "react";
 import { View, Image } from "react-native";
-import { Text } from "../components/Type";
+import Text  from "../components/Type";
 import { TouchableRipple } from "react-native-paper";
 import tw from "../lib/tailwind";
 import FlashView from "./FlashView";
 import PropTypes from "prop-types";
 import defaultIconImg from "../../assets/service-icons/airtime.png";
+import BoxShadowView from "./BoxShadowView";
 
 /**
  * renders a pressable ui card representing an app service e.g airtime
  */
+
 const ServiceCard = (props) => {
   return (
     <FlashView
@@ -18,37 +20,39 @@ const ServiceCard = (props) => {
       animate={props.animate}
       containerStyle={tw`rounded-xl w-4/12 mx-2 max-h-24`}
     >
-      <TouchableRipple
-        style={tw`w-full items-center justify-around rounded-xl`}
-        accessibilityRole="button"
-        onPress={props.onPress}
-        rippleColor={"#0004"}
-      >
-        <>
-          <View style={tw.style("w-10 h-10 my-3", props.imgWrapperStyle)}>
-            <Image
-              accessibilityRole="imagebutton"
-              accessibilityLabel={props.title}
-              testID="service-image"
-              source={props.iconSrc}
-              style={tw.style("rounded-none w-full h-full")}
-              resizeMode="contain"
-            />
-          </View>
-          <View style={tw`bg-primary p-1.5 w-full rounded-b-xl`}>
-            <Text
-                accessibilityRole="text"
-                testID="service-title"
-                style={tw.style(
-                "text-accent",
-                props.serviceTextStyle
-                )}
-            >
-                {props.title}
-            </Text>
-          </View>
-        </>
-      </TouchableRipple>
+      <BoxShadowView containerStyle={tw`rounded-xl`}>
+        <TouchableRipple
+          style={tw`w-full items-center justify-around rounded-xl`}
+          accessibilityRole="button"
+          onPress={props.onPress}
+          rippleColor={"#0004"}
+        >
+          <>
+            <View style={tw.style("w-10 h-10 my-3", props.imgWrapperStyle)}>
+              <Image
+                accessibilityRole="imagebutton"
+                accessibilityLabel={props.title}
+                testID="service-image"
+                source={props.iconSrc}
+                style={tw.style("rounded-none w-full h-full")}
+                resizeMode="contain"
+              />
+            </View>
+            <View style={tw`bg-primary p-1.5 w-full rounded-b-xl`}>
+              <Text
+                  accessibilityRole="text"
+                  testID="service-title"
+                  style={tw.style(
+                  "text-accent",
+                  props.serviceTextStyle
+                  )}
+              >
+                  {props.title}
+              </Text>
+            </View>
+          </>
+        </TouchableRipple>
+      </BoxShadowView>
     </FlashView>
   );
 };
