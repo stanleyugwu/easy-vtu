@@ -1,19 +1,16 @@
 import React, {useRef, useEffect} from 'react';
 import {Animated} from 'react-native';
-import ShadowView from './ShadowView';
 import tw from '../lib/tailwind';
 import PropTypes from 'prop-types';
 
 /**
- * 
+ * adds flash animation effect to its children
  * @param {Boolean} animate prop to enable or disable animation 
  * @param {Number} delay number of milliseconds to delay animation
  * @param {Number} bounciness bounciness of element when animating
  * @param {Object} containerStyle style objct for Animated.View component
- * @param {Object} containerProps props object to apply to Animated.View
- * @returns
  */
-const FlashView = (props) => {
+const FlashView = React.forwardRef((props,ref) => {
 
     //store animated value
     const flasAnim = useRef(new Animated.Value(0)).current
@@ -32,38 +29,31 @@ const FlashView = (props) => {
     }, [flasAnim])
 
     return (
-        <ShadowView
-            style={
-                tw.style(
-                    'rounded-lg w-5/12 p-0 max-w-xs bg-white my-3',
-                    props.containerStyle
-                )
-            }
+        <Animated.View 
+            style={tw.style('rounded-lg w-32 p-0 max-w-xs bg-white my-3',{transform:[{scale:flasAnim}]})}
+            ref={ref}
         >
-            <Animated.View 
-                style={{transform:[{scale:flasAnim}]}}
-                {...props.containerProps}
-            >
-                {props.children}
-            </Animated.View>
-        </ShadowView>
+            {props.children}
+        </Animated.View>
     )
-}
+})
 
 FlashView.defaultProps = {
     animate:true,
     delay:20,
-    bounciness:20,
+    bounciness:15,
     containerStyle:null,
-    containerProps:null
 }
 
 FlashView.propTypes = {
+    /** determines whether animation is enabled or not */
     animate:PropTypes.bool,
+    /** delay for animation */
     delay:PropTypes.number,
+    /** bounciness of animation */
     bounciness:PropTypes.number,
+    /** styles for `BoxShadowView` wrapper component */
     containerStyle:PropTypes.object,
-    containerProps:PropTypes.object
 }
 
-export default FlashView
+export default React.memo(FlashView)
