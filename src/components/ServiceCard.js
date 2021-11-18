@@ -1,50 +1,83 @@
-import React from 'react';
-import {View, StyleSheet, Platform, Image} from 'react-native';
-import {Text} from 'react-native-paper';
-import { TouchableRipple } from 'react-native-paper';
-import tw from '../lib/tailwind';
-import FlashView from '../components/FlashView'
+import React from "react";
+import { View, Image } from "react-native";
+import { Text } from "../components/Type";
+import { TouchableRipple } from "react-native-paper";
+import tw from "../lib/tailwind";
+import FlashView from "./FlashView";
+import PropTypes from "prop-types";
+import defaultIconImg from "../../assets/service-icons/airtime.png";
 
+/**
+ * renders a pressable ui card representing an app service e.g airtime
+ */
 const ServiceCard = (props) => {
-    const hexColors = ["#0000cc","#00cc00","#cc0000",tw.color('accent'),tw.color('primary')]
-    const {
-        source = require('../../assets/service-icons/airtime.png'), 
-        title = 'MORE', 
-        iconWrapperProps,
-        animate = true, 
-        animationDelay = 0,
-        titleProps, 
-        onPress = () => null
-    } = props;
-
-    const randomColorIndex = Math.floor(Math.random() * hexColors.length)
-    
-    return (
-        <FlashView
-            delay={animationDelay}
-            bounciness={20}
-            animate={animate}
-            containerStyle={{
-                borderBottomWidth:3,
-                borderColor:hexColors[randomColorIndex]
-            }}
-        >
-            <TouchableRipple 
-                style={tw`w-full p-3 items-center justify-around`} 
-                accessibilityRole="button" 
-                onPress={onPress}
-                rippleColor={"#0004"}
+  return (
+    <FlashView
+      delay={props.animationDelay}
+      bounciness={20}
+      animate={props.animate}
+      containerStyle={tw`rounded-xl w-4/12 mx-2 max-h-24`}
+    >
+      <TouchableRipple
+        style={tw`w-full items-center justify-around rounded-xl`}
+        accessibilityRole="button"
+        onPress={props.onPress}
+        rippleColor={"#0004"}
+      >
+        <>
+          <View style={tw.style("w-10 h-10 my-3", props.imgWrapperStyle)}>
+            <Image
+              accessibilityRole="imagebutton"
+              accessibilityLabel={props.title}
+              testID="service-image"
+              source={props.iconSrc}
+              style={tw.style("rounded-none w-full h-full")}
+              resizeMode="contain"
+            />
+          </View>
+          <View style={tw`bg-primary p-1.5 w-full rounded-b-xl`}>
+            <Text
+                accessibilityRole="text"
+                testID="service-title"
+                style={tw.style(
+                "text-accent",
+                props.serviceTextStyle
+                )}
             >
-                <>
-                    <View {...iconWrapperProps} style={tw`w-10 h-10`}>
-                        <Image accessibilityRole="imagebutton" accessibilityLabel={title} testID="service-image" source={source} style={tw.style('rounded-none w-full h-full')} resizeMode="contain"/>
-                    </View>
-                    <Text {...titleProps} accessibilityRole="text" testID="service-title" style={tw`text-gray-800 font-nunitobold text-center mt-2`}>{title}</Text>
-                </>
-            </TouchableRipple>
-        </FlashView>
-    )
-}
+                {props.title}
+            </Text>
+          </View>
+        </>
+      </TouchableRipple>
+    </FlashView>
+  );
+};
 
+ServiceCard.propTypes = {
+  /** source for service image */
+  iconSrc: PropTypes.number.isRequired,
+  /** service text */
+  title: PropTypes.string.isRequired,
+  /** determines whether animation is enabled */
+  animate: PropTypes.bool.isRequired,
+  /** delay for the animation */
+  animationDelay: PropTypes.number,
+  /** style for image `View` wrapper component */
+  imgWrapperStyle: PropTypes.object,
+  /** style for service `Text` component */
+  serviceTextStyle: PropTypes.object,
+  /** callback to be invoked when card is pressed */
+  onPress: PropTypes.func.isRequired,
+};
 
-export default ServiceCard
+ServiceCard.defaultProps = {
+  iconSrc: defaultIconImg,
+  title: "EasyVtu",
+  animate: true,
+  animationDelay: 0,
+  imgWrapperStyle: null,
+  serviceTextStyle: null,
+  onPress: () => null,
+};
+
+export default React.memo(ServiceCard);
