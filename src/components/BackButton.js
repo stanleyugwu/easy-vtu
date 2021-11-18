@@ -1,14 +1,41 @@
-import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import { Text } from 'react-native-paper';
-import {Entypo as Icon} from '@expo/vector-icons';
-import tw from '../lib/tailwind';
+import React from "react";
+import { TouchableOpacity } from "react-native";
+import { Text } from "./Type";
+import { Entypo as Icon } from "@expo/vector-icons";
+import tw from "../lib/tailwind";
+import PropTypes from 'prop-types';
 
-const BackButton = ({onPress,style, textStyle = null, buttonText = 'Back', ...rest}) => {
-    return <TouchableOpacity style={tw.style('p-2 flex-row',style)} onPress={onPress} {...rest}>
-        <Icon name="chevron-thin-left" size={25}/>
-        <Text style={tw.style('text-base',textStyle)}>{buttonText}</Text>
+/**
+ * Back button component
+ */
+const BackButton = (props) => {
+  return (
+    <TouchableOpacity
+      style={tw.style("p-2 flex-row", props.wrapperStyle)}
+      onPress={props.onPress}
+      accessibilityLabel="back-button"
+    >
+      <Icon name="chevron-thin-left" size={25} />
+      <Text style={tw.style("text-base", props.textStyle)} accessibilityRole="text" accessibilityLabel={"button label"}>{props.buttonText}</Text>
     </TouchableOpacity>
+  );
+};
+
+BackButton.propTypes = {
+  /** text label for button */
+  buttonText:PropTypes.string.isRequired,
+  /** callback that is called when button is pressed */
+  onPress:PropTypes.func,
+  /** style for label wrapper `Text` component */
+  textStyle:PropTypes.object,
+  /** style for `TouchableOpacity` wrapper component */
+  wrapperStyle:PropTypes.object,
 }
 
-export default BackButton
+BackButton.defaultProps = {
+  buttonText:"Back",
+  textStyle:null,
+  wrapperStyle:null
+}
+
+export default React.memo(BackButton);
