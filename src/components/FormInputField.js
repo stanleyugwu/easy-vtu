@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import IoniconsJson from "@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/Ionicons.json";
-import { Text } from "./Type";
+import Text  from "./Type";
 import { Ionicons as Icon } from "@expo/vector-icons";
 import tw from "../lib/tailwind";
 import { TextInput } from "react-native-paper";

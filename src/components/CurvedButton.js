@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from './Type';
+import Text from "./Type";
 import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableHighlight, View, } from 'react-native';
 import BoxShadowView from './BoxShadowView';

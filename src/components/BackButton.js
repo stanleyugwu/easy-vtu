@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { Text } from "./Type";
+import Text from "./Type";
 import { Entypo as Icon } from "@expo/vector-icons";
 import tw from "../lib/tailwind";
 import PropTypes from 'prop-types';

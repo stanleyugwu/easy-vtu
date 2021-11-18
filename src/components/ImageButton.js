@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { TouchableRipple } from "react-native-paper";
-import { Text } from "./Type";
+import Text from "./Type";
 import { Ionicons as Icon } from "@expo/vector-icons";
 import { Image, View } from "react-native";
 import tw from "../lib/tailwind";
