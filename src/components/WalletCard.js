@@ -1,14 +1,14 @@
 import React from 'react';
 import {View} from 'react-native';
-import { Text } from './Type';
+import Text from "./Type";
 import tw from '../lib/tailwind';
 import {Ionicons as Icon} from '@expo/vector-icons'
-import ShadowView from './ShadowView';
+import BoxShadowView from './BoxShadowView';
 
 const WalletCard = ({balance = '#0',totalCards = 0,onAddCallback = () => null}) => {
     return (
-        <ShadowView 
-            style={
+        <BoxShadowView 
+            containerStyle={
                 tw.style(
                     'w-80 max-w-md mx-auto rounded-bl-md rounded-tr-md bg-white p-3',
                     {borderTopLeftRadius:35,borderBottomRightRadius:35}
@@ -39,7 +39,7 @@ const WalletCard = ({balance = '#0',totalCards = 0,onAddCallback = () => null}) 
                     onPress={onAddCallback}
                 />
             </View>
-        </ShadowView>
+        </BoxShadowView>
     )
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableRipple, Avatar } from "react-native-paper";
-import { Text } from "./Type";
+import Text from "./Type";
 import tw from '../lib/tailwind';
 
 const NetworkProviderButton = ({onPress,networkImageSrc,networkName,buttonStyle,...rest}) => (

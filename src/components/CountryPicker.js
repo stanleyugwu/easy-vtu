@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, FlatList, TouchableOpacity, ScrollView} from 'react-native';
 import tw from '../lib/tailwind';
-import { Text } from './Type';
+import Text from "./Type";
 import countryList from 'react-native-phone-input/dist/resources/countries.json';
 
 class CountryPicker extends React.PureComponent{

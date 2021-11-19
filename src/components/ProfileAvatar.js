@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import tw from '../lib/tailwind';
 import {Avatar} from 'react-native-paper';
-import {Text} from '../components/Type';
+import Text from '../components/Type';
 
 const ProfileAvatar = ({imageUrl,text = 'Hello, Welcome',textStyle,...rest}) => {
     return (

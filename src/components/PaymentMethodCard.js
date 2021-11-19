@@ -1,13 +1,13 @@
 import React from 'react';
 import { TouchableRipple } from 'react-native-paper';
 import {Ionicons as Icon} from '@expo/vector-icons';
-import { Text } from './Type';
+import Text from "./Type";
 import tw from '../lib/tailwind';
-import ShadowView from './ShadowView';
+import BoxShadowView from './BoxShadowView';
 
 const PaymentMethodCard = ({label,iconName,onPress, containerStyle}) => {
     return (
-        <ShadowView style={tw`rounded-full flex-row border border-gray-lighter justify-center items-center bg-primary my-2`}>
+        <BoxShadowView containerStyle={tw`rounded-full flex-row border border-gray-lighter justify-center items-center bg-primary my-2`}>
             <TouchableRipple
             rippleColor="#0004"
             borderless={true}
@@ -32,7 +32,7 @@ const PaymentMethodCard = ({label,iconName,onPress, containerStyle}) => {
                 />
             </>
         </TouchableRipple>
-       </ShadowView>
+       </BoxShadowView>
     )
 }
 

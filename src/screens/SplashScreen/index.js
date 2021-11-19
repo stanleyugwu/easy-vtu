@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import ScreenContainer from '../../components/CustomSafeAreaView';
 import { View, Image, TouchableOpacity, StatusBar } from 'react-native';
 import tw from '../../lib/tailwind';
-import CircleButton from '../../components/CircleButton';
+import RoundButton from '../../components/RoundButton';
 import SlideCounterDots from '../../components/SlideCounterDots';
-import {Text} from '../../components/Type';
+import Text from '../../components/Type';
 import Splash1 from './Splash1';
 import Splash2 from './Splash2';
 import Splash3 from './Splash3';
@@ -48,7 +48,7 @@ const SplashScreen = (props) => {
                                 <Text style={tw`uppercase text-xl text-accent font-nunitobold`}>Skip</Text>
                             </TouchableOpacity>
                         ) : (currentSplash > 1 && currentSplash < 3) ? (
-                            <CircleButton 
+                            <RoundButton 
                                 icon="arrow-left" 
                                 color={tw.color('accent')} 
                                 size={35} 
@@ -58,10 +58,10 @@ const SplashScreen = (props) => {
                     }
                     {
                         // currentSplash == 2 ? (
-                        //     <CustomButton text="Get Started" onPress={_ => setCurrentSplash(3)} buttonStyle={tw`p-1`}/>
+                        //     <CurvedButton text="Get Started" onPress={_ => setCurrentSplash(3)} buttonStyle={tw`p-1`}/>
                         // ) : 
                         (currentSplash < 3) ? (
-                            <CircleButton 
+                            <RoundButton 
                                 icon="arrow-right" 
                                 color={tw.color('accent')} 
                                 size={35} 

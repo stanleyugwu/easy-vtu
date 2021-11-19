@@ -1,11 +1,11 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
-import {Text, Title} from '../components/Type';
+import Text, {Title} from '../components/Type';
 import ScreenContainer from '../components/CustomSafeAreaView';
 import tw from '../lib/tailwind';
 import Services from '../components/Services';
 import { StatusBar } from 'react-native';
-import ShadowView from '../components/ShadowView';
+import BoxShadowView from '../components/BoxShadowView';
 
 const QuickSubHomeScreen = ({navigation}) => {
 
@@ -13,16 +13,16 @@ const QuickSubHomeScreen = ({navigation}) => {
         <ScreenContainer>
             <StatusBar backgroundColor={tw.color('primary')}/>
             <View>
-                <ShadowView style={tw.style('w-full bg-primary rounded-b-full pt-6')} gradient={[tw.color('primary'),tw.color('primary'),tw.color('accent'),]}>
+                <BoxShadowView containerStyle={tw.style('w-full bg-primary rounded-b-full pt-6')} gradient={[tw.color('primary'),tw.color('primary'),tw.color('accent'),]}>
                     <Title style={tw`mt-2 text-white`}>Quick Top-Up</Title>
                     <Text style={tw`mb-5 text-white`}>No Registeration Needed.</Text>
-                </ShadowView>
+                </BoxShadowView>
                 <Title style={tw`mt-10 text-xl`}>What do you want to do?</Title>
                <ScrollView>
                 <Services navigation={navigation}/>
                </ScrollView>
             </View>
-            <ShadowView 
+            <BoxShadowView 
                 style={tw.style('bg-accent w-40 h-40 rounded-full absolute',{left:-60, bottom:-60,opacity:0.2})}
             />
         </ScreenContainer>

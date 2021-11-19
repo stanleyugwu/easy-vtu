@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableRipple, RadioButton} from 'react-native-paper';
 import tw from '../lib/tailwind';
-import {Text} from './Type';
+import Text from './Type';
 import PropTypes from 'prop-types';
 
 /**

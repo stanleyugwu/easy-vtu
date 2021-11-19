@@ -1,7 +1,7 @@
 import React from 'react';
 import {Dialog, TouchableRipple, Avatar} from 'react-native-paper';
 import tw from '../lib/tailwind';
-import { Text } from './Type';
+import Text from "./Type";
 import NetworkProviderButton from './NetworkProviderButton';
 import PropTypes from 'prop-types';
 
