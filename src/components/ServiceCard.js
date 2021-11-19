@@ -18,7 +18,7 @@ const ServiceCard = (props) => {
       delay={props.animationDelay}
       bounciness={20}
       animate={props.animate}
-      containerStyle={tw`rounded-xl w-4/12 mx-2 max-h-24`}
+      containerStyle={tw`rounded-xl w-32 max-w-xs max-h-36 mx-2`}
     >
       <BoxShadowView containerStyle={tw`rounded-xl`}>
         <TouchableRipple
