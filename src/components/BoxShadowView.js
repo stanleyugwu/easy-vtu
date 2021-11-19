@@ -28,7 +28,7 @@ const withBoxShadow = function(WrappedComponent){
 const BoxShadowView = (props) => {
     return (
         <View 
-            accessibilityLabel="BoxShadowView component wrapper" 
+            accessibilityLabel={props.accessibilityLabel} 
             style={[
                 styles.boxShadow,
                 {backgroundColor:'white'},
@@ -60,10 +60,18 @@ const styles = StyleSheet.create({
 BoxShadowView.propTypes = {
     /** style for component `View` wrapper */
     containerStyle:PropTypes.object,
+
+    /** accessibilityLabel for parent `View` component */
+    accessibilityLabel: PropTypes.string,
+
+    /** child nodes to wrap */
+    children: PropTypes.node
 }
 
 BoxShadowView.defaultProps = {
-    children:null
+    children:null,
+    containerStyle: null,
+    accessibilityLabel: "BoxShadowView component wrapper"
 }
 
 export {BoxShadowView as default, withBoxShadow}
