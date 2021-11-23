@@ -17,7 +17,7 @@ const SafeArea = ({ children, scrollViewProps, containerStyle, ...rest }) => (
     mode="margin"
     {...rest}
   >
-    <ScrollView {...scrollViewProps}>
+    <ScrollView keyboardShouldPersistTaps="handled" {...scrollViewProps} >
       {children}
     </ScrollView>
   </SafeAreaView>
