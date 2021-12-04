@@ -40,7 +40,7 @@ const BoxShadowView = (props) => {
     )
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     boxShadow:
       Platform.OS == "ios"
         ? {
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
             shadowRadius: 3.84,
           }
         : {
-            elevation: 4,
+            elevation: 2,
           },
 });
 
