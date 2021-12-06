@@ -14,7 +14,7 @@ const PressResizerView = ({containerStyle, children, ...restOfProps}) => {
     const [scale, setScale] = useState(1);//scale factor
 
     const onTouchStartCb = React.useCallback(() => {
-        setScale(0.95);
+        setScale(0.965);
     });
 
     const onTouchEndCb = React.useCallback(() => {
@@ -26,6 +26,7 @@ const PressResizerView = ({containerStyle, children, ...restOfProps}) => {
             style={[containerStyle,{transform:[{scale}]}]} 
             onTouchStart={onTouchStartCb} 
             onTouchEnd={onTouchEndCb}
+            onTouchCancel={onTouchEndCb}
             accessibilityLabel={"PressResizerView wrapper"}
             {...restOfProps}
         >
