@@ -1,52 +1,62 @@
-import React, { useState } from "react";
-import PropTypes from 'prop-types';
-import { Text, View } from "react-native";
+import React, { useState, ReactChild } from "react";
+import PropTypes from "prop-types";
+import { View, ViewStyle } from "react-native";
 
 /**
- * reduces the scale size of its children when pressed,
- * creating a visual effect of reduction in size.
- * 
- * Note: this component destructures extra props in its wrapper `View` element.
- * but its not advised to attach event handlers to it
+ * @typedef {Object} PressResizerViewProp
+ * @property {string} accessibilityLabel Custom accessibility label for parent `View`
+ * @property {ViewStyle} containerStyle Styles for wrapper `View` element
+ * @property {ReactChild} children React Child to render with effect applied
  */
-const PressResizerView = ({containerStyle, children, ...restOfProps}) => {
 
-    const [scale, setScale] = useState(1);//scale factor
+/**
+ * Reduces the scale size of its children when pressed,
+ * creating a visual effect of reduction in size.
+ *
+ * Note: this component destructures extra passed props, and passes it to its wrapper `View` element.
+ * Avoid attaching `touch` event handlers to this component.
+ */
+const PressResizerView = (
+  /** @type {PressResizerViewProp} */ {
+    accessibilityLabel,
+    containerStyle,
+    children,
+    ...restOfProps
+  }
+) => {
+  const [scale, setScale] = useState(1); //scale factor
 
-    const onTouchStartCb = React.useCallback(() => {
-        setScale(0.965);
-    });
+  const onTouchStartCb = React.useCallback(() => {
+    setScale(0.965);
+  });
 
-    const onTouchEndCb = React.useCallback(() => {
-        setScale(1);
-    });
+  const onTouchEndCb = React.useCallback(() => {
+    setScale(1);
+  });
 
-    return (
-        <View 
-            style={[containerStyle,{transform:[{scale}]}]} 
-            onTouchStart={onTouchStartCb} 
-            onTouchEnd={onTouchEndCb}
-            onTouchCancel={onTouchEndCb}
-            accessibilityLabel={"PressResizerView wrapper"}
-            {...restOfProps}
-        >
-            {children}
-        </View>
-    )
-}
+  return (
+    <View
+      {...restOfProps}
+      style={[containerStyle, { transform: [{ scale }] }]}
+      onTouchStart={onTouchStartCb}
+      onTouchEnd={onTouchEndCb}
+      onTouchCancel={onTouchEndCb}
+      accessibilityLabel={accessibilityLabel}
+    >
+      {children}
+    </View>
+  );
+};
 
 PressResizerView.propTypes = {
-    /** styles for wrapper `View` element */
-    containerStyle: PropTypes.object,
-
-    /** children to render */
-    children: PropTypes.element.isRequired
-}
+  accessibilityLabel: PropTypes.string,
+  containerStyle: PropTypes.object,
+  children: PropTypes.element.isRequired,
+};
 
 PressResizerView.defaultProps = {
-    containerStyle: null,
-    children: <Text/>
-}
+  accessibilityLabel: "PressResizerView wrapper",
+};
 
 PressResizerView.displayName = "PressResizerView";
 
