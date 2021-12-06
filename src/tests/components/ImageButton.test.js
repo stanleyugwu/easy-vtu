@@ -13,7 +13,7 @@ describe('<ImageButton/> Component', () => {
     });
 
     it('should render a local image from a given resource id, to the left of the card', () => {
-        const imgId = require('../../../assets/service-icons/airtime.png');
+        const imgId = require('../../../assets/service_icons/airtime.png');
         const {getByA11yRole} = render(<ImageButton imageSrc={imgId} onPress={() => null} />);
         expect(getByA11yRole('imagebutton').props.source).toBe(imgId);
     });
