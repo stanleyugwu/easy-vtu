@@ -4,17 +4,17 @@ import {
   SafeAreaViewProps,
 } from "react-native-safe-area-context";
 import PropTypes from "prop-types";
+import { ScrollViewProperties, ViewStyle } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { ScrollViewProps, ViewStyle } from "react-native";
 
 /**
  * @typedef {Object} CustomSafeAreaProps
  * @property {boolean} scrollable When `true`, makes its children scrollable when the overflow the screen.
- * @property {ScrollViewProps} scrollViewProps Props for inner `ScrollView` component.
+ * @property {ScrollViewProperties} scrollViewProps Props for inner `ScrollView` component.
  * This only applies when `scrollable` is `true`.
  * @property {ViewStyle} containerStyle Style for `SafeAreaView` or `ScrollView` wrapper component depending on scrollable prop
  * @property {ReactNode} children Children to render
- * @property {...SafeAreaViewProps} restOfProps Extra props for `SafeAreaView`
+ * @property {SafeAreaViewProps} restOfProps Extra props for `SafeAreaView`
  */
 
 /**
