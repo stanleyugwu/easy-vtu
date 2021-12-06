@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image} from 'react-native';
-import {Text,Title} from '../../components/Type';
+import Text, {Title} from '../../components/Type';
 import FadeInView from '../../components/FadeInView';
 import tw from '../../lib/tailwind';
 

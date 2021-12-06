@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+export const initialState = {
     isSignedIn:false,
     accessToken:null,
     profile: {
@@ -21,16 +21,28 @@ export const userSlice = createSlice({
     initialState,
     reducers:{
         signIn: (state, action) => {
+            let profile = action.payload;
+            if(
+                !profile ||
+                !(profile instanceof Object) ||
+                (Object.keys(state.profile).join('') !== Object.keys(profile).join('')) //assert payload contains all and only profile keys
+            ) return
+
             state.isSignedIn = true;
-            state.profile = action.payload;
+            state.profile = profile
+        },
+        signInForTest: (state, action) => {
+            state.isSignedIn = true;
         },
         setToken: (state, action) => {
-            state.accessToken = action.payload;
+            let token = action.payload;
+            if(!token || typeof token !== 'string' || !token.trim().length) return
+            state.accessToken = token;
         }
     }
 });
 
-export const {signIn, setToken} = userSlice.actions;
+export const {signIn, setToken, signInForTest} = userSlice.actions;
 
 export const selectUserSignInCreds = state => ({
     email: state.user.profile.email,

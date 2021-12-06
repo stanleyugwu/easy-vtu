@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Image} from 'react-native';
 import {Title} from '../../components/Type';
-import CustomButton from '../../components/CustomButton';
+import CurvedButton from '../../components/CurvedButton';
 import FadeInView from '../../components/FadeInView';
 import tw from '../../lib/tailwind';
 
@@ -17,14 +17,14 @@ const Splash3 = (props) => {
             <Title style={tw`my-6`}>Start Topping Up Now!</Title>
             <View style={tw`w-full mt-6`}>
                 <FadeInView delay={100} slideUp={true}>
-                    <CustomButton 
+                    <CurvedButton 
                         text="Create An Account" 
                         style={tw`w-full`} 
                         onPress={() => {props.navigate('Sign-Up')}}
                     />
                 </FadeInView>
                 <FadeInView delay={200} slideUp={true}>
-                    <CustomButton 
+                    <CurvedButton 
                         text="SIGN IN"
                         shadow={true}
                         style={tw.style('w-full my-4')} 
@@ -32,7 +32,7 @@ const Splash3 = (props) => {
                     />
                 </FadeInView>
                 <FadeInView delay={300} slideUp={true}>
-                    <CustomButton 
+                    <CurvedButton 
                         text="Quick Sub"   
                         style={tw`w-full`}
                         onPress={() => {

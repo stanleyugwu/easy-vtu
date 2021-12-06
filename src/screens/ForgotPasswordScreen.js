@@ -1,9 +1,9 @@
 import React from 'react';
 import tw from '../lib/tailwind';
-import CustomButton from '../components/CustomButton';
+import CurvedButton from '../components/CurvedButton';
 import { ImageBackground, View, Image, ScrollView  } from 'react-native';
 import { TextInput, Divider,} from 'react-native-paper';
-import {Text, Title} from '../components/Type';
+import Text, {Title} from '../components/Type';
 import {AntDesign as Icon} from '@expo/vector-icons';
 
 const ForgotPasswordScreen = (props) => {
@@ -31,7 +31,7 @@ const ForgotPasswordScreen = (props) => {
                             mode="flat"
                             left={<TextInput.Icon name="account" />}
                         />
-                        <CustomButton 
+                        <CurvedButton 
                             text="Regain Access" 
                             containerProps={{style:tw`mt-7`}} 
                             right={<Icon name="rightcircleo" size={20} color={tw.color('accent')}/>}

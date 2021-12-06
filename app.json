@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#047d2e"
+      "backgroundColor": "#192F5E"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,6 +21,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.devvie.easyvtu",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"

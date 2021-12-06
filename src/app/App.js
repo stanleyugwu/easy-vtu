@@ -18,7 +18,6 @@ import ElectricityScreen from '../screens/services/ElectricityScreen';
 import CableScreen from '../screens/services/CableScreen';
 import ScratchCardScreen from '../screens/services/ScratchCardScreen';
 
-import {AntDesign as Icon} from '@expo/vector-icons';
 import tw from '../lib/tailwind';
 import { Image } from 'react-native';
 

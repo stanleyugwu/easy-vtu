@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@digieggs/rn-country-code-picker": "^1.2.0",
-    "@expo-google-fonts/nunito": "^0.2.0",
+    "@expo-google-fonts/open-sans": "^0.2.0",
     "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-navigation/bottom-tabs": "^6.0.5",
     "@react-navigation/native": "^6.0.2",
@@ -32,8 +32,11 @@
     "axios": "^0.21.4",
     "crypto-js": "3.1.9-1",
     "expo": "~42.0.1",
+    "expo-contacts": "~9.2.5",
     "expo-linear-gradient": "~9.2.0",
+    "expo-react-native-shadow": "^1.0.3",
     "expo-status-bar": "~1.0.4",
+    "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -44,17 +47,20 @@
     "react-native-paper": "^4.9.2",
     "react-native-phone-input": "^1.1.0",
     "react-native-screens": "^3.6.0",
+    "react-native-select-contact": "^1.6.3",
     "react-native-spinkit": "^1.5.1",
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.5",
     "tailwind-react-native-classnames": "^1.4.3",
-    "tailwindcss": "^2.2.9"
+    "tailwindcss": "^2.2.9",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@testing-library/react-native": "^7.2.0",
     "@types/react-native-phone-input": "^0.2.2",
     "jest-expo": "^42.1.0",
+    "prop-types": "^15.7.2",
     "react-test-renderer": "16.13"
   },
   "private": true
