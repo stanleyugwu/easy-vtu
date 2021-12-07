@@ -35,10 +35,10 @@ const PaymentMethodButton = React.forwardRef(
         : { uri: props.imageSource };
 
     return (
-      <PressResizerView containerStyle={tw`my-2 rounded-3xl`}>
+      <PressResizerView containerStyle={tw`my-2 rounded-md`}>
         <TouchableRipple rippleColor="#fff9"onPress={props.onPress} ref={ref}>
           <BoxShadowView
-            containerStyle={tw`py-2 px-9 flex-row items-center rounded-full bg-white`}
+            containerStyle={tw`py-2 px-9 flex-row items-center rounded-md bg-white`}
           >
             <Image source={resolvedSrc} style={tw`h-10 w-10`} />
             <Text style={tw`pl-6 font-sans-semibold text-primary`}>
@@ -96,7 +96,7 @@ const PaymentMethodPicker = React.forwardRef((/** @type {PaymentMethodPickerProp
       onRequestClose={props.onRequestClose}
       onBackgroundTouch={props.onBackgroundTouch}
     >
-      <View style={tw`bg-gray-light p-2 rounded-t-2xl bg-accent`} ref={ref}>
+      <View style={tw`bg-gray-light p-4 rounded-t-2xl bg-accent`} ref={ref}>
         <Title style={tw`self-center my-auto text-lg my-8 text-black`}>
           How Do You Want To Pay?
         </Title>
