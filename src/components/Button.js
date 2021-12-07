@@ -225,7 +225,7 @@ Button.defaultProps = {
   label: "Click Me",
   disabled: false,
   bgColor: tw.color("primary"),
-  labelColor: tw.color("light"),
+  labelColor: tw.color("accent"),
   dropShadow: true,
 };
 
