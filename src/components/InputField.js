@@ -101,7 +101,7 @@ const InputField = React.forwardRef(
             onPress={props.onButtonPress}
             accessibilityLabel={"button input field"}
             style={tw.style(
-              `flex-row border-b border-gray-400 justify-between items-center h-12 p-1 max-h-14`,
+              `flex-row border-b border-primary justify-between items-center h-12 p-1 max-h-14`,
               props.buttonStyle
             )}
             ref={ref}
@@ -139,7 +139,7 @@ const InputField = React.forwardRef(
     /** input field TextInput */
     const textInput = (
       <View
-        style={tw`pl-1.5 border-b border-gray-400 mt-2 items-center flex-row`}
+        style={tw`pl-1.5 border-b border-primary mt-2 items-center flex-row`}
       >
         {leftElement ? (
           <View
@@ -175,7 +175,7 @@ const InputField = React.forwardRef(
           accessibilityLabel={"text input field"}
           selectionColor="#aaa"
           style={tw.style(
-            `h-10 max-h-12 max-w-md border-0 bg-white text-base font-nunitobold`,
+            `h-10 max-h-12 max-w-md border-0 bg-white text-base font-sans`,
             { flex: 1, paddingVertical: 7, paddingHorizontal: 6 },
             props.inputFieldStyle
           )}
@@ -201,15 +201,15 @@ const InputField = React.forwardRef(
         containerStyle={tw.style(`max-w-md my-2 p-4 rounded-lg`,props.containerStyle)}
         accessibilityLabel={props.accessibilityLabel}
       >
-        <View style={tw`flex-row items-center mb-3`} testID={"label wrapper"}>
+        <View style={tw`flex-row items-center mb-1.5`} testID={"label wrapper"}>
           <Icon
             accessibilityLabel={"field label icon"}
             name={props.fieldLabelIcon}
-            size={18}
-            color={tw.color("black")}
+            size={16}
+            color="#666"
           />
           <View style={tw`flex-col ml-2 items-start`}>
-            <Text accessibilityLabel={"field label"}>
+            <Text accessibilityLabel={"field label"} style={{fontWeight:"700",color:'#666',fontSize:14}}>
               {props.fieldLabel}
               {props.fieldRequired ? (
                 <Text style={tw`text-red-400`}> *</Text>
