@@ -41,7 +41,7 @@ const PaymentMethodButton = React.forwardRef(
             containerStyle={tw`py-2 px-9 flex-row items-center rounded-full bg-white`}
           >
             <Image source={resolvedSrc} style={tw`h-10 w-10`} />
-            <Text style={tw`pl-6 font-nunitobold text-primary`}>
+            <Text style={tw`pl-6 font-sans-semibold text-primary`}>
               {props.label}
             </Text>
           </BoxShadowView>

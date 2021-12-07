@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text, ActivityIndicator, TextInput } from "react-native";
+import { View, ActivityIndicator, TextInput } from "react-native";
 import PropTypes from "prop-types";
 import * as Contacts from "expo-contacts";
 import ModalWrapper from "./ModalWrapper";
 import { FlatList } from "react-native-gesture-handler";
 import tw from "../lib/tailwind";
-import { Title } from "./Type";
+import Text, { Title } from "./Type";
 import BoxShadowView from "./BoxShadowView";
 import { Ionicons as Icon } from "@expo/vector-icons";
 import debounce from "../utils/debounce";
@@ -69,14 +69,14 @@ const renderContact = (item, onSelectCb = () => null) => {
         }
       >
         <>
-          <View style={tw.style(`rounded-full p-4 bg-gray-light`)}>
+          <View style={tw.style(`rounded-full p-4`,{backgroundColor:randomColor()})}>
             <Icon name="person" size={23} />
           </View>
           <View style={tw`flex-col ml-4`}>
-            <Text style={tw`text-base text-gray-600 font-nunitobold`}>
+            <Title style={tw`text-base text-gray-600 text-left font-sans-bold`}>
               {item.name}
-            </Text>
-            <Text style={tw`text-gray-500`}>{item.phoneNumber}</Text>
+            </Title>
+            <Text style={tw`text-left`}>{item.phoneNumber}</Text>
           </View>
         </>
       </TouchableRipple>

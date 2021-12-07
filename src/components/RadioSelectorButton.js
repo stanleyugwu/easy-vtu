@@ -27,7 +27,7 @@ const RadioSelectorButton = (props) => {
             {...props.restOfProps}
         >
             <>
-                <Text style={tw`font-nunitobold pl-5 text-accent`} accessibilityLabel="button text">
+                <Text style={tw`font-sans-semibold pl-5 text-accent`} accessibilityLabel="button text">
                     {props.label}
                 </Text>
                 <RadioButton

@@ -63,7 +63,7 @@ const Header = React.forwardRef((/** @type {HeaderProps} */ props, ref) => {
       >
         <ProfileAvatar
           accessibilityLabel="header profile avatar"
-          textStyle={tw`text-gray-light font-nunitobold`}
+          textStyle={tw`text-gray-light font-sans-semibold`}
           label={"👋 Hello " + profile.username}
           imageUrl={profile.image}
         />

@@ -34,7 +34,7 @@ const Error = React.memo(({ errorMessage = defaultError, reportCb }) => {
           </Text>
         </TouchableOpacity>
       ) : null}
-      {showThankYou ? <Text style={tw`font-nunitobold text-lg text-primary mt-5`}>Report Sent. Thank You!.</Text> : null}
+      {showThankYou ? <Text style={tw`font-sans-semibold text-lg text-primary mt-5`}>Report Sent. Thank You!.</Text> : null}
     </SafeArea>
   );
 });
