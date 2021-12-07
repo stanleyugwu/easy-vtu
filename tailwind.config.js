@@ -10,7 +10,7 @@ module.exports = {
           accent:'#f7b902',
           black:'#555',
           white:'#fff',
-          light:'#efe',
+          light:'#eeeedf',
           gray:{
             DEFAULT:'#888888',
             light:'#e5e5e5',
@@ -18,13 +18,14 @@ module.exports = {
           }
         },
         fontFamily:{
-          'sans-bold':['fira-sans-semibold','fira-sans'],
-          sans:['fira-sans','sans-serif'],
+          'sans-bold':['open-sans-bold'],
+          'sans-semibold':['open-sans-semibold','open-sans'],
+          sans:['open-sans','open-sans-semibold','sans-serif'],
           serif:['serif']
         },
         fontSize:{
-          'btn':15,
-          '1.5xl':22
+          'base':15,
+          '1.5xl':22,
         }
       },
     },

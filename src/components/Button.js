@@ -138,7 +138,7 @@ const Button = (props) => {
     >
       {left}
       <Text
-        style={tw.style("mx-6", { color: props.labelColor })}
+        style={tw.style("mx-6 font-sans-semibold", { color: props.labelColor })}
         accessibilityLabel={"button label"}
       >
         {props.label}
