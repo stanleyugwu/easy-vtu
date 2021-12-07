@@ -18,7 +18,7 @@ const Text = (props) => {
   const { children, style, ...restOfProps } = props;
   return (
     <NativeText
-      style={tw.style("text-center text-base text-black font-sans", style)}
+      style={tw.style("text-center text-base leading-6 text-black font-sans", style)}
       {...restOfProps}
     >
       {children}

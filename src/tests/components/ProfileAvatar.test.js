@@ -7,7 +7,7 @@ const ProfileAvatarTest = () => {
         const imageUrl = "https://via.placeholder.com/600/92c952";
     
         it(`given image uri and '${text}' as props, render avatar image, with '${text}' beside it`, () => {
-            const {getByA11yRole, getByA11yLabel} = render(<ProfileAvatar imageUrl={imageUrl} text={text}/>);
+            const {getByA11yRole, getByA11yLabel} = render(<ProfileAvatar imageUrl={imageUrl} label={text}/>);
             const image = getByA11yLabel('avatar-image');
             const textComp = getByA11yRole('text');
             expect(image.props.children[1].props.source.uri).toBe(imageUrl);
@@ -15,7 +15,7 @@ const ProfileAvatarTest = () => {
         });
     
         it(`given no image uri, render default icon image, with '${text}' beside it`, () => {
-            const {getByA11yRole} = render(<ProfileAvatar text={text}/>);
+            const {getByA11yRole} = render(<ProfileAvatar label={text}/>);
             const image = getByA11yRole('imagebutton');
             const textComp = getByA11yRole('text');
             expect(image.props.children.props.source).toBe('account');

@@ -1,16 +1,21 @@
 import React, { useRef, useEffect } from "react";
-import { Animated } from "react-native";
+import { Animated, ViewStyle } from "react-native";
 import tw from "../lib/tailwind";
 import PropTypes from "prop-types";
 
 /**
  * adds flash animation effect to its children
- * @param {Boolean} animate prop to enable or disable animation
- * @param {Number} delay number of milliseconds to delay animation
- * @param {Number} bounciness bounciness of element when animating
- * @param {Object} containerStyle style objct for Animated.View component
+ * @typedef {Object} FlasViewProp
+ * @property {Boolean} animate - prop to enable or disable animation
+ * @property {Number} delay - number of milliseconds to delay animation
+ * @property {Number} bounciness - bounciness of element when animating
+ * @property {ViewStyle} containerStyle - style object for Animated.View component
  */
-const FlashView = React.forwardRef((props, ref) => {
+
+/**
+ * Adds flash animation to children on display
+ */
+const FlashView = React.forwardRef((/** @type {FlasViewProp} */props, ref) => {
   //store animated value
   const flasAnim = useRef(new Animated.Value(0)).current;
 
