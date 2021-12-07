@@ -73,7 +73,7 @@ const ServiceCard = (props) => {
                 accessibilityRole="text"
                 testID="service-title"
                 style={tw.style(
-                  "text-primary text-sm font-nunitobold",
+                  "text-primary text-sm font-sans-sans",
                   props.serviceTextStyle
                 )}
               >
