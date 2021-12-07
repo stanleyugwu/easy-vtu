@@ -40,7 +40,7 @@ const Title = (props) => {
   const { children, style, ...restOfProps } = props;
   return (
     <NativeText
-      style={[tw`text-center text-black font-sans-bold text-lg`, style]}
+      style={[tw`text-center text-black font-sans-semibold text-xl`, style]}
       {...restOfProps}
     >
       {children}
