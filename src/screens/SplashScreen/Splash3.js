@@ -24,7 +24,7 @@ const Splash3 = (props) => {
   }, []);
 
   return (
-    <FadeInView style={tw`p-3 mx-auto w-full`} duration={300}>
+    <FadeInView style={tw`p-3 mx-auto w-full bg-white`} duration={300}>
       <Image
         source={splashImg}
         resizeMode="contain"
@@ -33,17 +33,23 @@ const Splash3 = (props) => {
           height: 230,
           flexShrink: 0,
           flexGrow: 0,
+          opacity:0.4,
           alignSelf: "center",
+          display:'none'
         }}
       />
 
-      <Title style={tw`my-6`}>Start Topping Up Now!</Title>
+      <Title style={tw`mt-40 text-light text-xl`}>Start Topping Up Now!</Title>
+      <Title style={tw`mb-6 text-light text-xl`}>Write Up Write Up</Title>
 
-      <View>
+      <View style={tw`px-2`}>
         <FadeInView delay={100} slideUp={true}>
           <CurvedButton
-            label="CREATE AN ACCOUNT"
-            containerStyle={tw.style(`my-3.5`)}
+            bgColor={tw.color('light')}
+            labelColor={tw.color('primary')}
+            label="CREATE ACCOUNT"
+            dropShadow={false}
+            containerStyle={tw.style(`my-4`)}
             leftIconName="person-add-outline"
             onPress={signupCallback}
           />
@@ -51,16 +57,21 @@ const Splash3 = (props) => {
 
         <FadeInView delay={200} slideUp={true}>
           <CurvedButton
+            bgColor={tw.color('light')}
+            labelColor={tw.color('primary')}
             label="SIGN IN"
+            dropShadow={false}
             leftIconName="enter-outline"
-            containerStyle={tw.style("mb-3.5")}
+            containerStyle={tw.style("mb-4")}
             onPress={signinCallback}
           />
         </FadeInView>
-        <FadeInView delay={300} slideUp={true}>
+        <FadeInView delay={300} slideUp={true} containerStyle={tw`mt-3`}>
           <CurvedButton
-            label="CONTINUE WITHOUT SIGN-IN"
-            leftIconName="fast-food-outline"
+            bgColor={tw.color('accent')}
+            labelColor={tw.color('primary')}
+            dropShadow={false}
+            label="CONTINUE WITHOUT LOGIN"
             onPress={quicksubCallback}
           />
         </FadeInView>

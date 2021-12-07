@@ -15,8 +15,8 @@ const BackButton = (props) => {
       onPress={props.onPress}
       accessibilityLabel="back-button"
     >
-      <Icon name="chevron-thin-left" size={25} />
-      <Text style={tw.style("text-base", props.textStyle)} accessibilityRole="text" accessibilityLabel={"button label"}>{props.buttonText}</Text>
+      <Icon name="chevron-thin-left" size={25} style={props.iconStyle} />
+      <Text style={props.textStyle} accessibilityRole="text" accessibilityLabel={"button label"}>{props.buttonText}</Text>
     </TouchableOpacity>
   );
 };
@@ -28,14 +28,14 @@ BackButton.propTypes = {
   onPress:PropTypes.func,
   /** style for label wrapper `Text` component */
   textStyle:PropTypes.object,
+  /** Style for `Icon` */
+  iconStyle: PropTypes.object,
   /** style for `TouchableOpacity` wrapper component */
   wrapperStyle:PropTypes.object,
 }
 
 BackButton.defaultProps = {
   buttonText:"Back",
-  textStyle:null,
-  wrapperStyle:null
 }
 
 export default React.memo(BackButton);

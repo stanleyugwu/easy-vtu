@@ -11,8 +11,8 @@ const Splash2 = () => (
       source={splashImg}
       style={{ width: 220, height: 220, flexShrink: 0, flexGrow: 0 }}
     />
-    <Title style={tw`mt-5`}>Buy with ease</Title>
-    <Text>
+    <Title style={tw`mt-5 text-accent`}>Buy with ease</Title>
+    <Text style={tw`text-light mt-1`}>
       Second Splash Very long text Very long text Very long text Very long text
       Very long text Very long text
     </Text>
