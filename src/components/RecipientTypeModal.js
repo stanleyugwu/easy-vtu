@@ -21,10 +21,12 @@ import othersImg from "../../assets/others_img.png";
  * @property {() => void} [onRequestClose] The onRequestClose prop allows passing a function that will be called
  *  once the modal has been dismissed. On the Android platform, this is a required function.
  * @property {() => void} [onBackgroundTouch] Function to call when the area around the modal is touched
- * @property {1 | 2} activeIndex The index of the currently selected/active button
+ * @property {0 | 1 | 2} [activeIndex] The index of the currently selected/active button
+ * - `0` none
  * - `1` for **my self** button
  * - `2` for **others** button
  * @property {ColorValue} overlayColor Color for the background of modal overlay
+ * @property {string} [customTitle] Custom title to show in modal
  */
 
 /** @param {RecipientTypeModalProps} props */
@@ -53,7 +55,7 @@ const RecipientTypeModal = (props) => {
           style={tw`text-lg`}
           accessibilityLabel="recipient type modal title"
         >
-          Who Are You Topping Up For?
+          {props.customTitle}
         </Title>
         <View style={tw`flex-row justify-between my-7`} onStartShouldSetResponder={() => true}>
           <TouchableOpacity
@@ -118,12 +120,14 @@ const RecipientTypeModal = (props) => {
 };
 
 RecipientTypeModal.propTypes = {
+  customTitle: PropTypes.string,
   onSelect: PropTypes.func.isRequired,
   activeIndex: PropTypes.oneOf([1, 2]),
 };
 
 RecipientTypeModal.defaultProps = {
-  activeIndex: 1,
+  customTitle: "Who Are You Topping Up For?",
+  activeIndex: 0,
 };
 
 export default React.memo(RecipientTypeModal);
