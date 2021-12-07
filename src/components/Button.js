@@ -150,7 +150,7 @@ const Button = (props) => {
   const Touchable = (
     <TouchableHighlight
       onPress={props.onPress}
-      style={tw.style(styles.otherStyles, "rounded-xl")}
+      style={tw.style(styles.otherStyles, "rounded-lg")}
       accessibilityRole="button"
       accessibilityLabel="curved button"
       disabled={props.disabled}
@@ -164,7 +164,7 @@ const Button = (props) => {
           end={{ x: 1, y: 0.2 }}
           testID={"gradient wrapper"}
           style={tw.style(
-            "rounded-xl justify-center w-full",
+            "rounded-lg justify-center w-full",
             { maxHeight: 60, minHeight: 46, height: 55 },
             styles.spacingStyles
           )}
@@ -178,10 +178,10 @@ const Button = (props) => {
   //conditionally apply drop shadow
   return (
     <PressResizerView
-      containerStyle={tw.style(props.containerStyle, "rounded-xl")}
+      containerStyle={tw.style(props.containerStyle, "rounded-lg")}
     >
       {props.dropShadow ? (
-        <BoxShadowView containerStyle={tw`rounded-xl`}>
+        <BoxShadowView containerStyle={tw`rounded-lg`}>
           {Touchable}
         </BoxShadowView>
       ) : (
