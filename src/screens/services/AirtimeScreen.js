@@ -1,13 +1,14 @@
 import React from "react";
 import SafeArea from "../../components/CustomSafeAreaView";
 import Text from "../../components/Type";
-import { View, ActivityIndicator, Image } from "react-native";
+import { View, ActivityIndicator, Image, ImageBackground } from "react-native";
 import { useSelector } from "react-redux";
 import CurvedButton from "../../components/Button";
 import tw from "../../lib/tailwind";
 import { MaterialIcons as Icon } from "@expo/vector-icons";
 import PaymentMethodPicker from "../../components/PaymentMethodPicker";
 import InputField from "../../components/InputField";
+import tileBg from '../../../assets/tile_background.png';
 import mtnLogo from "../../../assets/providers/MTN_LOGO.png";
 import { useNavigation } from "@react-navigation/core";
 import ContactPicker from "../../components/ContactPicker";
@@ -107,105 +108,107 @@ const AirtimeScreen = (props) => {
   //show a loader as rendering is delayed
   if (!screenLoaded) return LoadingIndicator;
   return (
-    <SafeArea>
-      <View style={tw`flex-row items-start pl-3 my-4`}>
-        <View style={tw`border border-primary p-0.5 bg-white`}>
-          <Image source={providerLogoSrc} style={tw`h-12 w-12`} />
+    <ImageBackground source={tileBg} style={tw`h-full w-full`}>
+      <SafeArea>
+        <View style={tw`flex-row items-start pl-3 mt-1`}>
+          <View style={tw`border border-primary p-0.5 bg-white`}>
+            <Image source={providerLogoSrc} style={tw`h-12 w-12`} />
+          </View>
+          <View style={tw`flex-col justify-start items-start ml-2`}>
+            <Text style={tw`font-sans-bold`}>{networkName.toUpperCase()}</Text>
+            <Text>{motto[networkName.toLowerCase()]}</Text>
+          </View>
         </View>
-        <View style={tw`flex-col justify-start items-start ml-2`}>
-          <Text style={tw`font-sans-bold`}>{networkName.toUpperCase()}</Text>
-          <Text>{motto[networkName.toLowerCase()]}</Text>
+
+        {/* PANE TO SELECT RECIEPIENT TYPE */}
+        {recipientType === "My Self" ? (
+          <InputField
+            containerStyle={tw`mt-2`}
+            fieldLabel="Topping Up For"
+            fieldRequired={false}
+            fieldLabelIcon="person"
+            accessibilityLabel="network input"
+            value={`${recipientType} ${userPhoneFormatted}`}
+            extraInputProps={{ editable: false, disabled: true }}
+          />
+        ) : null}
+
+        {/* PANE TO ENTER RECIPIENT NUMBER */}
+        <View
+          style={tw.style(`mt-2`, recipientType == "My Self" ? "hidden" : "flex")}
+        >
+          <InputField
+            fieldLabel="Recipient Mobile Number:"
+            fieldLabelIcon="phone-portrait"
+            ref={recipientsInputRef}
+            placeholder="Enter Mobile Number"
+            // fieldLabelSubtitle={ recipientType == "Others" ? "(Enter one number per line)" : null}
+            accessibilityLabel="recipient numbers input"
+            value={recipientNumber}
+            onChangeText={handleRecipientNumberChange}
+            rightInputNode={contactIcon}
+            extraInputProps={{
+              keyboardType: "phone-pad",
+              maxLength: 20,
+              accessibilityLabel: "multi-number recipients input",
+              accessibilityRole: "text",
+            }}
+          />
         </View>
-      </View>
 
-      {/* PANE TO SELECT RECIEPIENT TYPE */}
-      {recipientType === "My Self" ? (
+        {/* PANE TO ENTER AMOUNT*/}
         <InputField
-          containerStyle={tw`mt-4`}
-          fieldLabel="Topping Up For"
-          fieldRequired={false}
-          fieldLabelIcon="person"
-          accessibilityLabel="network input"
-          value={`${recipientType} ${userPhoneFormatted}`}
-          extraInputProps={{ editable: false, disabled: true }}
-        />
-      ) : null}
-
-      {/* PANE TO ENTER RECIPIENT NUMBER */}
-      <View
-        style={tw.style(`mt-4`, recipientType == "My Self" ? "hidden" : "flex")}
-      >
-        <InputField
-          fieldLabel="Recipient Mobile Number:"
-          fieldLabelIcon="phone-portrait"
-          ref={recipientsInputRef}
-          placeholder="Enter Mobile Number"
-          // fieldLabelSubtitle={ recipientType == "Others" ? "(Enter one number per line)" : null}
-          accessibilityLabel="recipient numbers input"
-          value={recipientNumber}
-          onChangeText={handleRecipientNumberChange}
-          rightInputNode={contactIcon}
+          fieldLabel="Airtime Amount:"
+          containerStyle={tw`my-4`}
+          fieldLabelIcon="md-cash-outline"
+          accessibilityLabel="airtime amount input"
+          value={"" + airtimeAmount}
           extraInputProps={{
-            keyboardType: "phone-pad",
-            maxLength: 20,
-            accessibilityLabel: "multi-number recipients input",
+            keyboardType: "number-pad",
+            maxLength: 6,
+          }}
+          onChangeText={handleSetAirtimeAmount}
+        />
+
+        {/* PANE TO SHOW AMOUNT PAYABLE */}
+        <InputField
+          fieldLabel="Amount Payable:"
+          fieldLabelSubtitle="(what you'll pay for the airtime value)"
+          fieldRequired={false}
+          fieldLabelIcon="md-cash-outline"
+          accessibilityLabel="payable amount input"
+          value={"\u20A6" + amountPayable}
+          extraInputProps={{
+            disabled: true,
+            editable: false,
+            accessibilityLabel: "disabled input showing amount payable",
             accessibilityRole: "text",
           }}
         />
-      </View>
-
-      {/* PANE TO ENTER AMOUNT*/}
-      <InputField
-        fieldLabel="Airtime Amount:"
-        containerStyle={tw`my-4`}
-        fieldLabelIcon="md-cash-outline"
-        accessibilityLabel="airtime amount input"
-        value={"" + airtimeAmount}
-        extraInputProps={{
-          keyboardType: "number-pad",
-          maxLength: 6,
-        }}
-        onChangeText={handleSetAirtimeAmount}
-      />
-
-      {/* PANE TO SHOW AMOUNT PAYABLE */}
-      <InputField
-        fieldLabel="Amount Payable:"
-        fieldLabelSubtitle="(what you'll pay for the airtime value)"
-        fieldRequired={false}
-        fieldLabelIcon="md-cash-outline"
-        accessibilityLabel="payable amount input"
-        value={"\u20A6" + amountPayable}
-        extraInputProps={{
-          disabled: true,
-          editable: false,
-          accessibilityLabel: "disabled input showing amount payable",
-          accessibilityRole: "text",
-        }}
-      />
-      <CurvedButton
-        containerStyle={tw`my-2`}
-        label="Proceed"
-        rightIconName="chevron-forward-circle-outline"
-        onPress={() => setPaymentMtdPickerVisible(true)}
-        accessibilityRole="button"
-        accessibilityLabel="cta buy airtime"
-      />
-      {contactPickerVisible ? (
-        <ContactPicker
-          onRequestClose={closeContactPicker}
-          onBackgroundTouch={closeContactPicker}
-          onContactSelect={handleContactSelect}
+        <CurvedButton
+          containerStyle={tw`my-2`}
+          label="Proceed"
+          rightIconName="chevron-forward-circle-outline"
+          onPress={() => setPaymentMtdPickerVisible(true)}
+          accessibilityRole="button"
+          accessibilityLabel="cta buy airtime"
         />
-      ) : null}
-      {paymentMtdPickerVisible ? (
-        <PaymentMethodPicker
-          onBackgroundTouch={closePaymentMtdPicker}
-          onRequestClose={closePaymentMtdPicker}
-          onMethodSelect={(me) => console.log(me)}
-        />
-      ) : null}
-    </SafeArea>
+        {contactPickerVisible ? (
+          <ContactPicker
+            onRequestClose={closeContactPicker}
+            onBackgroundTouch={closeContactPicker}
+            onContactSelect={handleContactSelect}
+          />
+        ) : null}
+        {paymentMtdPickerVisible ? (
+          <PaymentMethodPicker
+            onBackgroundTouch={closePaymentMtdPicker}
+            onRequestClose={closePaymentMtdPicker}
+            onMethodSelect={(me) => console.log(me)}
+          />
+        ) : null}
+      </SafeArea>
+    </ImageBackground>
   );
 };
 
