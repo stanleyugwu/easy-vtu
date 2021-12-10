@@ -42,24 +42,27 @@ const LoaderModal = (
         <View
           accessibilityLabel="loader modal main"
           style={tw.style(
-            "rounded-lg mx-auto my-auto w-64 max-w-md p-3 bg-white",
+            "rounded-lg mx-auto my-auto w-64 max-w-md bg-white p-2 items-center",
             modalStyle
           )}
         >
-          <LottieView
-            source={require("../../assets/loader.json")}
-            style={{ width: 100, height: 50, alignSelf: "center" }}
-            autoPlay={true}
-            speed={2.5}
-          />
-          {loadingText ? (
-            <Text
-              accessibilityLabel="loader modal text"
-              style={tw`font-sans-bold`}
-            >
-              {loadingText}
-            </Text>
-          ) : null}
+          <View style={tw`w-full flex-col items-center justify-center content-center`}>
+            <LottieView
+              source={require("../../assets/loader.json")}
+              style={{ width: '100%',height:50, alignSelf: "center",}}
+              resizeMode="contain"
+              autoPlay={true}
+              speed={2.5}
+            />
+            {loadingText ? (
+              <Text
+                accessibilityLabel="loader modal text"
+                style={tw`font-sans-semibold text-sm mt-1 content-center items-center`}
+              >
+                {loadingText}
+              </Text>
+            ) : null}
+          </View>
         </View>
       </View>
     </Modal>
@@ -75,6 +78,7 @@ LoaderModal.propTypes = {
 
 LoaderModal.defaultProps = {
   accessibilityLabel: "Loader Dialog",
+  loadingText:"Processing"
 };
 
 export default React.memo(LoaderModal);
