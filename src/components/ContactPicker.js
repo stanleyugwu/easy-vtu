@@ -6,15 +6,23 @@ import ModalWrapper from "./ModalWrapper";
 import { FlatList } from "react-native-gesture-handler";
 import tw from "../lib/tailwind";
 import Text, { Title } from "./Type";
-import BoxShadowView from "./BoxShadowView";
-import { Ionicons as Icon } from "@expo/vector-icons";
 import debounce from "../utils/debounce";
-import { TouchableRipple } from "react-native-paper";
+import Contact from "./Contact";
+
+/** @typedef {import('./Contact').Contact} ContactParameter */
+/**
+ * @typedef {Object} ContactPickerProps
+ * @property {(selectedContact: ContactParameter) => void} onContactSelect Function to be called when a contact is selected.\
+ * This function will be passed an object describing the selected contact. This object has `name` and `phoneNumber` keys
+ * @property {() => void} [onRequestClose] The onRequestClose prop allows passing a function that will be called
+ *  once the modal has been dismissed. On the Android platform, this is a required function.
+ * @property {() => void} [onBackgroundTouch] Function to call when the area around the modal is touched
+ */
 
 /**
  * filters given contacts array, removing contacts with short or no phone number
  * @param {Object[]} contacts
- * @returns {Object[]}
+ * @returns {import("./Contact").Contact[]}
  */
 const filterContacts = (contacts) => {
   return contacts
@@ -47,42 +55,11 @@ const getUserContacts = async () => {
   }
 };
 
-//function to generate random color hex
-let colors = ["#f55", "#5f5", "#55f", "#ff5", "#5ff", "#f5f"];
-const randomColor = () => colors[Math.floor(Math.random() * colors.length)];
-
 const noContacts = (
   <Title style={tw`self-center my-auto text-gray-lighter text-base`}>
     No Contact Found
   </Title>
 );
-
-/** Renders each contact */
-const renderContact = (item, onSelectCb = () => null) => {
-  return (
-    <BoxShadowView containerStyle={tw`justify-center m-2`}>
-      <TouchableRipple
-        rippleColor="#0009"
-        style={tw`flex-row items-center p-3 `}
-        onPress={() =>
-          onSelectCb({ name: item.name, phoneNumber: item.phoneNumber })
-        }
-      >
-        <>
-          <View style={tw.style(`rounded-full p-4`,{backgroundColor:randomColor()})}>
-            <Icon name="person" size={23} />
-          </View>
-          <View style={tw`flex-col ml-4`}>
-            <Title style={tw`text-base text-gray-600 text-left font-sans-bold`}>
-              {item.name}
-            </Title>
-            <Text style={tw`text-left`}>{item.phoneNumber}</Text>
-          </View>
-        </>
-      </TouchableRipple>
-    </BoxShadowView>
-  );
-};
 
 const loadingView = (
   <View style={tw`self-center my-auto`}>
@@ -90,19 +67,6 @@ const loadingView = (
     <Text style={tw`mt-1`}>Loading Contacts</Text>
   </View>
 );
-
-/**
- * @typedef {Object} Contact
- * @property {string} name Fullname of selected contact
- * @property {string} phoneNumber Phone number of selected contact
- *
- * @typedef {Object} ContactPickerProps
- * @property {(selectedContact: Contact) => void} onContactSelect Function to be called when a contact is selected.\
- * This function will be passed an object describing the selected contact. This object has `name` and `phoneNumber` keys
- * @property {() => void} [onRequestClose] The onRequestClose prop allows passing a function that will be called
- *  once the modal has been dismissed. On the Android platform, this is a required function.
- * @property {() => void} [onBackgroundTouch] Function to call when the area around the modal is touched
- */
 
 /**
  * Renders a modal showing user's contacts to pick from for top-up
@@ -136,9 +100,13 @@ const ContactPicker = React.forwardRef(
     );
 
     // takes item and passes it to `renderContact` along with callback for when contact is selected
-    const handleRenderContact = React.useCallback(({ item }) =>
-      renderContact(item, props.onContactSelect)
-    );
+    const handleRenderContact = React.useCallback(({ item }) => (
+      <Contact
+        name={item.name}
+        phoneNumber={item.phoneNumber}
+        onSelectCb={props.onContactSelect}
+      />
+    ));
 
     const searchBar = React.useMemo(() => {
       return (
