@@ -1,5 +1,7 @@
 node_modules/
 .expo/
+Note.txt
+assets/fonts/
 npm-debug.*
 *.jks
 *.p8
@@ -8,6 +10,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+ISSUES.md
 
 # macOS
 .DS_Store

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useFonts } from 'expo-font';
 import LoadingScreen from '../screens/LoadingScreen';
 import App from './App';
-import { getLocalData } from "../utils/storageAdapters";
+import { getLocalData, storeLocalData } from "../utils/storageAdapters";
 import { useDispatch } from "react-redux";
 import { setToken, signIn } from "../store/slices/userSlice";
 import { addCard, addMoney } from "../store/slices/walletSlice";
@@ -41,7 +41,7 @@ const AppWrapper = () => {
             // console.log(stored)
             // return
             let data = await getLocalData(true);
-            console.log(data);
+            // console.log(data);
             
             if(data && ('accessToken' in data) && ('profile' in data) && ('wallet' in data)){
                 dispatch(signIn(data.profile));

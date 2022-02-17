@@ -1,5 +1,5 @@
 import React from "react";
-import { StatusBar, View } from "react-native";
+import { ImageBackground, StatusBar, View } from "react-native";
 import { Title } from "../../components/Type";
 import SafeArea from "../../components/CustomSafeAreaView";
 import ImageButton from "../../components/ImageButton";
@@ -7,6 +7,7 @@ import mtnLogo from "../../../assets/providers/MTN_LOGO.png";
 import airtelLogo from "../../../assets/providers/AIRTEL_LOGO.png";
 import gloLogo from "../../../assets/providers/GLO_LOGO.png";
 import etisalatLogo from "../../../assets/providers/9MOBILE_LOGO.jpeg";
+import tileBg from '../../../assets/tile_background.png';
 import tw from "../../lib/tailwind";
 import FlashView from "../../components/FlashView";
 import { useSelector } from "react-redux";
@@ -121,80 +122,82 @@ const NetworkProvidersScreen = (props) => {
   }, []);
 
   return (
-    <SafeArea>
-      <StatusBar backgroundColor={tw.color("primary")} />
-      {(!rcptModalVisible || !isSignedIn) ? (
-        <View>
-          <Title style={tw`my-6`}>Select Network Provider</Title>
-          <FlashView delay={250} bounciness={5}>
-            <ImageButton
-              label={"Mtn " + serviceType}
-              imgSrc={mtnLogo}
-              onPress={() =>
-                navigation.replace(navigationRoute, {
-                  headerTitle: "Mtn " + titleBackhalf,
-                  networkName: "Mtn",
-                  providerLogoSrc: mtnLogo,
-                  recipientType:'Others'
-                })
-              }
-            />
-          </FlashView>
-          <FlashView delay={350} bounciness={5}>
-            <ImageButton
-              label={"Airtel " + serviceType}
-              imgSrc={airtelLogo}
-              onPress={() =>
-                navigation.replace(navigationRoute, {
-                  headerTitle: "Airtel " + titleBackhalf,
-                  networkName: "Airtel",
-                  providerLogoSrc: airtelLogo,
-                  recipientType:'Others'
-                })
-              }
-            />
-          </FlashView>
-          <FlashView delay={450} bounciness={5}>
-            <ImageButton
-              label={"9Mobile " + serviceType}
-              imgSrc={etisalatLogo}
-              onPress={() =>
-                navigation.replace(navigationRoute, {
-                  headerTitle: "9Mobile " + titleBackhalf,
-                  networkName: "9Mobile",
-                  providerLogoSrc: etisalatLogo,
-                  recipientType:'Others'
-                })
-              }
-            />
-          </FlashView>
-          <FlashView delay={550} bounciness={5}>
-            <ImageButton
-              label={"Glo " + serviceType}
-              imgSrc={gloLogo}
-              onPress={() =>
-                navigation.replace(navigationRoute, {
-                  headerTitle: "Glo " + titleBackhalf,
-                  networkName: "Glo",
-                  providerLogoSrc: gloLogo,
-                  recipientType:'Others'
-                })
-              }
-            />
-          </FlashView>
-        </View>
-      ) : null}
-      {isSignedIn && rcptModalVisible ? (
-        <RecipientTypeModal
-          onSelect={handleRecipientTypeSelect}
-          customTitle={`Who Are You Buying ${serviceType} For?`}
-          overlayColor="#000c"
-          activeIndex={3}
-          onRequestClose={goBackHome}
-          onBackgroundTouch={goBackHome}
-        />
-      ) : null}
-    </SafeArea>
+    <ImageBackground source={tileBg} style={tw`h-full w-full`}>
+      <SafeArea>
+        <StatusBar backgroundColor={tw.color("primary")} />
+        {(!rcptModalVisible || !isSignedIn) ? (
+          <View>
+            <Title style={tw`my-6`}>Select Network Provider</Title>
+            <FlashView delay={250} bounciness={5}>
+              <ImageButton
+                label={"Mtn " + serviceType}
+                imgSrc={mtnLogo}
+                onPress={() =>
+                  navigation.replace(navigationRoute, {
+                    headerTitle: "Mtn " + titleBackhalf,
+                    networkName: "Mtn",
+                    providerLogoSrc: mtnLogo,
+                    recipientType:'Others'
+                  })
+                }
+              />
+            </FlashView>
+            <FlashView delay={350} bounciness={5}>
+              <ImageButton
+                label={"Airtel " + serviceType}
+                imgSrc={airtelLogo}
+                onPress={() =>
+                  navigation.replace(navigationRoute, {
+                    headerTitle: "Airtel " + titleBackhalf,
+                    networkName: "Airtel",
+                    providerLogoSrc: airtelLogo,
+                    recipientType:'Others'
+                  })
+                }
+              />
+            </FlashView>
+            <FlashView delay={450} bounciness={5}>
+              <ImageButton
+                label={"9Mobile " + serviceType}
+                imgSrc={etisalatLogo}
+                onPress={() =>
+                  navigation.replace(navigationRoute, {
+                    headerTitle: "9Mobile " + titleBackhalf,
+                    networkName: "9Mobile",
+                    providerLogoSrc: etisalatLogo,
+                    recipientType:'Others'
+                  })
+                }
+              />
+            </FlashView>
+            <FlashView delay={550} bounciness={5}>
+              <ImageButton
+                label={"Glo " + serviceType}
+                imgSrc={gloLogo}
+                onPress={() =>
+                  navigation.replace(navigationRoute, {
+                    headerTitle: "Glo " + titleBackhalf,
+                    networkName: "Glo",
+                    providerLogoSrc: gloLogo,
+                    recipientType:'Others'
+                  })
+                }
+              />
+            </FlashView>
+          </View>
+        ) : null}
+        {isSignedIn && rcptModalVisible ? (
+          <RecipientTypeModal
+            onSelect={handleRecipientTypeSelect}
+            customTitle={`Who Are You Buying ${serviceType} For?`}
+            overlayColor="#000c"
+            activeIndex={3}
+            onRequestClose={goBackHome}
+            onBackgroundTouch={goBackHome}
+          />
+        ) : null}
+      </SafeArea>
+    </ImageBackground>
   );
 };
 export default React.memo(NetworkProvidersScreen);

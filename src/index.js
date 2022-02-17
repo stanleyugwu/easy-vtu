@@ -6,9 +6,11 @@ import AppWrapper from './app/AppWrapper';
 
 const Main = () => {
     return (
-        <Provider store={store}>
-            <AppWrapper/>
-        </Provider>
+        <React.StrictMode>
+            <Provider store={store}>
+                <AppWrapper/>
+            </Provider>
+        </React.StrictMode>
     )
 }
 

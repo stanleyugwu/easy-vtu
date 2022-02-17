@@ -21,6 +21,7 @@
       "supportsTablet": true
     },
     "android": {
+      "permissions": ["READ_CONTACTS"],
       "package": "com.devvie.easyvtu",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",

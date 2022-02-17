@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import CurvedButton from "../../components/Button";
 import tw from "../../lib/tailwind";
 import { MaterialIcons as Icon } from "@expo/vector-icons";
-import PaymentMethodPicker from "../../components/PaymentMethodPicker";
 import InputField from "../../components/InputField";
 import tileBg from '../../../assets/tile_background.png';
 import mtnLogo from "../../../assets/providers/MTN_LOGO.png";
@@ -29,7 +28,6 @@ const LoadingIndicator = (
 
 const AirtimeScreen = (props) => {
   const userPhone = useSelector((state) => state.user.profile.phone);
-  const isSignedIn = useSelector((state) => state.user.isSignedIn);
 
   const [screenLoaded, setScreenLoaded] = React.useState(false);
   const [contactPickerVisible, setContactPickerVisible] = React.useState(false);
@@ -37,12 +35,20 @@ const AirtimeScreen = (props) => {
   const [recipientNumber, setRecipientNumber] = React.useState("");
 
   const [airtimeAmount, setAirtimeAmount] = React.useState(50);
-  const [paymentMtdPickerVisible, setPaymentMtdPickerVisible] =
-    React.useState(false);
 
   const recipientsInputRef = React.useRef();
 
   const navigation = useNavigation();
+
+  const gotoTransationReview = React.useCallback(() =>{
+    /** @type {import("../TransactionReviewScreen").TransactionReviewParameter} */
+    let paramObj = {
+      productType:'airtime',
+      product:networkName+" Airtime Top-Up",
+      transactionCost:airtimeAmount,
+    }
+    navigation.navigate('TransactionReviewScreen',paramObj);
+  });
 
   //destructure passed route params
   const {
@@ -82,18 +88,6 @@ const AirtimeScreen = (props) => {
     setContactPickerVisible(true)
   );
 
-  const closePaymentMtdPicker = React.useCallback(() => {
-    setPaymentMtdPickerVisible(false);
-  });
-
-  //calculate amount payable after applying 10% discounts, if airtime value > 100
-  const amountPayable = React.useMemo(
-    () =>
-      airtimeAmount > 100
-        ? airtimeAmount - (10 / 100) * airtimeAmount /**10% discount */
-        : airtimeAmount,
-    [airtimeAmount]
-  );
 
   const contactIcon = (
     <TouchableRipple
@@ -110,7 +104,7 @@ const AirtimeScreen = (props) => {
   return (
     <ImageBackground source={tileBg} style={tw`h-full w-full`}>
       <SafeArea>
-        <View style={tw`flex-row items-start pl-3 mt-1`}>
+        <View style={tw`flex-row items-start pl-3 mt-1 mb-8`}>
           <View style={tw`border border-primary p-0.5 bg-white`}>
             <Image source={providerLogoSrc} style={tw`h-12 w-12`} />
           </View>
@@ -128,7 +122,7 @@ const AirtimeScreen = (props) => {
             fieldRequired={false}
             fieldLabelIcon="person"
             accessibilityLabel="network input"
-            value={`${recipientType} ${userPhoneFormatted}`}
+            value={`${userPhoneFormatted}`}
             extraInputProps={{ editable: false, disabled: true }}
           />
         ) : null}
@@ -171,7 +165,7 @@ const AirtimeScreen = (props) => {
         />
 
         {/* PANE TO SHOW AMOUNT PAYABLE */}
-        <InputField
+        {/* <InputField
           fieldLabel="Amount Payable:"
           fieldLabelSubtitle="(what you'll pay for the airtime value)"
           fieldRequired={false}
@@ -184,12 +178,13 @@ const AirtimeScreen = (props) => {
             accessibilityLabel: "disabled input showing amount payable",
             accessibilityRole: "text",
           }}
-        />
+        /> */}
+
         <CurvedButton
           containerStyle={tw`my-2`}
-          label="Proceed"
+          label="Buy Now"
           rightIconName="chevron-forward-circle-outline"
-          onPress={() => setPaymentMtdPickerVisible(true)}
+          onPress={gotoTransationReview}
           accessibilityRole="button"
           accessibilityLabel="cta buy airtime"
         />
@@ -198,13 +193,6 @@ const AirtimeScreen = (props) => {
             onRequestClose={closeContactPicker}
             onBackgroundTouch={closeContactPicker}
             onContactSelect={handleContactSelect}
-          />
-        ) : null}
-        {paymentMtdPickerVisible ? (
-          <PaymentMethodPicker
-            onBackgroundTouch={closePaymentMtdPicker}
-            onRequestClose={closePaymentMtdPicker}
-            onMethodSelect={(me) => console.log(me)}
           />
         ) : null}
       </SafeArea>

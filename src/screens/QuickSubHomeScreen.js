@@ -10,9 +10,9 @@ import tileBg from '../../assets/tile_background.png';
 import { useTheme, DefaultTheme } from '@react-navigation/native';
 
 const QuickSubHomeScreen = ({navigation}) => {
-    // console.log(DefaultTheme);
+    console.log(DefaultTheme);
     return (
-        <ImageBackground source={tileBg} style={tw.style(`h-full w-full`,{backgroundColor:useTheme().colors.background})}>
+        <ImageBackground source={tileBg} style={tw.style(`h-full w-full`,)}>
             <ScreenContainer containerStyle={tw.style(`p-0 h-full`,)}>
                 <StatusBar backgroundColor={tw.color('primary')}/>
                 <View>
