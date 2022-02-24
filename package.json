@@ -1,11 +1,10 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "eject": "expo eject"
   },
@@ -40,7 +39,7 @@
     "lodash": "^4.17.21",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+    "react-native": "~0.63.4",
     "react-native-animated-loader": "^0.0.9",
     "react-native-easy-grid": "^0.2.2",
     "react-native-gesture-handler": "~1.10.2",
@@ -53,7 +52,11 @@
     "react-redux": "^7.2.5",
     "tailwind-react-native-classnames": "^1.4.3",
     "tailwindcss": "^2.2.9",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "expo-splash-screen": "~0.11.2",
+    "expo-updates": "~0.8.1",
+    "react-native-reanimated": "~2.2.0",
+    "react-native-unimodules": "0.14.10"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -63,5 +66,7 @@
     "prop-types": "^15.7.2",
     "react-test-renderer": "16.13"
   },
-  "private": true
+  "private": true,
+  "name": "EasyVtu",
+  "version": "1.0.0"
 }
