@@ -22,7 +22,7 @@ const LoadingScreen = (props) => (
         source={require("../../assets/loader.json")}
         style={{ width: 80, height: 80 }}
         autoPlay={true}
-        speed={2}
+        speed={3}
       />
     </View>
   </ImageBackground>
