@@ -1,17 +1,15 @@
 import React from 'react';
 import { registerRootComponent } from "expo";
-import { Provider } from "react-redux";
-import App from "./src/app/App";
-import store from './src/store';
+import App from "./App";
+import { Provider } from 'react-redux';
+import store from './store';
 
-const Main = () => {
-  return (
-    <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </React.StrictMode>
-  );
-};
+const Main = () => (
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
+);
 
 registerRootComponent(Main);
