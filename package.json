@@ -16,6 +16,7 @@
     "setupFiles": [
       "./src/tests/jestSetUpFile.config.js"
     ],
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
     ]
@@ -58,12 +59,17 @@
     "react-redux": "^7.2.5",
     "tailwind-react-native-classnames": "^1.4.3",
     "tailwindcss": "^2.2.9",
+    "typescript": "^4.6.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@testing-library/react-native": "^7.2.0",
+    "@types/jest": "^27.4.1",
+    "@types/react": "^17.0.39",
+    "@types/react-native": "^0.67.2",
     "@types/react-native-phone-input": "^0.2.2",
+    "@types/react-test-renderer": "^17.0.1",
     "jest-expo": "^42.1.0",
     "prop-types": "^15.7.2",
     "react-test-renderer": "16.13"
