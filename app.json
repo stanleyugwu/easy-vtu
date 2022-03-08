@@ -3,7 +3,7 @@
     "name": "Easy Vtu",
     "slug": "easy-vtu",
     "version": "1.0.0",
-    "entryPoint": "./src/index.js",
+    "entryPoint": "./index.js",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -24,7 +24,7 @@
       "permissions": ["READ_CONTACTS"],
       "package": "com.devvie.easyvtu",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon_foreground.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
