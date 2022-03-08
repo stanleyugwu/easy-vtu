@@ -1,93 +1,65 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useSelector } from 'react-redux';
-
-//Screens
-import SignUpScreen from '../screens/SignUpScreen';
-import SplashScreen from '../screens/SplashScreen/index';
-import SignInScreen from '../screens/SignInScreen';
-import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
-import UserScreen from '../screens/protected-screens/UserScreen'
-import QuickSubHomeScreen from '../screens/QuickSubHomeScreen';
-
-//services screens
-import AirtimeScreen from '../screens/services/AirtimeScreen';
-import DataScreen from '../screens/services/DataScreen';
-import ElectricityScreen from '../screens/services/ElectricityScreen';
-import CableScreen from '../screens/services/CableScreen';
-import ScratchCardScreen from '../screens/services/ScratchCardScreen';
-
-//util screens
-import NetworkProvidersScreen from '../screens/services/NetworkProvidersScreen';
-import TransactionReviewScreen from '../screens/TransactionReviewScreen';
-import BankTransferScreen from '../screens/BankTransferScreen';
-
-import tw from '../lib/tailwind';
-import { Image } from 'react-native';
-
-//Create Navigation Stack
-const Stack = createNativeStackNavigator();
-
-//App Icon 
-const AppIcon = () => <Image source={require('../../assets/white_icon.png')} style={{width:35,height:35}}/>
-
-// function to generate options object for any screen,
-// constructing its `title` prop based on route `params` passed to it and setting it to a given default title otherwise.
-const generateProvidersParams = (defaultTitle) => ({route}) => ({title:(route ?. params ?. headerTitle) || defaultTitle})
-
-/** @type {import('@react-navigation/native').Theme} */
-const theme = {
-  colors: {
-    "background": "rgb(242, 242, 242)",
-    "border": "rgb(216, 216, 216)",
-    "card": tw.color('primary'),
-    "notification": tw.color('accent'),
-    "primary": tw.color('primary'),
-    "text": tw.color('light'),
-  },
-  "dark": false,
-}
+import 'react-native-gesture-handler';
+import React, {useEffect, useState} from "react";
+import {useDispatch} from 'react-redux';
+import { useFonts } from 'expo-font';
+import LoadingScreen from '../screens/LoadingScreen';
+import Navigation from './Navigation';
+import { getLocalData, storeLocalData } from "../utils/storageAdapters";
+import { setToken, signIn } from "../store/slices/userSlice";
+import { addCard, addMoney } from "../store/slices/walletSlice";
+import { OpenSans_400Regular, OpenSans_600SemiBold, OpenSans_700Bold } from "@expo-google-fonts/open-sans";
+import { Text } from 'react-native';
 
 const App = () => {
-  const isSignedIn = useSelector(state => state.user.isSignedIn);
-  return (
-    <NavigationContainer theme={theme}>
-      <Stack.Navigator screenOptions={{animation:'slide_from_right'}}>
-        {
-          isSignedIn ? (
-            <Stack.Screen name="UserScreen" component={UserScreen} options={{headerShown:false}}/>
-          ) : (
-            <Stack.Group screenOptions={{headerShown:false}}>
-              <Stack.Screen name="Splash" component={SplashScreen}/>
-              <Stack.Screen name="Sign-Up" component={SignUpScreen}/>
-              <Stack.Screen name="Sign-In" component={SignInScreen}/>
-              <Stack.Screen name="Forgot-Password" component={ForgotPasswordScreen}/>
-              <Stack.Screen name="QuickSub" component={QuickSubHomeScreen}/>
-            </Stack.Group>
-          )
+    const [authenticating, setAuthenticating] = useState(true);
+    const dispatch = useDispatch();
+    let [fontsLoaded] = useFonts({
+        'open-sans':OpenSans_400Regular,
+        'open-sans-semibold':OpenSans_600SemiBold,
+        'open-sans-bold':OpenSans_700Bold
+    });
+
+    let mockData = {
+        accessToken : 'gjhsjhsd89s8d9d*jdjs_3892',
+        profile:{
+            id:'7387287bjjsdh',
+            username : 'Devvie',
+            email: 'stanleyugwu@gmail.com',
+            image:"https://lh3.googleusercontent.com/a-/AOh14GjF0JoYxA8T7G9AAu035TkoMxbGN3Nsy2Z7ph4H-w=w60-h60",
+            referrals:12,
+            phone: '2348066413705',
+            password: '#GodsDev',
+            createdAt:'21-08-2021'
+        },
+        wallet:{
+            balance: 200,
+            cards:[{name:'zenith'},{name:'access'}]
         }
-        <Stack.Group 
-          screenOptions={{
-            headerShown:true,
-            headerTitleStyle:tw`text-center font-sans-semibold text-lg text-light`,
-            headerTintColor:tw.color('light'),//back icon doesn't change to white unless this property is set
-            statusBarStyle:'light',
-            headerRight:AppIcon,
-            animationTypeForReplace:'push'
-          }}
-        >
-          <Stack.Screen name="NetworkProviders" component={NetworkProvidersScreen} options={generateProvidersParams('Network Providers')}/>
-          <Stack.Screen name="AirtimeScreen" component={AirtimeScreen} options={generateProvidersParams('Airtime Top-Up')}/>
-          <Stack.Screen name="DataScreen" component={DataScreen} options={generateProvidersParams('Data Top-Up')}/>
-          <Stack.Screen name="ElectricityScreen" component={ElectricityScreen} options={{headerTitle:'Electricity Recharge'}}/>
-          <Stack.Screen name="CableScreen" component={CableScreen} options={{headerTitle:'Cable Subscription'}}/>
-          <Stack.Screen name="ScratchCardScreen" component={ScratchCardScreen} options={{headerTitle:'Buy Scratch Cards'}}/>
-          <Stack.Screen name="TransactionReviewScreen" component={TransactionReviewScreen} options={{headerTitle:'Transaction Review'}}/>
-          <Stack.Screen name="BankTransferScreen" component={BankTransferScreen} options={{headerTitle:'Bank Transfer Payment'}}/>
-        </Stack.Group>
-      </Stack.Navigator>
-    </NavigationContainer>
+    }
+
+    useEffect(() => {
+        const authenticateUser = async () => {
+            // let stored = await storeLocalData(mockData,true);
+            // console.log(stored)
+            // return
+            let data = await getLocalData(true);
+            // console.log(data);
+            
+            if(data && ('accessToken' in data) && ('profile' in data) && ('wallet' in data)){
+                dispatch(signIn(data.profile));
+                dispatch(addMoney(data.wallet.balance));
+                dispatch(addCard(data.wallet.cards));
+                dispatch(setToken(data.accessToken));
+            }
+            setAuthenticating(false);
+            return
+        }
+        authenticateUser();
+    },[])
+
+    if(!fontsLoaded || authenticating) return <LoadingScreen/>;
+  return (
+    <Navigation/>
   )
 }
 
