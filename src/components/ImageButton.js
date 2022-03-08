@@ -46,7 +46,7 @@ const ImageButton = (props) => {
             testID={"inner view wrapper"}
           >
             {/* image wrapper */}
-            <View style={tw`bg-white p-4 w-3/12 rounded-l-md rounded-r-3xl`}>
+            <View style={tw`bg-accent p-3 w-3/12 rounded-l-md rounded-r-3xl`}>
               <Image
                 source={resolvedSrc}
                 style={tw`w-11 h-11`}
@@ -62,7 +62,7 @@ const ImageButton = (props) => {
               accessibilityLabel={"label text wrapper"}
             >
               <Text
-                style={tw.style("pr-10", { color: props.labelColor })}
+                style={tw.style("pr-10 font-sans-semibold", { color: props.labelColor })}
                 accessibilityLabel="label text"
               >
                 {props.label}

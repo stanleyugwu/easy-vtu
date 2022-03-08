@@ -62,7 +62,7 @@ const WalletCard = React.forwardRef((/** @type {Prop} */ props, ref) => {
             />
             <Text
               accessibilityLabel="cards-added"
-              style={tw`ml-1 items-center text-sm font-nunitobold`}
+              style={tw`ml-1 items-center text-sm font-sans-semibold`}
             >
               {props.totalCards + " Card(s)"}
             </Text>

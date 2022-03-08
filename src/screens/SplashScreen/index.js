@@ -73,7 +73,7 @@ const SplashScreen = (props) => {
       <ScreenContainer
         containerStyle={tw.style(
           `bg-primary h-full`,
-          currentSplashScreen === 3 && { opacity: 0.9 }
+          currentSplashScreen === 3 && { opacity: 0.8 }
         )}
       >
         <StatusBar backgroundColor={tw.color("primary")} />

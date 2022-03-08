@@ -3,13 +3,13 @@
     "name": "Easy Vtu",
     "slug": "easy-vtu",
     "version": "1.0.0",
-    "entryPoint": "./src/index.js",
+    "entryPoint": "./index.js",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#192F5E"
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,14 +21,15 @@
       "supportsTablet": true
     },
     "android": {
+      "permissions": ["READ_CONTACTS"],
       "package": "com.devvie.easyvtu",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/icon.png"
+      "favicon": "./assets/images/icon.png"
     }
   }
 }

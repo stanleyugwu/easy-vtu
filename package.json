@@ -1,11 +1,10 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "eject": "expo eject"
   },
@@ -17,6 +16,7 @@
     "setupFiles": [
       "./src/tests/jestSetUpFile.config.js"
     ],
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
     ]
@@ -35,33 +35,46 @@
     "expo-contacts": "~9.2.5",
     "expo-linear-gradient": "~9.2.0",
     "expo-react-native-shadow": "^1.0.3",
+    "expo-splash-screen": "~0.11.2",
     "expo-status-bar": "~1.0.4",
+    "expo-updates": "~0.8.1",
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
+    "lottie-react-native": "^5.0.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+    "react-native": "~0.63.4",
     "react-native-animated-loader": "^0.0.9",
     "react-native-easy-grid": "^0.2.2",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-paper": "^4.9.2",
     "react-native-phone-input": "^1.1.0",
+    "react-native-reanimated": "~2.2.0",
+    "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.6.0",
     "react-native-select-contact": "^1.6.3",
     "react-native-spinkit": "^1.5.1",
+    "react-native-unimodules": "0.14.10",
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.5",
     "tailwind-react-native-classnames": "^1.4.3",
     "tailwindcss": "^2.2.9",
+    "typescript": "^4.6.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@testing-library/react-native": "^7.2.0",
+    "@types/jest": "^27.4.1",
+    "@types/react": "^17.0.39",
+    "@types/react-native": "^0.67.2",
     "@types/react-native-phone-input": "^0.2.2",
+    "@types/react-test-renderer": "^17.0.1",
     "jest-expo": "^42.1.0",
     "prop-types": "^15.7.2",
     "react-test-renderer": "16.13"
   },
-  "private": true
+  "private": true,
+  "name": "EasyVtu",
+  "version": "1.0.0"
 }
