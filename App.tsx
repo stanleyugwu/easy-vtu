@@ -2,26 +2,18 @@ import "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useFonts } from "expo-font";
+import useCachedResources from './hooks/useCachedResources';
 import LoadingScreen from "./screens/LoadingScreen";
 import Navigation from "./navigation";
 import { getLocalData, storeLocalData } from "./utils/storageAdapters";
 import { setToken, signIn } from "./store/slices/userSlice";
 import { addCard, addMoney } from "./store/slices/walletSlice";
 
-import {
-  OpenSans_400Regular,
-  OpenSans_600SemiBold,
-  OpenSans_700Bold,
-} from "@expo-google-fonts/open-sans";
-
 const App = () => {
   const [authenticating, setAuthenticating] = useState(true);
+  const fontsLoaded = useCachedResources();
   const dispatch = useDispatch();
-  let [fontsLoaded] = useFonts({
-    "open-sans": OpenSans_400Regular,
-    "open-sans-semibold": OpenSans_600SemiBold,
-    "open-sans-bold": OpenSans_700Bold,
-  });
+  
 
   let mockData = {
     accessToken: "gjhsjhsd89s8d9d*jdjs_3892",
@@ -68,7 +60,7 @@ const App = () => {
   }, []);
 
   if (!fontsLoaded || authenticating) {
-      return null
+    return null
   };
 
   return (
