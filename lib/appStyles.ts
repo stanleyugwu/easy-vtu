@@ -33,10 +33,10 @@ export default StyleSheet.create({
 });
 
 export const typeStyle = StyleSheet.create({
-  heading: tw.style(`open-sans text-2xl leading-6`, {
+  heading: tw.style(`font-sans text-2xl leading-6`, {
     letterSpacing: 0.1,
   }),
-  title: tw.style(`open-sans-semibold text-xl`, {
+  title: tw.style(`font-sans-semibold text-xl`, {
     letterSpacing: 0.15,
   }),
   subTitle: tw.style(`font-sans-semibold leading-6`, {fontSize:16, letterSpacing: 0.15 }),
