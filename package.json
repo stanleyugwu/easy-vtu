@@ -16,7 +16,14 @@
     "setupFiles": [
       "./src/tests/jestSetUpFile.config.js"
     ],
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
     ]
@@ -70,9 +77,11 @@
     "@types/react-native": "^0.67.2",
     "@types/react-native-phone-input": "^0.2.2",
     "@types/react-test-renderer": "^17.0.1",
+    "@types/tailwindcss": "^3.0.9",
     "jest-expo": "^42.1.0",
     "prop-types": "^15.7.2",
-    "react-test-renderer": "16.13"
+    "react-test-renderer": "16.13",
+    "ts-node": "^10.7.0"
   },
   "private": true,
   "name": "EasyVtu",
