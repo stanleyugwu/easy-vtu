@@ -5,12 +5,12 @@
  * @returns {function} a new version of `func` that can debounce calls to original `func` 
  * for the numbr of milliseconds passed in `timeout` parameter. Timeout defaults to **600ms**
  */
- const debounce = (func = () => null, timeout = 600) => {
-    let timer;
-    return function(){
-      clearTimeout(timer);
-      timer = setTimeout(() => func(...arguments), timeout)
-    }
+ const debounce = (func:(...args:any) => any, timeout:number = 600) => {
+  let timer:NodeJS.Timeout;
+  return function(){
+    clearTimeout(timer);
+    timer = setTimeout(() => func(...arguments), timeout)
   }
+}
 
-  export default debounce
+export default debounce

@@ -8,6 +8,7 @@ import React from 'react';
  import Colors from '../constants/Colors';
  import useColorScheme from '../hooks/useColorScheme';
  import {typeStyle} from '../lib/appStyles';
+import tw from '../lib/tailwind';
  
  export function useThemeColor(
    props: { light?: string; dark?: string },
@@ -19,7 +20,8 @@ import React from 'react';
    if (colorFromProps) {
      return colorFromProps;
    } else {
-     return Colors[theme][colorName];
+     // theme is set to "light", we're not doing dark mode yet
+     return Colors["light"][colorName];
    }
  }
  
@@ -41,10 +43,12 @@ type ThemeProps = {
    return <DefaultText style={[{ color },typeStyle[type], style]} {...otherProps} />;
  }
  
- export function View(props: ViewProps) {
+ const View = React.forwardRef(function View(props: ViewProps, ref:React.ForwardedRef<DefaultView>) {
    const { style, lightColor, darkColor, ...otherProps } = props;
    const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
  
-   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
- }
+   return <DefaultView style={[{ backgroundColor }, style]} ref={ref} {...otherProps} />;
+ })
+
+ export {View}
  

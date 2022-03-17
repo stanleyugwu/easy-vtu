@@ -4,6 +4,14 @@ import tw from "../lib/tailwind";
 import { ScrollView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/core";
 
+// Service icons
+const airtime = require("../assets/images/service_icons/airtime.png");
+const data = require("../assets/images/service_icons/data.png");
+const electricity = require("../assets/images/service_icons/electricity.png");
+const cable = require("../assets/images/service_icons/cable.png");
+const scratchCard = require("../assets/images/service_icons/card.png");
+const more = require("../assets/images/service_icons/more.png");
+
 /**
  * Renders app services in cards with `ServiceCard` component
  */
@@ -16,9 +24,9 @@ const Services = () => {
     >
       <ServiceCard
         animationDelay={300}
-        bounciness={10}
+        
         title="Buy Airtime"
-        iconSrc={require("../assets/images/service_icons/airtime.png")}
+        iconSrc={airtime}
         onPress={(_) =>
           navigation.navigate("NetworkProviders", {
             headerTitle: "Airtime Top-Up",
@@ -28,9 +36,9 @@ const Services = () => {
       />
       <ServiceCard
         animationDelay={400}
-        bounciness={10}
+        
         title="Buy Data"
-        iconSrc={require("../assets/images/service_icons/data.png")}
+        iconSrc={data}
         onPress={(_) =>
           navigation.navigate("NetworkProviders", {
             headerTitle: "Data Top-Up",
@@ -40,32 +48,31 @@ const Services = () => {
       />
       <ServiceCard
         animationDelay={500}
-        bounciness={10}
+        
         title="Buy Electricity"
-        containerStyle={tw`my-3`}
-        iconSrc={require("../assets/images/service_icons/electricity.png")}
+        style={tw`my-3`}
+        iconSrc={electricity}
         onPress={(_) => navigation.navigate("NetworkProviders")}
       />
 
       <ServiceCard
         animationDelay={600}
-        bounciness={10}
+        
         title="Tv Cable"
-        containerStyle={tw`my-3`}
-        iconSrc={require("../assets/images/service_icons/cable.png")}
+        style={tw`my-3`}
+        iconSrc={cable}
         onPress={(_) => navigation.navigate("NetworkProviders")}
       />
       <ServiceCard
         animationDelay={700}
-        bounciness={10}
+        
         title="Scratch Card"
-        iconSrc={require("../assets/images/service_icons/card.png")}
+        iconSrc={scratchCard}
         onPress={(_) => navigation.navigate("NetworkProviders")}
       />
       <ServiceCard
         animationDelay={800}
-        bounciness={10}
-        iconSrc={require("../assets/images/service_icons/more.png")}
+        iconSrc={more}
       />
     </ScrollView>
   );
