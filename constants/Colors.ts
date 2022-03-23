@@ -12,7 +12,7 @@ export default {
     tabIconSelected: tintColorLight,
   },
   dark: {
-    text: '#eee',
+    text: tw.color('on-dark'),
     background: tw.color('on-background'),
     tint: '#00C4B4',
     tabIconDefault: '#ccc',

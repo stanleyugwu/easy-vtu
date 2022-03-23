@@ -1,7 +1,12 @@
-import { FontAwesome } from '@expo/vector-icons';
-import * as Font from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
+import { FontAwesome } from "@expo/vector-icons";
+import * as Font from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect, useState } from "react";
+import {
+  OpenSans_400Regular,
+  OpenSans_600SemiBold,
+  OpenSans_700Bold,
+} from "@expo-google-fonts/open-sans";
 
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -15,12 +20,9 @@ export default function useCachedResources() {
         // Load fonts
         await Font.loadAsync({
           ...FontAwesome.font,
-          'rubik':require('../assets/fonts/Rubik-Regular.ttf'),
-          'rubik-medium': require('../assets/fonts/Rubik-Medium.ttf'),
-          'comfortaa': require('../assets/fonts/Comfortaa-Regular.ttf'),
-          'comfortaa-medium': require('../assets/fonts/Comfortaa-Medium.ttf'),
-          'comfortaa-bold': require('../assets/fonts/Comfortaa-Bold.ttf'),
-          'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
+          "open-sans": OpenSans_400Regular,
+          "open-sans-semibold": OpenSans_600SemiBold,
+          "open-sans-bold": OpenSans_700Bold,
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service

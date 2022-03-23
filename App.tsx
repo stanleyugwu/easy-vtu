@@ -1,78 +1,24 @@
-import "react-native-gesture-handler";
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useFonts } from "expo-font";
-import LoadingScreen from "./screens/LoadingScreen";
+import React from "react";
+import useCachedResources from "./hooks/useCachedResources";
+import useAuthenticate from "./hooks/useAuthenticate";
 import Navigation from "./navigation";
-import { getLocalData, storeLocalData } from "./utils/storageAdapters";
-import { setToken, signIn } from "./store/slices/userSlice";
-import { addCard, addMoney } from "./store/slices/walletSlice";
-
-import {
-  OpenSans_400Regular,
-  OpenSans_600SemiBold,
-  OpenSans_700Bold,
-} from "@expo-google-fonts/open-sans";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
+import tw from "./lib/tailwind";
 
 const App = () => {
-  const [authenticating, setAuthenticating] = useState(true);
-  const dispatch = useDispatch();
-  let [fontsLoaded] = useFonts({
-    "open-sans": OpenSans_400Regular,
-    "open-sans-semibold": OpenSans_600SemiBold,
-    "open-sans-bold": OpenSans_700Bold,
-  });
+  const fontsLoaded = useCachedResources();
+  const userAuthenticating = useAuthenticate();
 
-  let mockData = {
-    accessToken: "gjhsjhsd89s8d9d*jdjs_3892",
-    profile: {
-      id: "7387287bjjsdh",
-      username: "Devvie",
-      email: "stanleyugwu@gmail.com",
-      image:
-        "https://lh3.googleusercontent.com/a-/AOh14GjF0JoYxA8T7G9AAu035TkoMxbGN3Nsy2Z7ph4H-w=w60-h60",
-      referrals: 12,
-      phone: "2348066413705",
-      password: "#GodsDev",
-      createdAt: "21-08-2021",
-    },
-    wallet: {
-      balance: 200,
-      cards: [{ name: "zenith" }, { name: "access" }],
-    },
-  };
-
-  useEffect(() => {
-    const authenticateUser = async () => {
-      // let stored = await storeLocalData(mockData,true);
-      // console.log(stored)
-      // return
-      let data = await getLocalData(true);
-      // console.log(data);
-
-      if (
-        data &&
-        "accessToken" in data &&
-        "profile" in data &&
-        "wallet" in data
-      ) {
-        dispatch(signIn(data.profile));
-        dispatch(addMoney(data.wallet.balance));
-        dispatch(addCard(data.wallet.cards));
-        dispatch(setToken(data.accessToken));
-      }
-      setAuthenticating(false);
-      return;
-    };
-    authenticateUser();
-  }, []);
-
-  if (!fontsLoaded || authenticating) {
-      return null
-  };
+  if (!fontsLoaded || userAuthenticating) {
+    return null;
+  }
 
   return (
-    <Navigation />
+    <SafeAreaProvider>
+      <Navigation />
+      <StatusBar backgroundColor={tw.color("primary-dark")} style="light" />
+    </SafeAreaProvider>
   );
 };
 
