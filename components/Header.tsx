@@ -47,25 +47,25 @@ const Header = React.forwardRef(
     return (
       <View
         accessibilityLabel={accessibilityLabel}
-        style={[tw`h-44 p-3`, style]}
+        style={[tw`h-44 p-3 bg-transparent`, style]}
         ref={ref}
         {...otherProps}
       >
         <View
-          style={tw`flex-row justify-between mb-2`}
+          style={tw`flex-row justify-between mb-2 bg-transparent`}
           accessibilityLabel="header top-bar"
         >
           <Icon
             name="menu"
             onPress={onMenuPress}
             size={37}
-            color={tw.color("accent")}
+            color={tw.color("secondary")}
             accessibilityLabel="header top-bar menu-icon"
             accessibilityRole="button"
           />
           <Icon
             name="notifications"
-            color={tw.color("accent")}
+            color={tw.color("secondary")}
             size={28}
             style={tw`pt-1`}
             accessibilityLabel="header top-bar notification-icon"

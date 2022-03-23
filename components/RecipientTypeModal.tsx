@@ -80,19 +80,19 @@ const RecipientTypeModal = ({
     >
       <View
         accessibilityLabel="recipient type modal"
-        style={tw.style(`p-6 bg-gray-light max-w-md rounded-lg`, {
+        style={tw.style(`p-6 bg-surface max-w-md rounded-lg`, {
           zIndex: 99999,
         })}
       >
         <Text
           type="title"
-          style={tw`text-lg`}
+          style={tw`text-center`}
           accessibilityLabel="recipient type modal title"
         >
           {customTitle}
         </Text>
         <View
-          style={tw`flex-row justify-between my-7`}
+          style={tw`flex-row bg-transparent justify-between my-7`}
           onStartShouldSetResponder={() => true}
         >
           <RippleButton
@@ -105,7 +105,7 @@ const RecipientTypeModal = ({
             <PressResizerView
               accessibilityLabel="self recipient type button"
               accessibilityRole="button"
-              style={[tw`py-3 rounded-md px-6`, appStyles.boxShadow]}
+              style={[tw`py-3 rounded-md px-6 bg-surface`, appStyles.boxShadow]}
             >
               <Image
                 source={selfImg}
@@ -113,7 +113,8 @@ const RecipientTypeModal = ({
                 accessibilityLabel="myself image illustration"
               />
               <Text
-                style={{ paddingTop: 10 }}
+              type="subTitle"
+                style={[tw`text-center text-on-surface`,{ paddingTop: 10 }]}
                 accessibilityLabel="my self text"
               >
                 My Self
@@ -131,14 +132,14 @@ const RecipientTypeModal = ({
             <PressResizerView
               accessibilityLabel="others recipient type button"
               accessibilityRole="button"
-              style={tw`py-3 rounded-md px-6`}
+              style={[tw`py-3 rounded-md px-6 bg-surface`, appStyles.boxShadow]}
             >
               <Image
                 source={othersImg}
                 style={{ width: 70, height: 70, resizeMode: "contain" }}
                 accessibilityLabel="others image illustration"
               />
-              <Text style={{ paddingTop: 10 }} accessibilityLabel="others text">
+              <Text type="subTitle" style={[tw`text-center text-on-surface`,{ paddingTop: 10 }]} accessibilityLabel="others text">
                 Others
               </Text>
             </PressResizerView>

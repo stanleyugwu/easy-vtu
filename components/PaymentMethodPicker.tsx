@@ -19,6 +19,8 @@ import defaultPaymentMethodImage from "../assets/images/wallet_img.png";
 import cardImg from "../assets/images/card_img.png";
 import appStyles from "../lib/appStyles";
 
+export type PaymentMethods = "wallet" | "card" | "transfer";
+
 export type PaymentMethodButtonProps = {
   /** Button text label */
   label: string;
@@ -43,10 +45,10 @@ const PaymentMethodButton = ({
     <PressResizerView
       style={[tw`my-2 rounded-md bg-surface`, appStyles.boxShadow]}
     >
-      <RippleButton rippleColor="#fff9" onPress={onPress}>
-        <View style={tw`py-2 px-9 flex-row items-center rounded-md bg-surface`}>
+      <RippleButton rippleColor={tw.color("secondary")} onPress={onPress}>
+        <View style={tw`py-2 px-4 flex-row items-center rounded-md bg-transparent`}>
           <Image source={imageSource} style={tw`h-10 w-10`} />
-          <Text style={tw`pl-6 font-sans-semibold text-primary`}>{label}</Text>
+          <Text type="button" style={[tw`pl-6 text-primary`]} textBreakStrategy="highQuality" lineBreakMode="middle">{label}</Text>
         </View>
       </RippleButton>
     </PressResizerView>
@@ -57,7 +59,7 @@ export type PaymentMethodPicker = {
   /** Function to call when a method is selected.
    * This method will be called with `wallet` or `card` or `transfer`representing the method selected
    */
-  onMethodSelect: (selectedMethod: "wallet" | "card" | "transfer") => void;
+  onMethodSelect: (selectedMethod: PaymentMethods) => void;
 } & ModalWrapperProps;
 
 /**
@@ -88,10 +90,10 @@ const PaymentMethodPicker = ({
       onRequestClose={onRequestClose}
       onBackgroundTouch={onBackgroundTouch}
     >
-      <View style={tw`bg-gray-light p-4 rounded-t-2xl bg-accent`} ref={ref}>
+      <View style={tw`p-4 rounded-t-2xl bg-secondary`}>
         <Text
           type="title"
-          style={tw`self-center my-auto text-lg my-8 text-black`}
+          style={tw`self-center my-auto text-lg text-on-surface my-8`}
         >
           How Do You Want To Pay?
         </Text>

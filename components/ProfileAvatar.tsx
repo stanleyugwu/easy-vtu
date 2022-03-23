@@ -39,7 +39,7 @@ const ProfileAvatar = ({
   return (
     <View
       accessibilityLabel={accessibilityLabel}
-      style={tw.style("flex-row justify-start items-center ml-4 mb-2", style)}
+      style={tw.style("flex-row justify-start items-center ml-4 mb-2 bg-transparent", style)}
     >
       {imageUrl ? (
         <Avatar.Image
@@ -61,8 +61,9 @@ const ProfileAvatar = ({
         />
       )}
       <Text
+       type="title"
         accessibilityRole="text"
-        style={tw.style("ml-3 text-lg", textStyle)}
+        style={tw.style("ml-3 text-lg text-on-primary", textStyle)}
       >
         {label}
       </Text>

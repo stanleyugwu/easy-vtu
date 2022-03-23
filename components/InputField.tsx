@@ -41,7 +41,7 @@ export type InputFieldProps = {
   /** Style to apply to `<Pressable/>` element */
   buttonStyle?: ViewStyle;
   /** Extra props for input field element `<TextInput` */
-  extraInputProps?: TextInputProps;
+  extraInputProps?: Partial<TextInputProps>;
   /** Extra props for input field element `<Pressable/>` */
   extraButtonProps?: PressableProps;
   /** When `fieldType` is **input**, number of lines the `<TextInput/>` should have */

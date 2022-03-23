@@ -139,7 +139,7 @@ let Drawer = ({
             {showAvatar ? (
               <RippleButton
                 borderless={true}
-                rippleColor={tw.color("accent")}
+                rippleColor={tw.color("secondary")}
                 onPress={onAvatarPress}
               >
                 {avatarUri ? (

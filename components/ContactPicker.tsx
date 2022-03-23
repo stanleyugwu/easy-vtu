@@ -133,7 +133,7 @@ const ContactPicker = React.forwardRef(
     const searchBar = React.useMemo(() => {
       return (
         <View
-          style={tw`w-full mb-3 pt-3 rounded-t-lg items-center justify-center`}
+          style={tw`w-full mb-3 pt-3 rounded-t-lg items-center justify-center bg-background`}
         >
           <TextInput
             placeholder="Search Contact"
@@ -150,11 +150,11 @@ const ContactPicker = React.forwardRef(
         modalPosition="bottom"
         onBackgroundTouch={onBackgroundTouch}
         onRequestClose={onRequestClose}
-        overlayStyle={tw`p-0`}
+        style={tw`p-0`}
       >
         <View
           style={[
-            tw`pb-4 rounded-t-2xl`,
+            tw`rounded-t-2xl`,
             {
               height: "90%",
             },

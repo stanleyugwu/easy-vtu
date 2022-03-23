@@ -64,8 +64,12 @@ const ServiceCard = ({
         onPress={onPress}
         rippleColor={"#0004"}
       >
-        <>
-          <View style={tw.style("w-14 h-14 my-2 bg-transparent", imgWrapperStyle)}>
+        <View
+          style={tw`w-full items-center justify-around rounded-xl bg-transparent`}
+        >
+          <View
+            style={tw.style("w-14 h-14 my-2 bg-transparent", imgWrapperStyle)}
+          >
             <Image
               accessibilityRole="imagebutton"
               accessibilityLabel={title}
@@ -75,20 +79,22 @@ const ServiceCard = ({
               resizeMode="contain"
             />
           </View>
-          <View style={tw`p-1.5 w-full bg-transparent rounded-b-xl bg-blue-100`}>
+          <View
+            style={tw`p-1.5 w-full bg-transparent rounded-b-xl bg-blue-100`}
+          >
             <Text
               type="body2"
               accessibilityRole="text"
               testID="service-title"
               style={tw.style(
-                "text-primary font-sans-semibold",
+                "text-primary font-sans-semibold text-center",
                 serviceTextStyle
               )}
             >
               {title}
             </Text>
           </View>
-        </>
+        </View>
       </RippleButton>
     </FlashView>
   );

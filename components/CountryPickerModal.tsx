@@ -44,18 +44,18 @@ export type CountryPickerModalProps = {
   /** The onRequestClose prop allows passing a function that will be called once the modal
    * has been dismissed. On the Android platform, this is a required function.
    */
-  onRequestClose: () => void;
+  onRequestClose?: () => void;
 
   /**
    * Function to call when the area around the modal is touched
    */
-  onBackgroundTouch: (event: GestureResponderEvent) => void;
+  onBackgroundTouch?: (event: GestureResponderEvent) => void;
 
   /** style for `TouchableOpacity` button wrapping each country */
-  btnStyle: TouchableOpacityProps["style"];
+  btnStyle?: TouchableOpacityProps["style"];
 
   /** `Text` style for the country names */
-  countryTextStyle: TextProps["style"];
+  countryTextStyle?: TextProps["style"];
 } & ViewProps;
 
 /**
@@ -123,7 +123,7 @@ const CountryPickerModal = ({
 
   return (
     <ModalWrapper
-      overlayStyle={tw`p-0`}
+      style={tw`p-0`}
       modalPosition="bottom"
       visible={true}
       onRequestClose={onRequestClose}

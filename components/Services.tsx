@@ -29,7 +29,6 @@ const Services = () => {
         iconSrc={airtime}
         onPress={(_) =>
           navigation.navigate("NetworkProviders", {
-            headerTitle: "Airtime Top-Up",
             serviceType: "Airtime",
           })
         }
@@ -41,7 +40,6 @@ const Services = () => {
         iconSrc={data}
         onPress={(_) =>
           navigation.navigate("NetworkProviders", {
-            headerTitle: "Data Top-Up",
             serviceType: "Data",
           })
         }

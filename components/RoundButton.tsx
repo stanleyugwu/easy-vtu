@@ -13,6 +13,8 @@ export type RoundButtonProps = {
   icon?: IconSource;
   /** Color of the icon insdide the button */
   iconColor?: string;
+  /** Size of the icon */
+  size?: number;
 } & RippleButtonProps;
 
 /**
@@ -23,11 +25,12 @@ const RoundButton = ({
   icon = "arrow-right",
   gradient = [tw.color("primary"), tw.color("primary")] as string[],
   accessibilityLabel = "round button",
+  size = 20,
   iconColor = tw.color("on-primary"),
   ...otherProps
 }: RoundButtonProps) => {
   return (
-    <PressResizerView>
+    <PressResizerView style={{backgroundColor:"transparent"}}>
       <RippleButton
         onPress={onPress}
         accessibilityLabel={accessibilityLabel}
@@ -45,6 +48,7 @@ const RoundButton = ({
             tvParallaxProperties={null}
             testID={"icon-button"}
             icon={icon}
+            size={size}
             color={iconColor}
             animated={true}
           />

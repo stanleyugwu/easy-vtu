@@ -41,31 +41,29 @@ export type ImageButtonProps = {
 const ImageButton = ({
   imgSrc = defaultImg,
   onPress,
-  labelColor = tw.color("on-primary"),
+  labelColor = tw.color("on-surface"),
   style,
   label = "Easy Vtu",
   rightIconName = "chevron-forward-sharp",
   ...otherProps
 }: ImageButtonProps) => {
   return (
-    <PressResizerView>
+    <PressResizerView style={[tw`rounded-md max-w-md mt-5 bg-surface`,appStyles.boxShadow, style]}>
       <RippleButton
         onPress={onPress}
-        style={[tw`rounded-md mt-5 max-w-md`, appStyles.boxShadow, style]}
         rippleColor={labelColor}
-        borderless={true}
         accessibilityRole="button"
         {...otherProps}
       >
         <View
           style={[
             tw`
-              bg-primary flex-row rounded-md`,
+              bg-transparent flex-row rounded-md`,
           ]}
           testID={"inner view wrapper"}
         >
           {/* image wrapper */}
-          <View style={tw`bg-accent p-3 w-3/12 rounded-l-md rounded-r-3xl`}>
+          <View style={tw`bg-primary p-3 w-3/12 rounded-l-md rounded-r-3xl`}>
             <Image
               source={imgSrc}
               style={tw`w-11 h-11`}
@@ -77,7 +75,7 @@ const ImageButton = ({
 
           {/* label wrapper */}
           <View
-            style={tw`flex-row items-center justify-end w-9/12 px-6`}
+            style={tw`flex-row items-center bg-transparent justify-end w-9/12 px-6`}
             accessibilityLabel={"label text wrapper"}
           >
             <Text

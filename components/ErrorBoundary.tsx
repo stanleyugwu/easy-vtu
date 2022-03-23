@@ -54,7 +54,7 @@ const Error = React.memo(
 );
 
 export type ErrorBoundaryProps = {
-  errorMessage: string;
+  errorMessage?: string;
   children: React.ReactNode;
 };
 export type ServerBugReport = {
