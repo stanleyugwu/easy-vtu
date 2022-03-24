@@ -37,7 +37,7 @@ const remoteConfigDefaults = {
     data: true,
     electricity: true,
     cable: true,
-    scratch_card: true,
+    scratchCard: true,
   }),
   announcement: { title: null, message: null },
 };
