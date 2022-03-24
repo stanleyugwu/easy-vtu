@@ -122,9 +122,16 @@ export type TailwindStyles = keyof typeof TwRNStylesJson;
 
 export type AppColors = AppThemeColors | keyof typeof supportedColors;
 // TODO: adding `string` type to `AppStyle` breaks autocompletion when adding styles
-export type AppStyle = TailwindStyles[] | boolean | null | undefined | {
-    [k: string]: boolean | string | number;
-} | string | object;
+export type AppStyle =
+  | TailwindStyles[]
+  | boolean
+  | null
+  | undefined
+  | {
+      [k: string]: boolean | string | number;
+    }
+  | string
+  | object;
 
 export interface TailwindFn {
   (strings: TemplateStringsArray, ...values: (AppStyle | number)[]): Style;
@@ -137,70 +144,89 @@ export type DiscountStructure = {
   discountPercentage: number;
   /** Description of the discount */
   discountDescription: string;
-}
+};
 
+export namespace RemoteConfig {
+  type services = "airtime" | "data" | "electricity" | "cable" | "scratchCard";
+  type paymentMethods = "wallet" | "bankTransfer" | "debitCard" | "BTCTransfer";
+
+  export type Discount = Record<services, null | number[]>;
+  export type ActivePaymentMethods = Record<paymentMethods, boolean>;
+  export type MaximumTopUpAmount = number;
+  export type SupportedDataNetworkProviders = string[];
+  export type SupportedAirtimeNetworkProviders = string[];
+  export type ActiveServices = Record<services, boolean>;
+  export type Announcement = { title: null | string; message: null | string };
+}
 
 /**
  * // => NAVIGATION-RELATED TYPES
  */
 
- import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
- import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
- import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import {
+  CompositeScreenProps,
+  NavigatorScreenParams,
+} from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ImageSourcePropType } from "react-native";
- 
- declare global {
-   namespace ReactNavigation {
-     interface RootParamList extends RootStackParamList {}
-   }
- }
 
- export type productType = "airtime" | "data" | "electricity" | "cable" | "exams";
- 
- export type RootStackParamList = {
-   "UserScreen": NavigatorScreenParams<RootTabParamList> | undefined;
-   "Splash": {activeScreen: 1 | 2 | 3};
-   "Sign-Up": undefined;
-   "Sign-In":undefined;
-   "Forgot-Password":undefined;
-   "QuickSub":undefined;
-   
-   //Service screens
-   "NetworkProviders":{serviceType: "Airtime" | "Data"};
-   "AirtimeScreen":{
-    headerTitle?: string,
-    networkName: string,
-    providerLogoSrc: ImageSourcePropType,
-    recipientType: 'My Self' | "Others";
-   };
-   "DataScreen":undefined;
-   "ElectricityScreen":undefined;
-   "CableScreen":undefined;
-   "ScratchCardScreen":undefined;
-   "TransactionReviewScreen":{
-    productType:productType,
-    product:string,
-    transactionCost:number,
-   };
-   "BankTransferScreen":{
-    transferAmount:number;
-   };
- };
- 
- export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
-   RootStackParamList,
-   Screen
- >;
- 
- // Screens for BottomTab (i.e after logging in)
- export type RootTabParamList = {
-   "Home": undefined;
-   "Wallet": undefined;
-   "Transactions":undefined;
-   "Profile": undefined;
- };
- 
- export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
-   BottomTabScreenProps<RootTabParamList, Screen>,
-   NativeStackScreenProps<RootStackParamList>
- >;
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends RootStackParamList {}
+  }
+}
+
+export type productType =
+  | "airtime"
+  | "data"
+  | "electricity"
+  | "cable"
+  | "exams";
+
+export type RootStackParamList = {
+  UserScreen: NavigatorScreenParams<RootTabParamList> | undefined;
+  Splash: { activeScreen: 1 | 2 | 3 };
+  "Sign-Up": undefined;
+  "Sign-In": undefined;
+  "Forgot-Password": undefined;
+  QuickSub: undefined;
+
+  //Service screens
+  NetworkProviders: { serviceType: "Airtime" | "Data" };
+  AirtimeScreen: {
+    headerTitle?: string;
+    networkName: string;
+    providerLogoSrc: ImageSourcePropType;
+    recipientType: "My Self" | "Others";
+  };
+  DataScreen: undefined;
+  ElectricityScreen: undefined;
+  CableScreen: undefined;
+  ScratchCardScreen: undefined;
+  TransactionReviewScreen: {
+    productType: productType;
+    product: string;
+    transactionCost: number;
+  };
+  BankTransferScreen: {
+    transferAmount: number;
+  };
+};
+
+export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
+  NativeStackScreenProps<RootStackParamList, Screen>;
+
+// Screens for BottomTab (i.e after logging in)
+export type RootTabParamList = {
+  Home: undefined;
+  Wallet: undefined;
+  Transactions: undefined;
+  Profile: undefined;
+};
+
+export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
+  CompositeScreenProps<
+    BottomTabScreenProps<RootTabParamList, Screen>,
+    NativeStackScreenProps<RootStackParamList>
+  >;
