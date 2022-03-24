@@ -58,12 +58,17 @@ const useSetupRemoteConfig = () => {
       await remoteConfig().setDefaults(
         remoteConfigDefaults as any as FirebaseRemoteConfigTypes.ConfigDefaults
       );
-
-      setSettingUp(false); // Done setting defaults
-
-      // We will fetch and activate server remote-config later in the process
+      // We will fetch server remote-config later in the process
       // At a point user needs internet to further
+      // Then we activate on next app start-up
       console.log("Defaults set");
+
+      // We assume a new config was fetched the last time, here we try to activate it
+      const activated = await remoteConfig().activate();
+      if (activated) console.log("Activated new config");
+      else console.log("Failed to activate fetched config");
+
+      setSettingUp(false); // Done setting up
     };
 
     remoteConfigInit();
