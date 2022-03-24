@@ -24,7 +24,6 @@ const Services = () => {
     >
       <ServiceCard
         animationDelay={300}
-        
         title="Buy Airtime"
         iconSrc={airtime}
         onPress={(_) =>
@@ -35,7 +34,6 @@ const Services = () => {
       />
       <ServiceCard
         animationDelay={400}
-        
         title="Buy Data"
         iconSrc={data}
         onPress={(_) =>
@@ -46,7 +44,6 @@ const Services = () => {
       />
       <ServiceCard
         animationDelay={500}
-        
         title="Buy Electricity"
         style={tw`my-3`}
         iconSrc={electricity}
@@ -55,7 +52,6 @@ const Services = () => {
 
       <ServiceCard
         animationDelay={600}
-        
         title="Tv Cable"
         style={tw`my-3`}
         iconSrc={cable}
@@ -63,15 +59,11 @@ const Services = () => {
       />
       <ServiceCard
         animationDelay={700}
-        
         title="Scratch Card"
         iconSrc={scratchCard}
         onPress={(_) => navigation.navigate("NetworkProviders")}
       />
-      <ServiceCard
-        animationDelay={800}
-        iconSrc={more}
-      />
+      <ServiceCard animationDelay={800} iconSrc={more} />
     </ScrollView>
   );
 };
