@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "647601461346",
+    "project_id": "easy-vtu",
+    "storage_bucket": "easy-vtu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647601461346:android:f281f0cf6c81d3893fd93b",
+        "android_client_info": {
+          "package_name": "com.devvie.easyvtu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "647601461346-1hjegfakaq71k4n7pomq5215gro6fu8s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATFdGDJ0DQYju1M9QLtLznuL24aSW8mS0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "647601461346-1hjegfakaq71k4n7pomq5215gro6fu8s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
