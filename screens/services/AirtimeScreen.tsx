@@ -4,7 +4,6 @@ import Text, { View } from "../../components/Themed";
 import {
   ActivityIndicator,
   Image,
-  ImageBackground,
   View as _View,
 } from "react-native";
 import { useSelector } from "react-redux";
@@ -12,10 +11,8 @@ import CurvedButton from "../../components/Button";
 import tw from "../../lib/tailwind";
 import { MaterialIcons as Icon } from "@expo/vector-icons";
 import InputField from "../../components/InputField";
-import { useNavigation } from "@react-navigation/core";
 import ContactPicker from "../../components/ContactPicker";
-import { TouchableRipple } from "react-native-paper";
-import type { RootStackScreenProps } from "../../types";
+import type { RootStackScreenProps, productType } from "../../types";
 import RippleButton from "../../components/RippleButton";
 import withTile from "../../hooks/withTile";
 
@@ -54,7 +51,7 @@ const AirtimeScreen = ({
 
   const gotoTransationReview = React.useCallback(() => {
     let paramObj = {
-      productType: "airtime",
+      productType: "airtime" as productType,
       product: networkName + " Airtime Top-Up",
       transactionCost: airtimeAmount,
     };
