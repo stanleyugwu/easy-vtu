@@ -11,6 +11,8 @@ import LoaderModal from "../components/LoaderModal";
 import { useSelector } from "react-redux";
 import StatusModal from "../components/StatusModal";
 import NetworkError from "../components/NetworkError";
+import remoteConfig from '@react-native-firebase/remote-config';
+import type { RemoteConfig } from "../types";
 
 import type {
   DiscountStructure,
@@ -19,9 +21,6 @@ import type {
 } from "../types";
 import appStyles from "../lib/appStyles";
 import withTile from "../hooks/withTile";
-
-// Assets
-const tileBg = require("../assets/images/tile_background.png");
 
 type TransactionInfoData = {
   /** The type of product about to be purchased. E.g `'airtime'` */
@@ -70,10 +69,10 @@ const TransactionReviewScreen = ({
   navigation,
   route,
 }: RootStackScreenProps<"TransactionReviewScreen">) => {
-  const discounts: DiscountStructure[] = [
-    { discountPercentage: 5, discountDescription: "Xmas discount" },
-    { discountPercentage: 15, discountDescription: "First Recharge" },
-  ];
+  const allDiscounts = JSON.parse(remoteConfig().getValue('discounts').asString()) as RemoteConfig.Discount;
+  
+  /** This variable tries to extract the discounts of the service supplied from `route params` e.g `airtime`, from the `remote-config` object */
+  const discounts = allDiscounts[route.params.productType] || [];
 
   /**cached unique iD for transaction.\
    * without being in `useRef`, new ID will be generated on any state change
