@@ -11,6 +11,9 @@ import tw from "../lib/tailwind";
 import ModalWrapper, { ModalWrapperProps } from "./ModalWrapper";
 import PressResizerView from "./PressResizerView";
 import RippleButton, { RippleButtonProps } from "./RippleButton";
+import remoteConfig from "@react-native-firebase/remote-config";
+
+import type { RemoteConfig } from "../types";
 
 //Images
 //@ts-ignore
@@ -19,7 +22,7 @@ import defaultPaymentMethodImage from "../assets/images/wallet_img.png";
 import cardImg from "../assets/images/card_img.png";
 import appStyles from "../lib/appStyles";
 
-export type PaymentMethods = "wallet" | "card" | "transfer";
+export type PaymentMethods = "wallet" | "card" | "transfer" | "bitcoin";
 
 export type PaymentMethodButtonProps = {
   /** Button text label */
@@ -46,9 +49,18 @@ const PaymentMethodButton = ({
       style={[tw`my-2 rounded-md bg-surface`, appStyles.boxShadow]}
     >
       <RippleButton rippleColor={tw.color("secondary")} onPress={onPress}>
-        <View style={tw`py-2 px-4 flex-row items-center rounded-md bg-transparent`}>
+        <View
+          style={tw`py-2 px-4 flex-row items-center rounded-md bg-transparent`}
+        >
           <Image source={imageSource} style={tw`h-10 w-10`} />
-          <Text type="button" style={[tw`pl-6 text-primary`]} textBreakStrategy="highQuality" lineBreakMode="middle">{label}</Text>
+          <Text
+            type="button"
+            style={[tw`pl-6 text-primary`]}
+            textBreakStrategy="highQuality"
+            lineBreakMode="middle"
+          >
+            {label}
+          </Text>
         </View>
       </RippleButton>
     </PressResizerView>
@@ -72,6 +84,11 @@ const PaymentMethodPicker = ({
 }: PaymentMethodPicker) => {
   const isSignedIn = useSelector((state) => state.user.isSignedIn);
 
+  // Remote config params
+  const activePaymentMethods = JSON.parse(
+    remoteConfig().getValue("activePaymentMethods").asString()
+  ) as RemoteConfig.ActivePaymentMethods;
+
   const handleWalletSelect = React.useCallback(() => {
     onMethodSelect("wallet");
   }, []);
@@ -80,6 +97,9 @@ const PaymentMethodPicker = ({
   }, []);
   const handleBankSelect = React.useCallback(() => {
     onMethodSelect("transfer");
+  }, []);
+  const handleBtcSelect = React.useCallback(() => {
+    onMethodSelect("bitcoin");
   }, []);
 
   return (
@@ -97,23 +117,36 @@ const PaymentMethodPicker = ({
         >
           How Do You Want To Pay?
         </Text>
-        {isSignedIn ? (
+        {isSignedIn && activePaymentMethods.wallet ? (
           <PaymentMethodButton
             label="Pay From Wallet"
             imageSource={defaultPaymentMethodImage}
             onPress={handleWalletSelect}
           />
         ) : null}
-        <PaymentMethodButton
-          label="Pay With Debit Card"
-          imageSource={cardImg}
-          onPress={handleCardSelect}
-        />
-        <PaymentMethodButton
-          label="Pay Through Bank Transfer"
-          imageSource={cardImg}
-          onPress={handleBankSelect}
-        />
+
+        {activePaymentMethods.debitCard ? (
+          <PaymentMethodButton
+            label="Pay With Debit Card"
+            imageSource={cardImg}
+            onPress={handleCardSelect}
+          />
+        ) : null}
+        {activePaymentMethods.bankTransfer ? (
+          <PaymentMethodButton
+            label="Pay Through Bank Transfer"
+            imageSource={cardImg}
+            onPress={handleBankSelect}
+          />
+        ) : null}
+
+        {activePaymentMethods.BTCTransfer ? (
+          <PaymentMethodButton
+            label="Pay Through Bitcoin"
+            imageSource={cardImg}
+            onPress={handleBankSelect}
+          />
+        ) : null}
       </View>
     </ModalWrapper>
   );
