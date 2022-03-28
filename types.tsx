@@ -147,16 +147,16 @@ export type DiscountStructure = {
 };
 
 export namespace RemoteConfig {
-  type services = "airtime" | "data" | "electricity" | "cable" | "scratchCard";
+  type services = productType;
   type paymentMethods = "wallet" | "bankTransfer" | "debitCard" | "BTCTransfer";
 
-  export type Discount = Record<services, null | number[]>;
+  export type Discount = Record<services, null | DiscountStructure[]>;
   export type ActivePaymentMethods = Record<paymentMethods, boolean>;
   export type MaximumTopUpAmount = number;
   export type SupportedDataNetworkProviders = string[];
   export type SupportedAirtimeNetworkProviders = string[];
   export type ActiveServices = Record<services, boolean>;
-  export type Announcement = { title: null | string; message: null | string };
+  export type Announcement = { title: null | string; message: null | string; updateUrl:null | string };
 }
 
 /**
@@ -182,7 +182,7 @@ export type productType =
   | "data"
   | "electricity"
   | "cable"
-  | "exams";
+  | "scratchCard";
 
 export type RootStackParamList = {
   UserScreen: NavigatorScreenParams<RootTabParamList> | undefined;
