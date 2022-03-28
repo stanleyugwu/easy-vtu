@@ -38,7 +38,6 @@ const Announcement = () => {
       style={{ height: "100%" }}
       onDismiss={handleCloseModal}
       onRequestClose={handleCloseModal}
-      onBackgroundTouch={handleCloseModal}
     >
       <View
         style={[

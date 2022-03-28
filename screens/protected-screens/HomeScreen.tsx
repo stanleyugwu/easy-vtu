@@ -15,6 +15,7 @@ import { DrawerLayout } from "react-native-gesture-handler";
 import Drawer, { DrawerItemType } from "../../components/Drawer";
 import { RootTabScreenProps } from "../../types";
 import SafeArea from "../../components/CustomSafeAreaView";
+import Announcement from "../../components/Announcement";
 
 // Assets
 const drawerBg = require("../../assets/images/moving_bg.gif");
@@ -154,6 +155,7 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
             })}
           >
             <Services />
+            <Announcement/>
           </ScrollView>
         </DrawerLayout>
       </SafeArea>
