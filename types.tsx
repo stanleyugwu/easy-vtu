@@ -185,7 +185,7 @@ export type productType =
   | "scratchCard";
 
 export type RootStackParamList = {
-  UserScreen: NavigatorScreenParams<RootTabParamList> | undefined;
+  UserScreenNavigation: NavigatorScreenParams<RootTabParamList> | undefined;
   Splash: { activeScreen: 1 | 2 | 3 };
   "Sign-Up": undefined;
   "Sign-In": undefined;

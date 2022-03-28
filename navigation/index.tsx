@@ -8,7 +8,7 @@ import SignUpScreen from "../screens/SignUpScreen";
 import SplashScreen from "../screens/SplashScreen/index";
 import SignInScreen from "../screens/SignInScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
-import UserScreen from "../screens/protected-screens/UserScreen";
+import UserScreenNavigation from "../screens/protected-screens/UserScreenNavigation";
 import QuickSubHomeScreen from "../screens/QuickSubHomeScreen";
 
 //services screens
@@ -50,10 +50,10 @@ const theme: Theme = {
   colors: {
     background: "rgb(242, 242, 242)",
     border: "rgb(216, 216, 216)",
-    card: tw.color("primary"),
-    notification: tw.color("secondary"),
-    primary: tw.color("primary"),
-    text: tw.color("on-background"),
+    card: tw.color("primary") as string,
+    notification: tw.color("secondary") as string,
+    primary: tw.color("primary") as string,
+    text: tw.color("on-background") as string,
   },
   dark: false,
 };
@@ -65,8 +65,8 @@ const Navigation = () => {
       <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
         {isSignedIn ? (
           <Stack.Screen
-            name="UserScreen"
-            component={UserScreen}
+            name="UserScreenNavigation"
+            component={UserScreenNavigation}
             options={{ headerShown: false }}
           />
         ) : (
