@@ -1,18 +1,17 @@
 import React from "react";
-import { ImageBackground, Alert } from "react-native";
+import { Alert } from "react-native";
 import Text, { View } from "../components/Themed";
-import PropTypes from "prop-types";
 import SafeAreaView from "../components/CustomSafeAreaView";
 import tw from "../lib/tailwind";
-import BoxShadowView from "../components/BoxShadowView";
-import PaymentMethodPicker, { PaymentMethods } from "../components/PaymentMethodPicker";
+import PaymentMethodPicker, {
+  PaymentMethods,
+} from "../components/PaymentMethodPicker";
 import Button from "../components/Button";
 import LoaderModal from "../components/LoaderModal";
 import { useSelector } from "react-redux";
-import StatusModal from "../components/StatusModal";
 import NetworkError from "../components/NetworkError";
-import remoteConfig from '@react-native-firebase/remote-config';
-import type { RemoteConfig } from "../types";
+import remoteConfig from "@react-native-firebase/remote-config";
+import type { RemoteConfig, RootState } from "../types";
 
 import type {
   DiscountStructure,
@@ -69,8 +68,10 @@ const TransactionReviewScreen = ({
   navigation,
   route,
 }: RootStackScreenProps<"TransactionReviewScreen">) => {
-  const allDiscounts = JSON.parse(remoteConfig().getValue('discounts').asString()) as RemoteConfig.Discount;
-  
+  const allDiscounts = JSON.parse(
+    remoteConfig().getValue("discounts").asString()
+  ) as RemoteConfig.Discount;
+
   /** This variable tries to extract the discounts of the service supplied from `route params` e.g `airtime`, from the `remote-config` object */
   const discounts = allDiscounts[route.params.productType] || [];
 
@@ -83,24 +84,29 @@ const TransactionReviewScreen = ({
   const [pymtMtdPickerVisible, setPymtMtdPickerVisible] = React.useState(false);
   const [paymentProcessing, setPaymentProcessing] = React.useState(false);
   const [statusModalVisible, setStatusModalVisible] = React.useState(false);
-  const walletBalance = useSelector((state) => state.wallet.balance);
+  const walletBalance = useSelector(
+    (state: RootState) => state.wallet.balance
+  );
 
   // handle when user selects a payment method
-  const handlePaymentMethodSelection = React.useCallback((method:PaymentMethods) => {
-    if (method === "transfer") {
-      navigation.navigate("BankTransferScreen", {
-        transferAmount: info.totalAmount,
-      });
-    } else if (method == "wallet") {
-      setPaymentProcessing(true);
-      if (info.totalAmount > walletBalance) {
-        setPaymentProcessing(false);
-        Alert.alert("Insufficient Fund in wallet");
+  const handlePaymentMethodSelection = React.useCallback(
+    (method: PaymentMethods) => {
+      if (method === "transfer") {
+        navigation.navigate("BankTransferScreen", {
+          transferAmount: info.totalAmount,
+        });
+      } else if (method == "wallet") {
+        setPaymentProcessing(true);
+        if (info.totalAmount > walletBalance) {
+          setPaymentProcessing(false);
+          Alert.alert("Insufficient Fund in wallet");
+        }
+        // setTimeout(() => setPaymentProcessing(false), 10000)
       }
-      // setTimeout(() => setPaymentProcessing(false), 10000)
-    }
-    closePymtMtdPane();
-  }, []);
+      closePymtMtdPane();
+    },
+    []
+  );
 
   // open payment method picker
   const openPaymentMethodPane = React.useCallback(
@@ -139,25 +145,33 @@ const TransactionReviewScreen = ({
       </Text>
       <View style={[tw`bg-surface p-4 mb-6`, appStyles.boxShadowSmall]}>
         {/* Type of product */}
-        <Text style={tw`text-gray`} type="body2">Product</Text>
+        <Text style={tw`text-gray`} type="body2">
+          Product
+        </Text>
         <Text style={tw`mb-4 text-on-surface`} type="subTitle">
           {info.productType.toUpperCase()}
         </Text>
 
         {/* Product Description */}
-        <Text style={tw`text-gray`} type="body2">Product Description</Text>
+        <Text style={tw`text-gray`} type="body2">
+          Product Description
+        </Text>
         <Text style={tw`mb-4  text-on-surface`} type="subTitle">
           {info.product}
         </Text>
 
         {/* Transaction ID */}
-        <Text style={tw`text-gray`} type="body2">Transaction ID</Text>
+        <Text style={tw`text-gray`} type="body2">
+          Transaction ID
+        </Text>
         <Text style={tw`mb-4  text-on-surface`} type="subTitle">
           {info.transactionId}
         </Text>
 
         {/* Original cost of product */}
-        <Text style={tw`text-gray`} type="body2">Transaction Cost</Text>
+        <Text style={tw`text-gray`} type="body2">
+          Transaction Cost
+        </Text>
         <Text type="subTitle" style={tw`text-on-surface`}>
           {"\u20A6"}
           {info.transactionCost}
@@ -166,7 +180,9 @@ const TransactionReviewScreen = ({
         {/* Discounts applied to purchase */}
         {info.discounts?.length ? (
           <>
-            <Text style={tw`text-gray mt-4`} type="body2">Discounts</Text>
+            <Text style={tw`text-gray mt-4`} type="body2">
+              Discounts
+            </Text>
             {info.discounts.map((discount, idx) => (
               <Text
                 type="subTitle"

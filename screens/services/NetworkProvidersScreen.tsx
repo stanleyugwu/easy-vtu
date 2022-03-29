@@ -1,5 +1,4 @@
 import React from "react";
-import { ImageBackground, StatusBar } from "react-native";
 import Text, { View } from "../../components/Themed";
 import SafeArea from "../../components/CustomSafeAreaView";
 import ImageButton from "../../components/ImageButton";
@@ -17,7 +16,7 @@ import RecipientTypeModal from "../../components/RecipientTypeModal";
 import withTile from "../../hooks/withTile";
 import remoteConfig from "@react-native-firebase/remote-config";
 
-import type { RootStackScreenProps, RootStackParamList } from "../../types";
+import type { RootStackScreenProps, RootStackParamList, RootState } from "../../types";
 import type { RemoteConfig } from "../../types";
 
 export type NetworkProvidersNames =
@@ -56,8 +55,8 @@ const NetworkProvidersScreen = ({
   //destructure params passed to screen
   const { serviceType = "Airtime" } = route.params;
 
-  const isSignedIn = useSelector((state) => state.user.isSignedIn);
-  const phoneNumber = useSelector((state) => state.user.profile.phone);
+  const isSignedIn = useSelector((state:RootState) => state.user?.isSignedIn);
+  const phoneNumber = useSelector((state:RootState) => state.user?.profile.phone || "");
 
   const [rcptModalVisible, setRcptModalVisible] = React.useState(true);
 

@@ -12,7 +12,7 @@ import tw from "../../lib/tailwind";
 import { MaterialIcons as Icon } from "@expo/vector-icons";
 import InputField from "../../components/InputField";
 import ContactPicker from "../../components/ContactPicker";
-import type { RootStackScreenProps, productType } from "../../types";
+import type { RootStackScreenProps, productType, RootState } from "../../types";
 import RippleButton from "../../components/RippleButton";
 import withTile from "../../hooks/withTile";
 
@@ -38,7 +38,7 @@ const AirtimeScreen = ({
   navigation,
   route,
 }: RootStackScreenProps<"AirtimeScreen">) => {
-  const userPhone = useSelector((state) => state.user.profile.phone);
+  const userPhone = useSelector((state:RootState) => state.user?.profile.phone || "");
 
   const [screenLoaded, setScreenLoaded] = React.useState(false);
   const [contactPickerVisible, setContactPickerVisible] = React.useState(false);
@@ -177,23 +177,6 @@ const AirtimeScreen = ({
         }}
         onChangeText={handleSetAirtimeAmount}
       />
-
-      {/* PANE TO SHOW AMOUNT PAYABLE */}
-      {/* <InputField
-          fieldLabel="Amount Payable:"
-          fieldLabelSubtitle="(what you'll pay for the airtime value)"
-          fieldRequired={false}
-          fieldLabelIcon="md-cash-outline"
-          accessibilityLabel="payable amount input"
-          value={"\u20A6" + amountPayable}
-          extraInputProps={{
-            disabled: true,
-            editable: false,
-            accessibilityLabel: "disabled input showing amount payable",
-            accessibilityRole: "text",
-          }}
-        /> */}
-
       <CurvedButton
         style={tw`my-2`}
         label="Buy Now"

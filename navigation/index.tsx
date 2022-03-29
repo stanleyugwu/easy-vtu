@@ -26,7 +26,7 @@ import BankTransferScreen from "../screens/BankTransferScreen";
 import tw from "../lib/tailwind";
 import { Image } from "react-native";
 
-import type { RootStackParamList } from "../types";
+import type { RootStackParamList, RootState } from "../types";
 import { Theme } from "@react-navigation/native";
 
 //Create Navigation Stack
@@ -59,7 +59,7 @@ const theme: Theme = {
 };
 
 const Navigation = () => {
-  const isSignedIn = useSelector((state) => state.user.isSignedIn);
+  const isSignedIn = useSelector((state:RootState) => state.user?.isSignedIn);
   return (
     <NavigationContainer theme={theme}>
       <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>

@@ -13,7 +13,7 @@ import PressResizerView from "./PressResizerView";
 import RippleButton, { RippleButtonProps } from "./RippleButton";
 import remoteConfig from "@react-native-firebase/remote-config";
 
-import type { RemoteConfig } from "../types";
+import type { RemoteConfig, RootState } from "../types";
 
 //Images
 //@ts-ignore
@@ -82,7 +82,7 @@ const PaymentMethodPicker = ({
   onRequestClose,
   onBackgroundTouch,
 }: PaymentMethodPicker) => {
-  const isSignedIn = useSelector((state) => state.user.isSignedIn);
+  const isSignedIn = useSelector((state:RootState) => state.user?.isSignedIn);
 
   // Remote config params
   const activePaymentMethods = JSON.parse(
