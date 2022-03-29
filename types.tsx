@@ -117,7 +117,7 @@ export type Country = {
 import TwRNStylesJson from "./tw-rn-styles.json";
 import { AppThemeColors } from "./tailwind.config";
 
-import { Style, ClassInput } from "tailwind-react-native-classnames";
+import { Style } from "tailwind-react-native-classnames";
 export type TailwindStyles = keyof typeof TwRNStylesJson;
 
 export type AppColors = AppThemeColors | keyof typeof supportedColors;
@@ -156,8 +156,139 @@ export namespace RemoteConfig {
   export type SupportedDataNetworkProviders = string[];
   export type SupportedAirtimeNetworkProviders = string[];
   export type ActiveServices = Record<services, boolean>;
-  export type Announcement = { title: null | string; message: null | string; updateUrl:null | string };
+  export type Announcement = {
+    title: null | string;
+    message: null | string;
+    updateUrl: null | string;
+  };
 }
+
+/** Corresponsing state slices for app redux store */
+export namespace AppStateSlices {
+  export type UserSlice = {
+    isSignedIn: boolean;
+    /** We'll use `accessToken` for auth and data fetching from server. 
+     /* We wont store passwords locally.
+    */
+    accessToken: string;
+    profile: {
+      /** User's unique id */
+      id: string;
+      username: string;
+      email: string;
+      phone: string;
+      image: string;
+      isVerified: boolean;
+      emailVerifiedAt: string | null;
+      isAdmin: boolean;
+      /** Unique id of referee */
+      referredBy: string;
+      noOfReferrals: number;
+      createdAt: string | number;
+      updatedAt: string | number;
+    };
+  };
+  export type WalletSlice = {
+    // user's balance in naira
+    balance: number;
+    // we're making account number string cus it might start with zero, and cause issues
+    accountNumber: string;
+    accountName: string;
+    bankName: string;
+  };
+  export type AppSlice = {
+    /** Will store the date app-rating dialog was shown to user last */
+    ratingModalLastSeen: number;
+    /**
+     *  Will store the date announcement dialog was shown to user last.
+     * This is neccessary to avoid frequent pop-ups
+     */
+    announcementModalLastSeen: number;
+  };
+}
+
+/** Dispatch payload types */
+export namespace DispatchPayloads {
+  /** Payload for signing in */
+  export type SignIn = AppStateSlices.UserSlice["profile"] & {
+    accessToken: string;
+  };
+
+  /** Payload for signing out */
+  export type SignOut = undefined;
+
+  export type updateProfilePayloadKeys =
+    | "username"
+    | "email"
+    | "phone"
+    | "image"
+    | "isVerified"
+    | "emailVerifiedAt"
+    | "isAdmin"
+    | "referredBy"
+    | "noOfReferrals"
+    | "createdAt"
+    | "updatedAt";
+
+  /**
+   * Payload for updating profile.
+   * This will be used for both when the user edits his profile and when the
+   * app automatically fetches profile to keep it in sync with the server.
+   *
+   * This will be possible by only adding the neccessary fields to the payload object.
+   * If you want to verify a user, you dispatch an action with only the `isVerified` and
+   * `verifiedAt` fields in the dispatch payload. The reducer will take care of merging the payload with existing state.
+   * @example dispatch(updateProfile({verified:true, verifiedAt: 1244534}))
+   */
+  export type UpdateProfile = Pick<
+    AppStateSlices.UserSlice["profile"],
+    updateProfilePayloadKeys
+  >;
+
+  /**
+   * Payload for adding money to wallet
+   * Should only be called by app carefully
+   */
+  export type AddMoneyPayload = number;
+
+  /**
+   * Payload for removing money from wallet
+   * Should only be called by app carefully
+   */
+  export type RemoveMoneyPayload = number;
+
+  /** Payload for resetting wallet */
+  export type ResetWalletPayload = undefined;
+
+  /** Payload for updating wallet account information */
+  export type UpdateAccountInfoPayload = {
+    accountNumber: string;
+    accountName: string;
+    bankName: string;
+  };
+
+  /** 
+   * Payload for setting the last seen of rating modal.
+   * It should be a timestamp in milliseconds
+  */
+  export type RatingModalLastSeenPayload = number;
+
+   /** 
+   * Payload for setting the last seen of annoncement modal.
+   * It should be a timestamp in milliseconds
+  */
+    export type AnnouncementModalLastSeenPayload = number;
+}
+
+/**
+ * Root state of the app.
+ * The essence of `null` in the union is for when user is not logged in
+ */
+export type RootState = {
+  user: null | AppStateSlices.UserSlice;
+  wallet: null | AppStateSlices.WalletSlice;
+  app: null | AppStateSlices.AppSlice;
+};
 
 /**
  * // => NAVIGATION-RELATED TYPES
