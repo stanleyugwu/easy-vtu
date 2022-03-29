@@ -9,7 +9,7 @@ const setRatingModalLastSeenReducer = (
 ) => {
   const timestamp = action.payload;
 
-  if (!timestamp || typeof timestamp != "number" || !state) return;
+  if (!timestamp || typeof timestamp != "number") return;
   state.ratingModalLastSeen = timestamp;
 };
 
@@ -19,11 +19,14 @@ const setAnnouncementModalLastSeenReducer = (
 ) => {
   const timestamp = action.payload;
 
-  if (!timestamp || typeof timestamp != "number" || !state) return;
+  if (!timestamp || typeof timestamp != "number") return;
   state.announcementModalLastSeen = timestamp;
 };
 
-const initialState: RootState["app"] = null;
+const initialState: RootState["app"] = {
+  announcementModalLastSeen: 0,
+  ratingModalLastSeen: 0,
+};
 
 const appSlice = createSlice({
   name: "app",

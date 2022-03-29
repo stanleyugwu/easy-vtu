@@ -192,9 +192,9 @@ export namespace AppStateSlices {
     // user's balance in naira
     balance: number;
     // we're making account number string cus it might start with zero, and cause issues
-    accountNumber: string;
-    accountName: string;
-    bankName: string;
+    accountNumber: string | null;
+    accountName: string | null;
+    bankName: string | null;
   };
   export type AppSlice = {
     /** Will store the date app-rating dialog was shown to user last */
@@ -286,8 +286,8 @@ export namespace DispatchPayloads {
  */
 export type RootState = {
   user: null | AppStateSlices.UserSlice;
-  wallet: null | AppStateSlices.WalletSlice;
-  app: null | AppStateSlices.AppSlice;
+  wallet: AppStateSlices.WalletSlice;
+  app: AppStateSlices.AppSlice;
 };
 
 /**

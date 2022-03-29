@@ -38,7 +38,7 @@ const resetWalletReducer = (
   state: WalletSlice,
   action: PayloadAction<Payloads.ResetWalletPayload>
 ) => {
-  state = null;
+  state = initialState;
 };
 
 const updateAccountInfoReducer = (
@@ -54,7 +54,12 @@ const updateAccountInfoReducer = (
   };
 };
 
-export const initialState: RootState["wallet"] = null;
+export const initialState: RootState["wallet"] = {
+  accountName: null,
+  accountNumber: null,
+  balance: 0,
+  bankName: null,
+};
 
 const walletSlice = createSlice({
   name: "wallet",
@@ -70,6 +75,6 @@ const walletSlice = createSlice({
 export const { addMoney, removeMoney, resetWallet, updateAccountInfo } =
   walletSlice.actions;
 
-export const balanceSelector = (state: RootState) => state.wallet?.balance;
+export const balanceSelector = (state: RootState) => state.wallet.balance;
 
 export default walletSlice.reducer;
