@@ -18,6 +18,7 @@ public class BasePackageList {
         new expo.modules.lineargradient.LinearGradientPackage(),
         new expo.modules.securestore.SecureStorePackage(),
         new expo.modules.splashscreen.SplashScreenPackage(),
+        new expo.modules.storereview.StoreReviewPackage(),
         new expo.modules.updates.UpdatesPackage()
     );
   }
