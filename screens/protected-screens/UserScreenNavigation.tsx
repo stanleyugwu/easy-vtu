@@ -118,7 +118,7 @@ const TransactionsScreen = (props) => {
 //create tab navigator
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
-const UserScreen = ({ navigation }: RootStackScreenProps<"UserScreen">) => {
+const UserScreenNavigation = ({ navigation }: RootStackScreenProps<"UserScreenNavigation">) => {
   return (
     <ErrorBoundary>
       <Tab.Navigator screenOptions={({ route }) => screenOptionGen(route)}>
@@ -143,4 +143,4 @@ const UserScreen = ({ navigation }: RootStackScreenProps<"UserScreen">) => {
   );
 };
 
-export default UserScreen;
+export default UserScreenNavigation;

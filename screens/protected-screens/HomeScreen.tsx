@@ -7,21 +7,24 @@ import {
   StatusBar,
   View,
   Dimensions,
-  GestureResponderEvent,
   ImageBackground,
 } from "react-native";
 import tw from "../../lib/tailwind";
 import { DrawerLayout } from "react-native-gesture-handler";
 import Drawer, { DrawerItemType } from "../../components/Drawer";
-import { RootTabScreenProps } from "../../types";
+import { RootState, RootTabScreenProps } from "../../types";
 import SafeArea from "../../components/CustomSafeAreaView";
+import Announcement from "../../components/Announcement";
 
 // Assets
 const drawerBg = require("../../assets/images/moving_bg.gif");
 
 const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
   //profile selector
-  const profile = useSelector((state) => state.user.profile);
+  const profile = useSelector((state: RootState) => state.user?.profile);
+
+  // if you dont have a profile, you dont deserve to be here
+  if (!profile) return null;
 
   // register refs
   const screenWidth = React.useRef(Dimensions.get("window").width).current;
@@ -154,6 +157,7 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
             })}
           >
             <Services />
+            <Announcement />
           </ScrollView>
         </DrawerLayout>
       </SafeArea>

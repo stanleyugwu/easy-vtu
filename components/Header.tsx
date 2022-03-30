@@ -1,5 +1,5 @@
 import React from "react";
-import { GestureResponderEvent, View as _View } from "react-native";
+import { GestureResponderEvent, ImageSourcePropType, View as _View } from "react-native";
 import ProfileAvatar from "./ProfileAvatar";
 import WalletCard from "./WalletCard";
 import tw from "../lib/tailwind";
@@ -8,6 +8,7 @@ import FadeInView from "./FadeInView";
 import RippleButton from "./RippleButton";
 import { useSelector } from "react-redux";
 import { View, ViewProps } from "./Themed";
+import { RootState } from "../types";
 
 export type HeaderProps = {
   /** Callback to invoke when `menu` icon in the header top bar is pressed */
@@ -41,8 +42,10 @@ const Header = React.forwardRef(
     ref: React.ForwardedRef<_View>
   ) => {
     // State selectors
-    const profile = useSelector((state) => state.user.profile);
-    const wallet = useSelector((state) => state.wallet);
+    const profile = useSelector((state:RootState) => state.user?.profile);
+    const wallet = useSelector((state:RootState) => state.wallet);
+
+    if(!profile) return null
 
     return (
       <View
@@ -79,14 +82,14 @@ const Header = React.forwardRef(
             accessibilityLabel="header profile avatar"
             textStyle={tw`text-gray-light font-sans-semibold`}
             label={"👋 Hello " + profile.username}
-            imageUrl={profile.image}
+            imageUrl={profile.image as ImageSourcePropType}
           />
         </RippleButton>
 
         <FadeInView slideUp={false} style={tw`w-full mt-2`}>
           <WalletCard
             balance={wallet.balance}
-            totalCards={wallet.cards.length}
+            totalCards={0}
             onAddCallback={onWalletAddCb}
           />
         </FadeInView>

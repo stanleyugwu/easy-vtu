@@ -7,6 +7,7 @@ import withTile from "../hooks/withTile";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 import type { RootStackScreenProps } from "../types";
+import Announcement from "../components/Announcement";
 
 const QuickSubHomeScreen = ({
   navigation,
@@ -30,6 +31,7 @@ const QuickSubHomeScreen = ({
         What do you want to do?
       </Text>
       <Services />
+      <Announcement/>
     </ScreenContainer>
   );
 };
