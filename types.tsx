@@ -159,7 +159,11 @@ export namespace RemoteConfig {
   export type Announcement = {
     title: null | string;
     message: null | string;
-    updateUrl: null | string;
+    /**
+     * Where the app will redirect to when the button in announcement modal is pressed.
+     * Absence of the field will make the button invisible all-together
+     */
+    buttonUrl: null | string;
   };
 }
 
