@@ -15,6 +15,7 @@ import Drawer, { DrawerItemType } from "../../components/Drawer";
 import { RootState, RootTabScreenProps } from "../../types";
 import SafeArea from "../../components/CustomSafeAreaView";
 import Announcement from "../../components/Announcement";
+import checkAppUpdates from '../../utils/checkAppUpdates';
 
 // Assets
 const drawerBg = require("../../assets/images/moving_bg.gif");
@@ -25,6 +26,11 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
 
   // if you dont have a profile, you dont deserve to be here
   if (!profile) return null;
+
+  React.useEffect(() => {
+    // check for and download app updates
+    checkAppUpdates();
+  },[])
 
   // register refs
   const screenWidth = React.useRef(Dimensions.get("window").width).current;
@@ -102,6 +108,7 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
       <View style={tw`bg-surface h-full w-full`}>
         <Drawer
           upperItems={upperDrawerItems}
+          // @ts-ignore issue with dependency
           avatarUri={profile.image}
           onAvatarPress={onAvatarPressCb}
           headerTitle={profile.username || "Welcome"}
@@ -139,6 +146,7 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
           drawerBackgroundColor={tw.color("surface")}
           drawerPosition={DrawerLayout.positions.Left as "left"}
           drawerType="slide"
+          onDrawerClose={closeDrawer}
           ref={drawerRef}
         >
           <Header
