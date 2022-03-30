@@ -1,24 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import tw from "../lib/tailwind";
 import CurvedButton from "../components/Button";
-import {
-  ImageBackground,
-  Image,
-  ActivityIndicator,
-  StatusBar,
-  Modal,
-  BackHandler,
-} from "react-native";
+import { Image } from "react-native";
 import { Divider } from "react-native-paper";
 import InputField from "../components/InputField";
 import SafeArea from "../components/CustomSafeAreaView";
-import { ScrollView } from "react-native-gesture-handler";
 import Text, { View } from "../components/Themed";
 import { Ionicons as Icon } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import useFormField from "../hooks/useFormField.hook";
-import { setToken, signIn as setSignIn } from "../store/slices/userSlice";
-import { addMoney } from "../store/slices/walletSlice";
+import { signIn as setSignIn } from "../store/slices/userSlice";
 import LoaderModal from "../components/LoaderModal";
 import axios from "axios";
 import { signIn } from "../adapters/auth.adapter";
@@ -27,7 +18,6 @@ import withTile from "../hooks/withTile";
 
 //Images
 const appIcon = require("../assets/images/icon.png");
-const tileBg = require("../assets/images/tile_signup.png");
 
 // should follow `useFormField` hook validator rules
 const emailValidator = (emailAddress: string) => {
