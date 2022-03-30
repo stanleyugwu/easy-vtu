@@ -39,7 +39,7 @@ const remoteConfigDefaults = {
     cable: true,
     scratchCard: true,
   }),
-  announcement: JSON.stringify({ title: null, message: null, updateUrl:null }),
+  announcement: JSON.stringify({ title: null, message: null, buttonUrl:null }),
 };
 
 // This is the type of remote-config data fetched from firebase or stored locally
