@@ -8,10 +8,18 @@ import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 import type { RootStackScreenProps } from "../types";
 import Announcement from "../components/Announcement";
+import RatingModal from "../components/RatingModal";
+import checkAppUpdates from "../utils/checkAppUpdates";
 
 const QuickSubHomeScreen = ({
   navigation,
 }: RootStackScreenProps<"QuickSub">) => {
+ 
+  React.useEffect(() => {
+    // check for and download app updates
+    checkAppUpdates();
+  },[]);
+  
   return (
     <ScreenContainer style={tw.style(`p-0 h-full`)}>
       <View style={tw.style("w-full bg-primary pt-1")}>
@@ -30,6 +38,7 @@ const QuickSubHomeScreen = ({
       <Text type="title" style={tw`mt-10 mb-5 text-center text-on-background`}>
         What do you want to do?
       </Text>
+      <RatingModal/>
       <Services />
       <Announcement/>
     </ScreenContainer>

@@ -18,11 +18,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "appStoreUrl": "https://apps.apple.com/app/apple-store/id123456789?action=write-review"
     },
     "android": {
       "permissions": ["READ_CONTACTS"],
       "package": "com.devvie.easyvtu",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.devvie.easyvtu&showAllReviews=true",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#FFFFFF"

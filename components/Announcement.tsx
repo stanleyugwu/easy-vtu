@@ -8,8 +8,11 @@ import { ScrollView } from "react-native-gesture-handler";
 // @ts-ignore
 import announcementAnimation from "../assets/images/announcement_animation.gif";
 import { Ionicons as Icon } from "@expo/vector-icons";
-import type { RemoteConfig } from "../types";
+import type { RemoteConfig, RootState } from "../types";
 import RippleButton from "./RippleButton";
+import isItTime from "../utils/isItTime";
+import { useDispatch, useSelector } from "react-redux";
+import { setAnnouncementModalLastSeen } from "../store/slices/appSlice";
 
 const Announcement = () => {
   const announcement = JSON.parse(
@@ -19,19 +22,29 @@ const Announcement = () => {
   if(!announcement.title && !announcement.message) return null; // Assert there are announcements
 
   const [modalOpen, setModalOpen] = React.useState(true);
+  const dispatch = useDispatch();
 
   const handleUpdateClick = React.useCallback(() => {
-    Linking.openURL(announcement.updateUrl as string).finally(() => {
+    Linking.openURL(announcement.buttonUrl as string).finally(() => {
       handleCloseModal();
     });
-  }, [announcement.updateUrl]);
+  }, [announcement.buttonUrl]);
 
   const handleCloseModal = React.useCallback(() => {
     setModalOpen(false);
   }, []);
 
+  const lastAnnouncementTime = useSelector((state:RootState) => state.app.announcementModalLastSeen);
+  
   // Checks if modal has been closed by user
   if (!modalOpen) return null;
+  
+  // assert if it's been over 24 hours since we showed dialog last
+  const canShowDialog = isItTime(lastAnnouncementTime, 86400000/* 24 hours */);
+  if(canShowDialog) {
+    // dialog should show now, lets update the last seen time
+    dispatch(setAnnouncementModalLastSeen(Date.now()));
+  } else return null;
 
   return (
     <ModalWrapper
@@ -63,7 +76,7 @@ const Announcement = () => {
             <Text style={tw`py-2`}>{announcement.message}</Text>
           </ScrollView>
         ) : null}
-        {announcement.updateUrl ? (
+        {announcement.buttonUrl ? (
           <View style={{ height: "10%", backgroundColor: "transparent" }}>
             <RippleButton
               style={tw`bg-primary mx-4 rounded-xl`}
