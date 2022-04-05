@@ -24,7 +24,6 @@ const storeLink =
  */
 export const RatingDialog = () => {
   const [dismissed, setDismissed] = React.useState(false);
-
   const handleRatePress = React.useCallback(() => {
     Linking.openURL(storeLink).finally(() => setDismissed(true));
   }, []);
