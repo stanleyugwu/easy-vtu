@@ -248,7 +248,7 @@ const InputField = React.forwardRef(
     return (
       <View
         style={tw.style(
-          ["max-w-md my-2 p-4 rounded-lg bg-surface"],
+          ["max-w-md my-2 p-3.5 rounded-lg bg-surface"],
           appStyles.boxShadow,
           style
         )}
