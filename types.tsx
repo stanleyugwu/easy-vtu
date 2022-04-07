@@ -174,8 +174,8 @@ export namespace AppStateSlices {
     /** We'll use `accessToken` for auth and data fetching from server. 
      /* We wont store passwords locally.
     */
-    accessToken: string;
-    profile: {
+    accessToken: string | null;
+    profile: null | {
       /** User's unique id */
       id: string;
       username: string;
@@ -271,17 +271,17 @@ export namespace DispatchPayloads {
     bankName: string;
   };
 
-  /** 
+  /**
    * Payload for setting the last seen of rating modal.
    * It should be a timestamp in milliseconds
-  */
+   */
   export type RatingModalLastSeenPayload = number;
 
-   /** 
+  /**
    * Payload for setting the last seen of annoncement modal.
    * It should be a timestamp in milliseconds
-  */
-    export type AnnouncementModalLastSeenPayload = number;
+   */
+  export type AnnouncementModalLastSeenPayload = number;
 }
 
 /**
@@ -289,7 +289,7 @@ export namespace DispatchPayloads {
  * The essence of `null` in the union is for when user is not logged in
  */
 export type RootState = {
-  user: null | AppStateSlices.UserSlice;
+  user: AppStateSlices.UserSlice;
   wallet: AppStateSlices.WalletSlice;
   app: AppStateSlices.AppSlice;
 };
@@ -365,3 +365,44 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     BottomTabScreenProps<RootTabParamList, Screen>,
     NativeStackScreenProps<RootStackParamList>
   >;
+
+/**
+ * TYPES FOR PAYLOADS COMING FROM THE SERVER
+ */
+export namespace Server {
+  export type Response = {
+    status: boolean;
+    message: string | { [field: string]: string[] };
+    data: any;
+  };
+
+  export type LoginResponse = {
+    access_token:
+      string,
+    data: {
+      created_at: string,
+      email: string,
+      email_verified_at: null | string,
+      id: number,
+      phone: string,
+      unique_id: string,
+      updated_at: string,
+      username: string,
+    },
+    expires_in: number,
+    message: string,
+    status: true,
+    token_type: "bearer",
+  };
+
+  export type ErrorResponse = {
+    status: false;
+    message: string | { [field: string]: string[] };
+    data: null | "Empty";
+  };
+
+  export type RequestError = {
+    message: string;
+    _error: object | string;
+  };
+}
