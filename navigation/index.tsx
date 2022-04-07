@@ -43,8 +43,8 @@ const AppIcon = () => (
 // function to generate options object for any screen,
 // constructing its `title` prop based on route `params` passed to it and setting it to a given default title otherwise.
 const generateProvidersParams =
-  (defaultTitle) =>
-  ({ route }) => ({ title: route?.params?.headerTitle || defaultTitle });
+  (defaultTitle: string) =>
+  ({ route }: any) => ({ title: route?.params?.headerTitle || defaultTitle });
 
 const theme: Theme = {
   colors: {
@@ -59,7 +59,7 @@ const theme: Theme = {
 };
 
 const Navigation = () => {
-  const isSignedIn = useSelector((state:RootState) => state.user?.isSignedIn);
+  const isSignedIn = useSelector((state: RootState) => state.user.isSignedIn);
   return (
     <NavigationContainer theme={theme}>
       <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>
@@ -72,12 +72,7 @@ const Navigation = () => {
         ) : (
           <Stack.Group screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Splash" component={SplashScreen} />
-            <Stack.Screen name="Sign-Up" component={SignUpScreen} options={{
-                headerShown: true,
-                headerTitle:"Sign-Up, It's Free",
-                headerTitleStyle: tw`text-center font-sans-semibold text-xl text-on-primary`,
-                headerTintColor: tw.color("on-primary"),
-              }} />
+            <Stack.Screen name="Sign-Up" component={SignUpScreen} />
             <Stack.Screen name="Sign-In" component={SignInScreen} />
             <Stack.Screen
               name="Forgot-Password"

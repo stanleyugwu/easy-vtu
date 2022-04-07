@@ -1,8 +1,7 @@
-import React, { LegacyRef } from "react";
+import React from "react";
 import tw from "../lib/tailwind";
 import CurvedButton from "../components/Button";
 import BackButton from "../components/BackButton";
-import { ImageBackground, StatusBar, TextInput } from "react-native";
 import { Divider } from "react-native-paper";
 import { BackHandler } from "react-native";
 import PhoneInput from "react-native-phone-input";
@@ -14,10 +13,7 @@ import { useFormik } from "formik";
 import LoaderModal from "../components/LoaderModal";
 import withTile from "../hooks/withTile";
 import { ScrollView } from "react-native-gesture-handler";
-
-import dancingLove from '../assets/json/dancing_love.json';
 import type { RootStackScreenProps } from "../types";
-import AnimatedLottieView from "lottie-react-native";
 
 type SignupErrorObject = Record<
   "username" | "password" | "emailAddress" | "confirmPassword" | "referrer",
@@ -362,6 +358,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
             onPress={() => setFormStep(1)}
           />
         ) : null}
+
         <View style={tw`w-full mb-0 bg-transparent`}>
           {formStep == 2 ? (
             <>
@@ -372,15 +369,13 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
                 style={tw`h-1 bg-primary rounded-full w-20 mx-auto mt-2 mb-4`}
               />
             </>
-          ) : (
-            <AnimatedLottieView
-          source={dancingLove}
-          style={{ width: "100%", height: 140, alignSelf:"center" }}
-          resizeMode="contain"
-          loop={true}
-          autoPlay={true}
-        />
-          )
+          ) : <>
+          <Text type="heading" style={tw`font-sans-semibold mt-8 text-center`}>
+            Sign Up
+          </Text>
+          <Divider
+          style={tw`h-1 bg-primary rounded-full w-10 mx-auto mt-2 mb-4`}
+        /></>
         }
         </View>
 
