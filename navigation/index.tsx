@@ -25,6 +25,7 @@ import BankTransferScreen from "../screens/BankTransferScreen";
 
 import tw from "../lib/tailwind";
 import { Image } from "react-native";
+import * as ExpoNativeSplashScreen from 'expo-splash-screen';
 
 import type { RootStackParamList, RootState } from "../types";
 import { Theme } from "@react-navigation/native";
@@ -60,6 +61,16 @@ const theme: Theme = {
 
 const Navigation = () => {
   const isSignedIn = useSelector((state: RootState) => state.user.isSignedIn);
+
+  React.useEffect(() => {
+    /**
+     * At this point, the native splash screen is still visible.
+     * Because this component takes time to render, especially when user is logged in, 
+     * we'll only hide the splash screen when this component's children are rendered
+     */
+    ExpoNativeSplashScreen.hideAsync();
+  }, [])
+
   return (
     <NavigationContainer theme={theme}>
       <Stack.Navigator screenOptions={{ animation: "slide_from_right" }}>

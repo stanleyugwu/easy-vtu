@@ -29,7 +29,12 @@ export default function useCachedResources() {
         console.warn(e);
       } finally {
         setLoadingComplete(true);
-        SplashScreen.hideAsync();
+        /**
+         * We're supposed to hide the splash-screen here, but because `Navigation` component takes
+         * time (2s) to fully render, we'll hide the splash-screen in the `useEffect` of `Navigation` component
+         * that will keep the splash-screen visible until all screens have been rendered
+         */
+        // SplashScreen.hideAsync();
       }
     }
 
