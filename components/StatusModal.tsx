@@ -20,6 +20,8 @@ export type StatusModalProps = {
   onClose: (event: GestureResponderEvent) => void;
   /** Text to further describe the status */
   statusText: string;
+  /** Optional Title for the text */
+  statusTextTitle?: string;
 } & ViewProps;
 
 /**
@@ -32,6 +34,7 @@ const StatusModal = ({
   onClose,
   status = "success",
   statusText,
+  statusTextTitle,
   ...otherProps
 }: StatusModalProps) => {
   return (
@@ -39,7 +42,7 @@ const StatusModal = ({
       <View
         accessibilityLabel={status + " modal main"}
         style={tw.style(
-          "mx-auto my-auto w-11/12 max-w-md bg-surface items-center",
+          "mx-auto my-auto w-11/12 max-w-md bg-surface items-center rounded-xl",
           style
         )}
         {...otherProps}
@@ -54,8 +57,9 @@ const StatusModal = ({
               style={{ width: "100%", height: 120, alignSelf: "center" }}
               resizeMode="contain"
               autoPlay={true}
-              loop={false}
-              speed={2.2}
+              loop={true}
+              duration={2000}
+              speed={2}
             />
           ) : (
             <LottieView
@@ -66,22 +70,30 @@ const StatusModal = ({
               autoPlay={true}
             />
           )}
+          {statusTextTitle ? (
+            <Text
+              type="title"
+              accessibilityLabel={status + " modal text"}
+              style={tw`mt-1 mb-2 content-center items-center text-center`}
+            >
+              {statusTextTitle}
+            </Text>
+          ) : null}
           {statusText ? (
             <Text
               accessibilityLabel={status + " modal text"}
-              style={tw`mt-1 content-center items-center`}
+              style={tw`mt-1 content-center items-center text-center`}
             >
               {statusText}
             </Text>
           ) : null}
         </View>
-        <View
-          style={tw`mt-3 justify-end w-full bg-transparent py-2 px-6 border-t border-gray`}
-        >
+        <View style={tw`mt-3 bg-transparent justify-end w-full px-6`}>
           <Text
             type="button"
-            style={tw.style(`text-right text-primary`, {
+            style={tw.style(`text-right p-2 text-primary`, {
               fontSize: 17,
+              lineHeight: 32,
             })}
             onPress={onClose}
           >
@@ -93,4 +105,4 @@ const StatusModal = ({
   );
 };
 
-export default React.memo(StatusModal);
+export default StatusModal;
