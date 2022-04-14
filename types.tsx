@@ -366,8 +366,29 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     NativeStackScreenProps<RootStackParamList>
   >;
 
+
+  /**
+   * Types for the form fields of different forms used in the app.
+   * Each type's field correspond to the field server expects/reads
+   */
+  export namespace FormFieldsTypes {
+    export type Login = {
+      email:string;
+      password:string;
+    }
+
+    export type SignUp = {
+      username: string,
+      email: string,
+      password: string,
+      password_confirmation: string,
+      phone:string;
+      referrer:string;
+    }
+  }
+
 /**
- * TYPES FOR PAYLOADS COMING FROM THE SERVER
+ * TYPES FOR RESPONSE PAYLOADS COMING FROM THE SERVER
  */
 export namespace Server {
   export type Response = {
@@ -394,6 +415,19 @@ export namespace Server {
     status: true,
     token_type: "bearer",
   };
+
+  export type SignUpResponse = {
+    status: true,
+    message: string,
+    data: {
+      username: string,
+      email: string,
+      phone: string,
+      unique_id: string,
+      updated_at: string,
+      created_at: string
+    }
+  }
 
   export type ErrorResponse = {
     status: false;
