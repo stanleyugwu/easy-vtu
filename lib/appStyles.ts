@@ -39,7 +39,10 @@ export const typeStyle = StyleSheet.create({
   title: tw.style(`font-sans-semibold text-xl`, {
     letterSpacing: 0.15,
   }),
-  subTitle: tw.style(`font-sans-semibold leading-6`, {fontSize:16, letterSpacing: 0.15 }),
+  subTitle: tw.style(`font-sans-semibold leading-6`, {
+    fontSize: 16,
+    letterSpacing: 0.15,
+  }),
   subTitle2: tw.style(`font-sans-semibold leading-6 text-sm`, {
     letterSpacing: 0.15,
   }),
@@ -52,4 +55,4 @@ export const typeStyle = StyleSheet.create({
   button: tw.style(`text-sm leading-4 font-sans-semibold uppercase`, {
     letterSpacing: 1.1,
   }),
-})
+});

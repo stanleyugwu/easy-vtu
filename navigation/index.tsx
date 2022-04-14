@@ -102,7 +102,7 @@ const Navigation = () => {
             headerShown: true,
             headerTitleStyle: tw`text-center font-sans-semibold text-xl text-on-primary`,
             headerTintColor: tw.color("on-primary"), //back icon doesn't change to white unless this property is set
-            statusBarStyle: "light",
+            statusBarStyle: "dark",
             headerRight: AppIcon,
             animationTypeForReplace: "push",
           }}

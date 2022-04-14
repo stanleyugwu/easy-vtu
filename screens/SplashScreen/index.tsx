@@ -1,11 +1,12 @@
 import React, { SetStateAction } from "react";
 import ScreenContainer from "../../components/CustomSafeAreaView";
-import { TouchableOpacity, StatusBar, ImageBackground } from "react-native";
+import { TouchableOpacity, ImageBackground } from "react-native";
 import tw from "../../lib/tailwind";
 import RoundButton from "../../components/RoundButton";
 import SlideCounterDots from "../../components/SlideCounterDots";
 import Text, { View } from "../../components/Themed";
 import BackButton from "../../components/BackButton";
+import { StatusBar } from "expo-status-bar";
 
 // splash screens
 import Splash1 from "./Splash1";
@@ -82,7 +83,7 @@ const SplashScreen = ({ navigation }: RootStackScreenProps<"Splash">) => {
       style={{ width: "100%", height: "100%" }}
       resizeMode="cover"
     >
-      <StatusBar backgroundColor={tw.color("primary")} />
+      <StatusBar backgroundColor={tw.color("primary-dark")} style="light" />
       <ScreenContainer
         style={tw.style(
           `bg-primary h-full`,
@@ -123,7 +124,7 @@ const SplashScreen = ({ navigation }: RootStackScreenProps<"Splash">) => {
                 icon="arrow-left"
                 iconColor={tw.color("primary")}
                 size={35}
-                gradient={[tw.color("on-primary"), tw.color("on-primary")]}
+                gradient={[tw.color("on-primary") as string, tw.color("on-primary") as string]}
                 onPress={backBtnPressHandler}
               />
             ) : null}
@@ -133,7 +134,7 @@ const SplashScreen = ({ navigation }: RootStackScreenProps<"Splash">) => {
               <RoundButton
                 icon="arrow-right"
                 iconColor={tw.color("primary")}
-                gradient={[tw.color("on-primary"), tw.color("on-primary")]}
+                gradient={[tw.color("on-primary") as string, tw.color("on-primary") as string]}
                 size={35}
                 onPress={frontBtnPressHandler}
               />
