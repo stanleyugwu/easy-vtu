@@ -114,7 +114,7 @@ const Button = ({
       {left}
       <Text
         type="button"
-        style={[tw`mx-6 font-sans-semibold`, { color: labelColor }]}
+        style={[tw`mx-3 font-sans-semibold`, { color: labelColor }]}
         accessibilityLabel={"button label"}
       >
         {label}
@@ -125,7 +125,7 @@ const Button = ({
 
   const Touchable = (
     <RippleButton
-      onPress={!disabled && onPress}
+      onPress={!disabled ? onPress : undefined}
       style={tw.style("rounded-lg")}
       accessibilityRole="button"
       accessibilityLabel="curved button"
