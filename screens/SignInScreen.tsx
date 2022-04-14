@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import tw from "../lib/tailwind";
 import CurvedButton from "../components/Button";
-import { Dimensions, Image } from "react-native";
+import { Dimensions } from "react-native";
 import { Divider, Snackbar } from "react-native-paper";
 import InputField from "../components/InputField";
 import SafeArea from "../components/CustomSafeAreaView";
@@ -11,13 +11,14 @@ import { useDispatch } from "react-redux";
 import useFormField from "../hooks/useFormField.hook";
 import { signIn as signInAction } from "../store/slices/userSlice";
 import LoaderModal from "../components/LoaderModal";
-import { RootStackScreenProps, Server } from "../types";
-import withTile from "../hooks/withTile";
+import { FormFieldsTypes, RootStackScreenProps, Server } from "../types";
 import myAxios from "../adapters/instance";
 import { AxiosResponse } from "axios";
-
-//Images
-const appIcon = require("../assets/images/icon.png");
+import FadeInView from "../components/FadeInView";
+import { ScrollView } from "react-native-gesture-handler";
+import { StatusBar } from "expo-status-bar";
+import welcomeAnimation from "../assets/json/welcome_animation.json";
+import AnimatedLottieView from "lottie-react-native";
 
 // should follow `useFormField` hook validator rules
 const emailValidator = (emailAddress: string) => {
@@ -75,10 +76,6 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
     controller.abort();
   });
 
-  const goToSignUp = React.useCallback(() => {
-    navigation.navigate("Sign-Up");
-  }, []);
-
   const goToForgotPassword = React.useCallback(() => {
     navigation.navigate("Forgot-Password");
   }, []);
@@ -103,8 +100,28 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
     // so as to avoid permanently cancelling a request
     controller = new AbortController();
 
+    dispatch(
+      signInAction({
+        accessToken:
+          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzMTMwOTAwNSwiZXhwIjoxNjMxMzEyNjA1LCJuYmYiOjE2MzEzMDkwMDUsImp0aSI6IjRINUozclNSYWhZQjB1V0YiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.vIdA8M_BbgI71OVjENByCpR4kqweKJ9-IJxyKQo56nA",
+        createdAt: "2022-03-02T18:15:45.000000Z",
+        email: "anipreciousebuka@gmail.com",
+        emailVerifiedAt: null,
+        id: "da4b6451d15e",
+        phone: "08176157244",
+        image: "/storage/uploads/1646246529_freestandingnikelogo-1024x576.png",
+        isAdmin: false,
+        isVerified: false,
+        noOfReferrals: 0,
+        referredBy: "",
+        updatedAt: "2022-03-02T18:56:33.000000Z",
+        username: "Preshdev",
+      })
+    );
+    return;
+
     myAxios
-      .post<any, AxiosResponse<Server.LoginResponse>, any>(
+      .post<any, AxiosResponse<Server.LoginResponse>, FormFieldsTypes.Login>(
         "/api/login",
         {
           email: emailValue,
@@ -127,7 +144,7 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
             username,
           } = response.data.data;
 
-          // Sign user in
+        // Sign user in
         dispatch(
           signInAction({
             accessToken,
@@ -136,16 +153,16 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
             emailVerifiedAt: email_verified_at,
             id: unique_id,
             phone,
-            image:"",
-            isAdmin:false,
-            isVerified:false,
-            noOfReferrals:0,
-            referredBy:"",
-            updatedAt:updated_at,
-            username
+            image: "",
+            isAdmin: false,
+            isVerified: false,
+            noOfReferrals: 0,
+            referredBy: "",
+            updatedAt: updated_at,
+            username,
           })
         );
-        
+
         // isMounted && setSigningIn(false);
       })
       .catch((error: Server.RequestError) => {
@@ -168,37 +185,69 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
   );
 
   return (
-    <SafeArea style={{ height: screenHeight, padding: 0 }}>
+    <SafeArea
+      style={{
+        height: screenHeight,
+        padding: 0,
+        backgroundColor: tw.color("background"),
+      }}
+    >
       {signingIn ? <LoaderModal loadingText="Signing In" /> : null}
-      <View style={tw`mx-auto w-full h-full px-4 mt-5 bg-transparent`}>
-        <Image
-          source={appIcon}
-          style={{
-            width: 100,
-            height: 100,
-            resizeMode: "contain",
-            alignSelf: "center",
-            flexGrow: 0,
-          }}
+      <StatusBar
+        backgroundColor={tw.color("background")}
+        animated
+        translucent
+        style="dark"
+      />
+      <View style={tw`bg-background`}>
+        <AnimatedLottieView
+          source={welcomeAnimation}
+          style={{ width: "100%", height: 150, alignSelf: "center" }}
+          resizeMode="contain"
+          autoPlay={true}
+          loop={true}
+          duration={2000}
+          speed={2}
         />
-        <Text type="title" style={tw`text-center`}>
-          Welcome Back!
-        </Text>
-        <Divider
-          style={tw`h-1 bg-primary rounded-full w-20 mx-auto mt-1 mb-6`}
-        />
+      </View>
+      <ScrollView
+        style={[
+          tw`mx-auto w-full h-full px-4 bg-primary-dark border`,
+          { borderTopLeftRadius: 60, borderTopRightRadius: 60 },
+        ]}
+        keyboardShouldPersistTaps="handled"
+      >
+        <FadeInView
+          slideUp
+          delay={400}
+          style={tw`w-full mb-0 bg-transparent mt-6`}
+        >
+          <Text
+            type="heading"
+            style={tw`font-sans-bold text-on-dark text-2xl ml-3 text-center`}
+          >
+            {"Glad To\nHave You Back!"}
+          </Text>
+          <FadeInView delay={1000} slideUp>
+            <Divider
+              style={tw`h-1 bg-on-dark mx-auto rounded-full w-10 mt-2 mb-8`}
+            />
+          </FadeInView>
+        </FadeInView>
 
         <View style={tw`bg-transparent`}>
           <InputField
             fieldLabel="Email Address"
             fieldType="input"
+            style={{ backgroundColor: "#eee" }}
+            textInputStyle={{ backgroundColor: "#eee" }}
             fieldLabelIcon="ios-mail-sharp"
             value={emailValue}
             onChangeText={handleEmailChange}
             placeholder="Enter Email Address"
           />
           {emailError ? (
-            <Text style={tw`text-red-700 pl-2 text-sm text-left font-sans`}>
+            <Text style={tw`text-red-400 pl-2 text-sm text-left font-sans`}>
               &gt; {emailError}
             </Text>
           ) : null}
@@ -209,6 +258,8 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
             fieldLabel="Password"
             fieldType="input"
             placeholder="Enter Password"
+            style={{ backgroundColor: "#eee" }}
+            textInputStyle={{ backgroundColor: "#eee" }}
             fieldLabelIcon="md-key-sharp"
             value={passwordValue}
             extraInputProps={{ secureTextEntry: !passwordVisible }}
@@ -216,14 +267,14 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
             rightInputNode={eyeIcon}
           />
           {passwordError ? (
-            <Text style={tw`text-red-700 pl-1 text-sm text-left font-sans`}>
+            <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
               &gt; {passwordError}
             </Text>
           ) : null}
         </View>
 
         <Text
-          style={tw`underline text-primary my-4 font-sans-semibold text-center`}
+          style={tw`underline text-secondary my-4 font-sans-semibold text-center`}
           onPress={goToForgotPassword}
         >
           FORGOT PASSWORD?
@@ -231,19 +282,12 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
 
         <CurvedButton
           label="Sign In"
+          bgColor={tw.color("secondary")}
+          labelColor={tw.color("primary")}
           leftIconName="enter-outline"
           onPress={_handleSignIn}
         />
-        <Text style={tw`mt-4 text-center`}>
-          Not a member yet?{" "}
-          <Text
-            style={tw`underline text-primary font-sans-semibold`}
-            onPress={goToSignUp}
-          >
-            SIGN UP
-          </Text>
-        </Text>
-      </View>
+      </ScrollView>
       {/* Below snack will be used to show errors */}
       <Snackbar
         visible={!!requestError}
@@ -256,4 +300,4 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
   );
 };
 
-export default withTile(SignInScreen, 2);
+export default SignInScreen;
