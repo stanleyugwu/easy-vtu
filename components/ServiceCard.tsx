@@ -53,7 +53,8 @@ const ServiceCard = ({
       animate={animate}
       accessibilityLabel={accessibilityLabel}
       style={tw.style(
-        `rounded-xl bg-surface w-32 max-w-xs max-h-36 mx-2`,
+        `rounded-xl bg-surface max-w-xs max-h-36 mx-2`,
+        { width: 132 },
         appStyles.boxShadow,
         style
       )}
@@ -68,7 +69,11 @@ const ServiceCard = ({
           style={tw`w-full items-center justify-around rounded-xl bg-transparent`}
         >
           <View
-            style={tw.style("w-14 h-14 my-2 bg-transparent", imgWrapperStyle)}
+            style={tw.style(
+              "my-2 bg-transparent",
+              { width: 66, height: 66 },
+              imgWrapperStyle
+            )}
           >
             <Image
               accessibilityRole="imagebutton"
