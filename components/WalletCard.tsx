@@ -3,23 +3,16 @@ import { GestureResponderEvent, Image, Platform } from "react-native";
 import Text, { View } from "./Themed";
 import tw from "../lib/tailwind";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
-import BoxShadowView from "./BoxShadowView";
 import appStyles from "../lib/appStyles";
 
 import type { ViewProps } from "./Themed";
 // @ts-ignore
 import walletImage from "../assets/images/wallet_img.png";
-// @ts-ignore
-import creditCardImage from "../assets/images/card_img.png";
-import PressResizerView from "./PressResizerView";
-import RippleButton from "./RippleButton";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export type WalletCardProps = {
   /** Amount to display as balance */
   balance: number;
-  /** Number to display as number of saved debit card */
-  totalCards: number;
   /** Function to invoke when "big plus" button is pressed */
   onAddCallback: (event: GestureResponderEvent) => void;
 } & ViewProps;
@@ -30,7 +23,6 @@ export type WalletCardProps = {
  */
 const WalletCard = ({
   balance = 0,
-  totalCards = 0,
   onAddCallback,
   style,
   accessibilityLabel = "wallet card",
@@ -38,7 +30,7 @@ const WalletCard = ({
   return (
     <View
       style={[
-        tw`flex-row justify-between items-center w-80 max-w-md mx-auto rounded-3xl bg-surface p-3`,
+        tw`flex-row justify-between border border-white items-center w-80 max-w-md mx-auto rounded-3xl bg-primary p-3`,
         Platform.OS == "ios"
           ? {
               shadowColor: tw.color("secondary"),
@@ -56,12 +48,18 @@ const WalletCard = ({
       ]}
       accessibilityLabel={accessibilityLabel}
     >
-      <View style={tw`flex-col justify-between pl-2 bg-transparent`}>
-        <View style={tw`flex-row bg-transparent`} accessibilityRole="tab">
+      <View
+        style={tw`flex-col justify-between pl-2 bg-transparent justify-center`}
+      >
+        <View
+          style={tw`flex-row bg-transparent items-center`}
+          accessibilityRole="tab"
+        >
           <Image source={walletImage} style={tw`w-5 h-5`} />
           <Text
+            type="body2"
             accessibilityLabel="wallet-label"
-            style={tw`ml-1 text-on-surface text-sm`}
+            style={tw`ml-1 text-on-primary`}
           >
             Wallet
           </Text>
@@ -69,40 +67,30 @@ const WalletCard = ({
 
         <Text
           accessibilityLabel="wallet-balance"
-          style={tw`text-3xl text-on-surface ml-4 my-2`}
+          style={tw`text-3xl font-sans-semibold text-on-dark my-2`}
         >
           {"\u20A6"}
           {balance}
         </Text>
-
-        <View style={tw`flex-row bg-transparent`}>
-          <Image source={creditCardImage} style={tw`w-5 h-5`} />
-          <Text
-            accessibilityLabel="cards-added"
-            style={tw`ml-1 items-center text-sm text-on-surface font-sans-semibold`}
-          >
-            {totalCards + " Card(s)"}
-          </Text>
-        </View>
       </View>
 
       <TouchableOpacity
         activeOpacity={0.6}
         style={[
-          tw`bg-primary p-2 text-center rounded-xl justify-center items-center`,
+          tw`p-2 text-center rounded-xl justify-center border border-blue-100 bg-secondary items-center`,
           appStyles.boxShadow,
         ]}
-        onPress={onAddCallback as any}
+        onPress={
+          onAddCallback as ((event: GestureResponderEvent) => void) &
+            (() => void)
+        }
       >
         <Icon
           name="wallet-plus"
-          style={[
-            tw`p-0 m-0 self-center mx-auto text-center justify-center`,
-            appStyles.boxShadow,
-          ]}
+          style={[tw`p-0 m-0 self-center mx-auto text-center justify-center`]}
           accessibilityRole="button"
-          size={45}
-          color={tw.color("secondary")}
+          size={40}
+          color={tw.color("primary")}
         />
       </TouchableOpacity>
     </View>
