@@ -22,10 +22,10 @@ const QuickSubHomeScreen = ({
   
   return (
     <ScreenContainer style={tw.style(`p-0 h-full`)}>
-      <View style={tw.style("w-full bg-primary pt-1")}>
+      <View style={tw.style("w-full bg-primary py-1",{borderBottomLeftRadius:50,borderBottomRightRadius:50})}>
         <Icon
           name="arrow-left"
-          style={tw`text-on-primary text-2xl absolute top-1/4 left-3 z-40`}
+          style={tw`text-on-primary text-2xl absolute top-1/4 left-6 z-40`}
           onPress={() => navigation.goBack()}
         />
         <Text type="title" style={tw`mt-2 text-on-primary text-center`}>
