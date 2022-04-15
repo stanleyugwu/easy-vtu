@@ -1,11 +1,7 @@
 import React from "react";
-import {
-  GestureResponderEvent,
-  View as _View,
-} from "react-native";
+import { GestureResponderEvent, View as _View } from "react-native";
 import tw from "../lib/tailwind";
 import { Ionicons as Icon } from "@expo/vector-icons";
-import FadeInView from "./FadeInView";
 import RippleButton from "./RippleButton";
 import { useSelector } from "react-redux";
 import Text, { View, ViewProps } from "./Themed";
@@ -44,7 +40,7 @@ const Header = React.forwardRef(
       <View
         accessibilityLabel={accessibilityLabel}
         style={[
-          tw`p-3 bg-transparent flex-row justify-between items-center`,
+          tw`p-3 px-6 bg-transparent flex-row justify-between items-center`,
           style,
         ]}
         ref={ref}
@@ -54,9 +50,9 @@ const Header = React.forwardRef(
           style={tw`flex-row justify-between items-center mb-2 bg-transparent`}
           accessibilityLabel="header top-bar"
         >
-          <FadeInView
+          <View
             style={tw`bg-blue-100 border border-gray rounded-full p-1`}
-            delay={400}
+            delay={200}
           >
             <RippleButton onPress={onAvatarPress}>
               {!!profile.image ? (
@@ -78,9 +74,9 @@ const Header = React.forwardRef(
                 />
               )}
             </RippleButton>
-          </FadeInView>
+          </View>
 
-          <FadeInView style={tw`bg-transparent ml-2`} delay={800}>
+          <View style={tw`bg-transparent ml-2`} delay={400}>
             <Text type="body2" style={tw`text-on-background`}>
               Welcome Back,
             </Text>
@@ -90,10 +86,10 @@ const Header = React.forwardRef(
             >
               {profile.username}
             </Text>
-          </FadeInView>
+          </View>
         </View>
 
-        <FadeInView delay={1200}>
+        <View delay={800}>
           <Icon
             name="menu"
             onPress={onMenuPress}
@@ -102,7 +98,7 @@ const Header = React.forwardRef(
             accessibilityLabel="header top-bar menu-icon"
             accessibilityRole="button"
           />
-        </FadeInView>
+        </View>
       </View>
     );
   }
