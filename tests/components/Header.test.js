@@ -1,7 +1,6 @@
 import {render, fireEvent} from '@testing-library/react-native';
 import Header from '../../components/Header';
 import WalletCardTest from './WalletCard.test';
-import ProfileAvatarTest from './ProfileAvatar.test';
 
 describe('Header Component', () => {
     it('renders menu icon', () => {
@@ -31,7 +30,6 @@ describe('Header Component', () => {
         expect(mockFn).toBeCalled();
     })
 
-    ProfileAvatarTest();
     it(`given a callback via onAvatarPress, calls the callback when profile avatar is pressed`, () => {
         const mockFn = jest.fn();
         const {getByA11yLabel} = render(<Header onAvatarPress={mockFn}/>);
