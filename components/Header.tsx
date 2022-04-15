@@ -1,27 +1,23 @@
 import React from "react";
-import { GestureResponderEvent, ImageSourcePropType, View as _View } from "react-native";
-import ProfileAvatar from "./ProfileAvatar";
-import WalletCard from "./WalletCard";
+import {
+  GestureResponderEvent,
+  View as _View,
+} from "react-native";
 import tw from "../lib/tailwind";
 import { Ionicons as Icon } from "@expo/vector-icons";
 import FadeInView from "./FadeInView";
 import RippleButton from "./RippleButton";
 import { useSelector } from "react-redux";
-import { View, ViewProps } from "./Themed";
+import Text, { View, ViewProps } from "./Themed";
 import { RootState } from "../types";
+import { Avatar } from "react-native-paper";
 
 export type HeaderProps = {
   /** Callback to invoke when `menu` icon in the header top bar is pressed */
   onMenuPress: (event: GestureResponderEvent) => void;
 
-  /** Callback to be invoked when `notification` icon  in the header top bar is pressed */
-  onNotificationPress: (event: GestureResponderEvent) => void;
-
   /** Callback to be invoked when the profile avatar image is pressed */
   onAvatarPress: (event: GestureResponderEvent) => void;
-
-  /** Callback to invoke when the plus "+" button in wallet card is pressed */
-  onWalletAddCb: (event: GestureResponderEvent) => void;
 } & ViewProps;
 
 /**
@@ -35,62 +31,76 @@ const Header = React.forwardRef(
       style,
       onMenuPress,
       onAvatarPress,
-      onNotificationPress,
-      onWalletAddCb,
       ...otherProps
     }: HeaderProps,
     ref: React.ForwardedRef<_View>
   ) => {
     // State selectors
-    const profile = useSelector((state:RootState) => state.user?.profile);
-    const wallet = useSelector((state:RootState) => state.wallet);
+    const profile = useSelector((state: RootState) => state.user?.profile);
 
-    if(!profile) return null
+    if (!profile) return null;
 
     return (
       <View
         accessibilityLabel={accessibilityLabel}
-        style={[tw`h-44 p-3 bg-transparent`, style]}
+        style={[
+          tw`p-3 bg-transparent flex-row justify-between items-center`,
+          style,
+        ]}
         ref={ref}
         {...otherProps}
       >
         <View
-          style={tw`flex-row justify-between mb-2 bg-transparent`}
+          style={tw`flex-row justify-between items-center mb-2 bg-transparent`}
           accessibilityLabel="header top-bar"
         >
+          <FadeInView
+            style={tw`bg-blue-100 border border-gray rounded-full p-1`}
+            delay={400}
+          >
+            <RippleButton onPress={onAvatarPress}>
+              {!!profile.image ? (
+                <Avatar.Image
+                  accessibilityHint="calls a function to navigate to profile screen"
+                  source={profile.image}
+                  size={48}
+                  accessibilityRole="imagebutton"
+                  accessibilityLabel="avatar-image"
+                />
+              ) : (
+                <Avatar.Icon
+                  icon="account"
+                  color={tw.color("primary")}
+                  style={tw.style("bg-white")}
+                  accessibilityRole="imagebutton"
+                  accessibilityLabel="avatar-image"
+                  size={48}
+                />
+              )}
+            </RippleButton>
+          </FadeInView>
+
+          <FadeInView style={tw`bg-transparent ml-2`} delay={800}>
+            <Text type="body2" style={tw`text-on-background`}>
+              Welcome Back,
+            </Text>
+            <Text
+              type="title"
+              style={{ lineHeight: 22, color: tw.color("on-background") }}
+            >
+              {profile.username}
+            </Text>
+          </FadeInView>
+        </View>
+
+        <FadeInView delay={1200}>
           <Icon
             name="menu"
             onPress={onMenuPress}
-            size={37}
-            color={tw.color("secondary")}
+            size={40}
+            color={tw.color("primary")}
             accessibilityLabel="header top-bar menu-icon"
             accessibilityRole="button"
-          />
-          <Icon
-            name="notifications"
-            color={tw.color("secondary")}
-            size={28}
-            style={tw`pt-1`}
-            accessibilityLabel="header top-bar notification-icon"
-            accessibilityRole="button"
-            onPress={onNotificationPress}
-          />
-        </View>
-
-        <RippleButton onPress={onAvatarPress} accessibilityLabel="profile-icon">
-          <ProfileAvatar
-            accessibilityLabel="header profile avatar"
-            textStyle={tw`text-gray-light font-sans-semibold`}
-            label={"👋 Hello " + profile.username}
-            imageUrl={profile.image as ImageSourcePropType}
-          />
-        </RippleButton>
-
-        <FadeInView slideUp={false} style={tw`w-full mt-2`}>
-          <WalletCard
-            balance={wallet.balance}
-            totalCards={0}
-            onAddCallback={onWalletAddCb}
           />
         </FadeInView>
       </View>
