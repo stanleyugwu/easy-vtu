@@ -49,7 +49,7 @@ const ServiceCard = ({
   return (
     <FlashView
       delay={animationDelay}
-      bounciness={15}
+      bounciness={12}
       animate={animate}
       accessibilityLabel={accessibilityLabel}
       style={tw.style(
