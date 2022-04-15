@@ -30,7 +30,7 @@ const Services = () => {
     >
       {activeServices.airtime ? (
         <ServiceCard
-          animationDelay={300}
+          animationDelay={500}
           title="Buy Airtime"
           iconSrc={airtime}
           style={tw`my-3`}
@@ -44,7 +44,7 @@ const Services = () => {
 
       {activeServices.data ? (
         <ServiceCard
-          animationDelay={400}
+          animationDelay={600}
           title="Buy Data"
           iconSrc={data}
           style={tw`my-3`}
@@ -58,7 +58,7 @@ const Services = () => {
 
       {activeServices.electricity ? (
         <ServiceCard
-          animationDelay={500}
+          animationDelay={700}
           title="Buy Electricity"
           style={tw`my-3`}
           iconSrc={electricity}
@@ -68,7 +68,7 @@ const Services = () => {
 
       {activeServices.cable ? (
         <ServiceCard
-          animationDelay={600}
+          animationDelay={800}
           title="Tv Cable"
           style={tw`my-3`}
           iconSrc={cable}
@@ -78,7 +78,7 @@ const Services = () => {
 
       {activeServices.scratchCard ? (
         <ServiceCard
-          animationDelay={700}
+          animationDelay={1000}
           title="Scratch Card"
           style={tw`my-3`}
           iconSrc={scratchCard}
