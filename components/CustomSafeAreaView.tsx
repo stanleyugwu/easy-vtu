@@ -30,7 +30,6 @@ const SafeArea = ({
   <SafeAreaView
     style={[
       {
-        height: "100%",
         padding: scrollable
           ? 0
           : 10 /* dont pad here if scrollView will be rendered, i.e `scrollable = true` */,
