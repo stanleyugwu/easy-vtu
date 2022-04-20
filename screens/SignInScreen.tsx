@@ -84,10 +84,12 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
   const _handleSignIn = () => {
     setRequestError(""); //hide snackbar error
     //assert empty values
-    if (emailValue === "" || passwordValue === "") {
+    if (!emailValue || !emailValue.trim().length) {
       handleEmailChange(""); //manually initiate error
-      handlePasswordChange(""); //manually initiate error
       return;
+    } else if(!passwordValue || !passwordValue.trim().length){
+      handlePasswordChange(""); //manually initiate error
+      return
     }
 
     //assert existing errors
