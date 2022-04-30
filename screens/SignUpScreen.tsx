@@ -26,6 +26,9 @@ import FadeInView from "../components/FadeInView";
 import * as Yup from "yup";
 import myAxios from "../adapters/instance";
 import StatusModal from "../components/StatusModal";
+import Layout from "../constants/Layout";
+import { StatusBar } from "expo-status-bar";
+import Button from "../components/Button";
 
 if (Platform.OS === "android") {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -271,7 +274,11 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
         <InputField
           fieldType="input"
           fieldLabel="Username"
-          style={{ backgroundColor: "#eee" }}
+          style={{
+            backgroundColor: "#eee",
+            borderTopLeftRadius: 30,
+            borderTopRightRadius: 30,
+          }}
           textInputStyle={{ backgroundColor: "#eee" }}
           value={formik.values.username}
           placeholder="Enter Username"
@@ -280,7 +287,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
           extraInputProps={{ autoFocus: true }}
         />
         {formik.errors.username ? (
-          <Text style={tw`text-red-700 pl-1 text-sm text-left font-sans`}>
+          <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
             {formik.errors.username}
           </Text>
         ) : null}
@@ -299,7 +306,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
           fieldLabelIcon="ios-mail-sharp"
         />
         {formik.errors.emailAddress ? (
-          <Text style={tw`text-red-700 pl-1 text-sm text-left font-sans`}>
+          <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
             &gt; {formik.errors.emailAddress}
           </Text>
         ) : null}
@@ -332,8 +339,8 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
         />
       </InputField>
       {mobileNumberError ? (
-        <Text style={tw`text-red-700 pl-1 text-sm text-left font-sans`}>
-          &gt; {mobileNumberError}
+        <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
+          {mobileNumberError}
         </Text>
       ) : null}
     </View>
@@ -358,7 +365,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
           placeholder="Enter password"
         />
         {formik.errors.password ? (
-          <Text style={tw`text-red-700 pl-1 text-sm text-left font-sans`}>
+          <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
             &gt; {formik.errors.password}
           </Text>
         ) : null}
@@ -378,7 +385,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
           extraInputProps={{ error: !!formik.errors.confirmPassword }}
         />
         {formik.errors.confirmPassword && formik.values.password ? (
-          <Text style={tw`text-red-700 pl-1 text-sm text-left font-sans`}>
+          <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
             &gt; {formik.errors.confirmPassword}
           </Text>
         ) : null}
@@ -398,7 +405,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
           fieldRequired={false}
         />
         {formik.errors.referrer ? (
-          <Text style={tw`text-red-700 pl-1 text-sm text-left font-sans`}>
+          <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
             {formik.errors.referrer}
           </Text>
         ) : null}
@@ -437,18 +444,29 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
   return (
     <SafeAreaView
       scrollable
-      style={{
-        padding: 10,
-        backgroundColor: tw.color("primary-dark"),
-        height: Dimensions.get("window").height,
-        justifyContent: "center",
-        alignItems: "center",
+      scrollViewProps={{
+        contentContainerStyle: {
+          padding: 0,
+          backgroundColor: tw.color("background"),
+          height: Layout.window.height,
+          justifyContent: "space-between",
+        },
       }}
     >
-      <FadeInView slideUp delay={400} style={tw`w-full mb-0 bg-transparent`}>
+      <StatusBar
+        backgroundColor={tw.color("background")}
+        animated
+        translucent
+        style="dark"
+      />
+      <FadeInView
+        slideUp
+        delay={400}
+        style={tw`w-full mb-0 bg-transparent mt-10`}
+      >
         <Text
           type="heading"
-          style={tw`font-sans-bold text-2xl ml-3 text-left text-on-dark`}
+          style={tw`font-sans-bold text-2xl ml-3 text-center text-on-background`}
         >
           {formStep === 1
             ? "Sign Up Now, \nIt's Free 🤟"
@@ -456,49 +474,37 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
         </Text>
         <FadeInView delay={1000} slideUp>
           <Divider
-            style={tw`h-1 bg-on-dark rounded-full ml-3 w-10 mt-2 mb-8`}
+            style={tw`h-1 bg-on-background mx-auto rounded-full w-10 mt-2 mb-4`}
           />
         </FadeInView>
       </FadeInView>
 
-      <View style={tw.style("mx-auto w-full px-4 pt-4 bg-on-dark rounded-3xl")}>
+      <View
+        style={tw.style("mx-auto w-full px-4 pt-7 pb-4 bg-primary-dark", {
+          borderTopLeftRadius: 60,
+          borderTopRightRadius: 60,
+        })}
+      >
         {/* Views corresponding to form steps */}
         {[formStep1View, formStep2View]}
 
-        <Text style={tw`my-4 mx-auto`}>
+        <Text style={tw`my-4 mx-auto text-on-dark`}>
           Already a member?{" "}
           <Text
-            style={tw`text-primary underline font-sans-bold`}
+            style={tw`text-secondary underline font-sans-bold`}
             onPress={(_) => navigation.navigate("Sign-In")}
           >
             SIGN IN
           </Text>
         </Text>
-
-        <PressResizerView>
-          <RippleButton
-            onPress={() => {
-              // manual disability implementation
-              if (formik.isValidating || formik.isSubmitting) return;
-
-              // we're not calling `formik.submitForm` here because we need to do further validations
-              // in a special way
-              handleSubmit();
-            }}
-          >
-            <View
-              style={tw`mb-0 flex-row justify-center items-center bg-secondary p-2.5 rounded-tr-full rounded-tl-full`}
-            >
-              <Text style={tw`text-center font-sans-semibold text-primary`}>
-                {formStep === 1 ? "PROCEED" : "SIGN UP"}
-              </Text>
-              <Icon
-                name="chevron-forward"
-                style={tw`text-primary text-2xl ml-1`}
-              />
-            </View>
-          </RippleButton>
-        </PressResizerView>
+        <Button
+          label={formStep === 1 ? "PROCEED" : "SIGN UP"}
+          bgColor={tw.color("secondary")}
+          labelColor={tw.color("primary")}
+          rightIconName="chevron-forward"
+          onPress={handleSubmit}
+          disabled={formik.isValidating || formik.isSubmitting}
+        />
       </View>
       {countryModalVisible ? countryModal : null}
       {formik.isSubmitting ? loaderModal : null}
