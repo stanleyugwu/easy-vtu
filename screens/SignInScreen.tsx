@@ -19,6 +19,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import welcomeAnimation from "../assets/json/welcome_animation.json";
 import AnimatedLottieView from "lottie-react-native";
+import Layout from "../constants/Layout";
 
 // should follow `useFormField` hook validator rules
 const emailValidator = (emailAddress: string) => {
@@ -38,8 +39,6 @@ const passwordValidator = (password: string) => {
   if (!password || !password.trim()) return `You didn't enter any password`;
   return true;
 };
-
-const screenHeight = Dimensions.get("window").height;
 
 /**
  * App sign in screen
@@ -87,9 +86,9 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
     if (!emailValue || !emailValue.trim().length) {
       handleEmailChange(""); //manually initiate error
       return;
-    } else if(!passwordValue || !passwordValue.trim().length){
+    } else if (!passwordValue || !passwordValue.trim().length) {
       handlePasswordChange(""); //manually initiate error
-      return
+      return;
     }
 
     //assert existing errors
@@ -107,17 +106,17 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
         accessToken:
           "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzMTMwOTAwNSwiZXhwIjoxNjMxMzEyNjA1LCJuYmYiOjE2MzEzMDkwMDUsImp0aSI6IjRINUozclNSYWhZQjB1V0YiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.vIdA8M_BbgI71OVjENByCpR4kqweKJ9-IJxyKQo56nA",
         createdAt: "2022-03-02T18:15:45.000000Z",
-        email: "anipreciousebuka@gmail.com",
+        email: "stanleyugwu17@gmail.com",
         emailVerifiedAt: null,
         id: "da4b6451d15e",
-        phone: "08176157244",
-        image: "/storage/uploads/1646246529_freestandingnikelogo-1024x576.png",
+        phone: "09033155169",
+        image: "https://avatars.githubusercontent.com/u/48139995?v=4",
         isAdmin: false,
         isVerified: false,
         noOfReferrals: 0,
         referredBy: "",
         updatedAt: "2022-03-02T18:56:33.000000Z",
-        username: "Preshdev",
+        username: "Devvie",
       })
     );
     return;
@@ -189,7 +188,7 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
   return (
     <SafeArea
       style={{
-        height: screenHeight,
+        height: Layout.window.height,
         padding: 0,
         backgroundColor: tw.color("background"),
       }}
@@ -201,7 +200,7 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
         translucent
         style="dark"
       />
-      <View style={tw`bg-background`}>
+      <View style={tw`bg-background -mb-4`}>
         <AnimatedLottieView
           source={welcomeAnimation}
           style={{ width: "100%", height: 150, alignSelf: "center" }}
@@ -214,7 +213,7 @@ const SignInScreen = ({ navigation }: RootStackScreenProps<"Sign-In">) => {
       </View>
       <ScrollView
         style={[
-          tw`mx-auto w-full h-full px-4 bg-primary-dark border`,
+          tw`mx-auto w-full h-full px-4 bg-primary-dark`,
           { borderTopLeftRadius: 60, borderTopRightRadius: 60 },
         ]}
         keyboardShouldPersistTaps="handled"
