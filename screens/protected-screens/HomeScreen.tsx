@@ -1,28 +1,27 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Services from "../../components/Services";
 import Header from "../../components/Header";
-import {
-  ScrollView,
-  StatusBar,
-  View,
-  Dimensions,
-  ImageBackground,
-} from "react-native";
+import { View } from "react-native";
 import tw from "../../lib/tailwind";
-import { DrawerLayout } from "react-native-gesture-handler";
+import { DrawerLayout, ScrollView } from "react-native-gesture-handler";
 import Drawer, { DrawerItemType } from "../../components/Drawer";
 import { RootState, RootTabScreenProps } from "../../types";
 import SafeArea from "../../components/CustomSafeAreaView";
 import Announcement from "../../components/Announcement";
-import checkAppUpdates from '../../utils/checkAppUpdates';
-
-// Assets
-const drawerBg = require("../../assets/images/moving_bg.gif");
+import checkAppUpdates from "../../utils/checkAppUpdates";
+import WalletCard from "../../components/WalletCard";
+import FadeInView from "../../components/FadeInView";
+import { signOut } from "../../store/slices/userSlice";
+import Layout from "../../constants/Layout";
+import syncProfile from "../../utils/keepProfileInSync";
+import { useNetInfo } from "@react-native-community/netinfo";
 
 const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
   //profile selector
   const profile = useSelector((state: RootState) => state.user?.profile);
+  const dispatch = useDispatch();
+  const netinfo = useNetInfo();
 
   // if you dont have a profile, you dont deserve to be here
   if (!profile) return null;
@@ -30,10 +29,17 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
   React.useEffect(() => {
     // check for and download app updates
     checkAppUpdates();
-  },[])
+  }, []);
+
+  // Update local user profile details with server profile details
+  React.useEffect(() => {
+    if(netinfo.isInternetReachable){
+      syncProfile();
+    }
+  },[netinfo])
 
   // register refs
-  const screenWidth = React.useRef(Dimensions.get("window").width).current;
+  const screenWidth = React.useRef(Layout.window.width).current;
   var drawerRef = React.useRef<DrawerLayout>(null);
 
   /** memoized function to open side drawer*/
@@ -78,14 +84,16 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
       },
       { iconName: "ios-call", label: "Contact Us", onItemPress: () => null },
       {
-        iconName: "ios-share-social",
-        label: "Tell a friend",
-        onItemPress: () => null,
-      },
-      {
         iconName: "md-help-circle",
         label: "Help/Feedback",
         onItemPress: () => null,
+      },
+      {
+        iconName: "exit",
+        label: "Sign-Out",
+        onItemPress() {
+          handleSignOut();
+        },
       },
     ],
     []
@@ -101,6 +109,11 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
     () => navigation.navigate("Profile"),
     []
   );
+
+  /** callback to be invoked when user presses on sign out*/
+  const handleSignOut = () => {
+    dispatch(signOut());
+  };
 
   /** memoized Drawer component */
   const drawer = React.useCallback(
@@ -120,56 +133,55 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
   );
 
   return (
-    <ImageBackground
-      source={drawerBg}
-      style={tw`h-full w-full`}
-      resizeMode="cover"
-      resizeMethod="resize"
+    <SafeArea
+      scrollable={false}
+      style={{
+        height: "100%",
+        padding: 0,
+        backgroundColor: tw.color("primary-dark"),
+      }}
     >
-      <StatusBar backgroundColor={"#192F5EBB"} />
-      <SafeArea
-        style={[
-          {
-            backgroundColor: "#192F5EBB",
-            height: "100%",
-            zIndex: 99,
-            padding: 0,
-          },
-        ]}
+      <DrawerLayout
+        renderNavigationView={drawer}
+        statusBarAnimation="fade"
+        drawerWidth={screenWidth / 2 + 130}
+        overlayColor="#0009"
+        enableTrackpadTwoFingerGesture={true}
+        drawerBackgroundColor={tw.color("surface")}
+        drawerPosition={DrawerLayout.positions.Left as "left"}
+        drawerType="slide"
+        onDrawerClose={closeDrawer}
+        ref={drawerRef}
       >
-        <DrawerLayout
-          renderNavigationView={drawer}
-          statusBarAnimation="fade"
-          drawerWidth={screenWidth / 2 + 130}
-          overlayColor="#0009"
-          enableTrackpadTwoFingerGesture={true}
-          drawerBackgroundColor={tw.color("surface")}
-          drawerPosition={DrawerLayout.positions.Left as "left"}
-          drawerType="slide"
-          onDrawerClose={closeDrawer}
-          ref={drawerRef}
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          style={{
+            backgroundColor: tw.color("background"),
+            paddingTop: 5,
+            borderTopLeftRadius: 40,
+            borderTopRightRadius: 40,
+          }}
         >
-          <Header
-            onWalletAddCb={walletAddCallback}
-            onAvatarPress={() => null}
-            onNotificationPress={() => null}
-            onMenuPress={openDrawer}
-            accessibilityLabel="home-screen header"
-            style={{ zIndex: 999 }}
-          />
-          <ScrollView
-            contentContainerStyle={tw.style(`h-full pt-16`, {
-              backgroundColor: "#f1f1f1",
-              borderTopLeftRadius: 50,
-              borderTopRightRadius: 50,
-            })}
-          >
-            <Services />
-            <Announcement />
-          </ScrollView>
-        </DrawerLayout>
-      </SafeArea>
-    </ImageBackground>
+          <FadeInView delay={400} slideUp>
+            <Header
+              onAvatarPress={onAvatarPressCb}
+              onMenuPress={openDrawer}
+              accessibilityLabel="home-screen header"
+              style={{ zIndex: 999 }}
+            />
+          </FadeInView>
+          <FadeInView slideUp delay={600}>
+            <WalletCard
+              balance={20000}
+              style={{ marginTop: 10 }}
+              onAddCallback={walletAddCallback}
+            />
+          </FadeInView>
+          <Services />
+          <Announcement />
+        </ScrollView>
+      </DrawerLayout>
+    </SafeArea>
   );
 };
 

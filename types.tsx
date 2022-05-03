@@ -329,12 +329,7 @@ export type RootStackParamList = {
 
   //Service screens
   NetworkProviders: { serviceType: "Airtime" | "Data" };
-  AirtimeScreen: {
-    headerTitle?: string;
-    networkName: string;
-    providerLogoSrc: ImageSourcePropType;
-    recipientType: "My Self" | "Others";
-  };
+  AirtimeScreen: undefined;
   DataScreen: undefined;
   ElectricityScreen: undefined;
   CableScreen: undefined;
@@ -366,26 +361,25 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     NativeStackScreenProps<RootStackParamList>
   >;
 
+/**
+ * Types for the form fields of different forms used in the app.
+ * Each type's field correspond to the field server expects/reads
+ */
+export namespace FormFieldsTypes {
+  export type Login = {
+    email: string;
+    password: string;
+  };
 
-  /**
-   * Types for the form fields of different forms used in the app.
-   * Each type's field correspond to the field server expects/reads
-   */
-  export namespace FormFieldsTypes {
-    export type Login = {
-      email:string;
-      password:string;
-    }
-
-    export type SignUp = {
-      username: string,
-      email: string,
-      password: string,
-      password_confirmation: string,
-      phone:string;
-      referrer:string;
-    }
-  }
+  export type SignUp = {
+    username: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+    phone: string;
+    referrer: string;
+  };
+}
 
 /**
  * TYPES FOR RESPONSE PAYLOADS COMING FROM THE SERVER
@@ -398,36 +392,46 @@ export namespace Server {
   };
 
   export type LoginResponse = {
-    access_token:
-      string,
-    data: {
-      created_at: string,
-      email: string,
-      email_verified_at: null | string,
-      id: number,
-      phone: string,
-      unique_id: string,
-      updated_at: string,
-      username: string,
-    },
-    expires_in: number,
-    message: string,
-    status: true,
-    token_type: "bearer",
+    access_token: string;
+    data: SignUpResponse["data"] & {
+      email_verified_at: null | string;
+      id: number;
+    };
+    expires_in: number;
+    message: string;
+    status: true;
+    token_type: "bearer";
+  };
+
+  // Response payload for user details
+  export type UserDetailsResponse = {
+    status: true;
+    message: string;
+    data: LoginResponse["data"] & {
+      image: string;
+      isVerified: number;
+      isAdmin: boolean;
+      refer_by: null | string;
+      wallet_balance: string;
+      account_number: null | string;
+      account_name: null | string;
+      bank_name: null | string;
+      no_of_referrals: number | string;
+    };
   };
 
   export type SignUpResponse = {
-    status: true,
-    message: string,
+    status: true;
+    message: string;
     data: {
-      username: string,
-      email: string,
-      phone: string,
-      unique_id: string,
-      updated_at: string,
-      created_at: string
-    }
-  }
+      username: string;
+      email: string;
+      phone: string;
+      unique_id: string;
+      updated_at: string;
+      created_at: string;
+    };
+  };
 
   export type ErrorResponse = {
     status: false;
