@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import Text, { View, ViewProps } from "./Themed";
 import { RootState } from "../types";
 import { Avatar } from "react-native-paper";
+import { useNetInfo } from "@react-native-community/netinfo";
 
 export type HeaderProps = {
   /** Callback to invoke when `menu` icon in the header top bar is pressed */
@@ -33,6 +34,7 @@ const Header = React.forwardRef(
   ) => {
     // State selectors
     const profile = useSelector((state: RootState) => state.user?.profile);
+    const netinfo = useNetInfo();
 
     if (!profile) return null;
 
@@ -40,25 +42,30 @@ const Header = React.forwardRef(
       <View
         accessibilityLabel={accessibilityLabel}
         style={[
-          tw`p-3 px-6 bg-transparent flex-row justify-between items-center`,
+          tw`bg-transparent justify-between`,
           style,
         ]}
         ref={ref}
         {...otherProps}
       >
+        {
+          !netinfo.isInternetReachable ? (
+            <Text type="body2" style={tw`text-center px-2 font-sans-semibold text-red-700`}>No Internet!, Data May be out of sync</Text>
+          ) : null
+        }
+        <View style={tw`p-3 px-6 bg-transparent flex-row justify-between items-center`}>
         <View
           style={tw`flex-row justify-between items-center mb-2 bg-transparent`}
           accessibilityLabel="header top-bar"
         >
           <View
             style={tw`bg-blue-100 border border-gray rounded-full p-1`}
-            delay={200}
           >
             <RippleButton onPress={onAvatarPress}>
               {!!profile.image ? (
                 <Avatar.Image
                   accessibilityHint="calls a function to navigate to profile screen"
-                  source={profile.image}
+                  source={{uri:profile.image}}
                   size={48}
                   accessibilityRole="imagebutton"
                   accessibilityLabel="avatar-image"
@@ -76,7 +83,7 @@ const Header = React.forwardRef(
             </RippleButton>
           </View>
 
-          <View style={tw`bg-transparent ml-2`} delay={400}>
+          <View style={tw`bg-transparent ml-2`}>
             <Text type="body2" style={tw`text-on-background`}>
               Welcome Back,
             </Text>
@@ -89,7 +96,7 @@ const Header = React.forwardRef(
           </View>
         </View>
 
-        <View delay={800}>
+        <View>
           <Icon
             name="menu"
             onPress={onMenuPress}
@@ -98,6 +105,7 @@ const Header = React.forwardRef(
             accessibilityLabel="header top-bar menu-icon"
             accessibilityRole="button"
           />
+        </View>
         </View>
       </View>
     );
