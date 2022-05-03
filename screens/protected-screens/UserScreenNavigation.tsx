@@ -71,8 +71,12 @@ const screenOptionGen = (
   headerTitleStyle: tw`text-on-primary font-sans-semibold`,
   headerRight: AppIcon,
   tabBarStyle: screensShouldShowTabBar.includes(route.name)
-    ? tw.style(`bg-primary`, { height: 52 })
-    : tw`hidden h-0`,
+    ? tw.style(`bg-primary`, {
+        height: 56,
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+      })
+    : tw`hidden h-0 bg-transparent`,
 
   //icons rendered in tab bar
   tabBarIcon: ({ focused, color, size }) => {
@@ -87,16 +91,26 @@ const screenOptionGen = (
     //change color on focus
     if (focused) {
       color = tw.color("secondary") as string;
-      size = 25;
+      size = 30;
     } else {
       size = 22;
       color = tw.color("gray") as string;
     }
 
-    return <Icon name={iconName} size={size} color={color} />;
+    return (
+      <Icon
+        name={iconName}
+        size={size}
+        style={tw.style(
+          focused && `bg-primary p-3.5 rounded-t-3xl`
+        )}
+        color={color}
+      />
+    );
   },
-  tabBarLabelStyle: tw`text-gray`,
+  tabBarLabelStyle: tw`text-on-primary p-1`,
   tabBarAccessibilityLabel: "tab bar icon",
+  lazy:true
 });
 
 const WalletScreen = (props) => {
@@ -118,7 +132,9 @@ const TransactionsScreen = (props) => {
 //create tab navigator
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
-const UserScreenNavigation = ({ navigation }: RootStackScreenProps<"UserScreenNavigation">) => {
+const UserScreenNavigation = ({
+  navigation,
+}: RootStackScreenProps<"UserScreenNavigation">) => {
   return (
     <ErrorBoundary>
       <Tab.Navigator screenOptions={({ route }) => screenOptionGen(route)}>

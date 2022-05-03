@@ -9,10 +9,10 @@ import { Avatar, Drawer as _Drawer } from "react-native-paper";
 import { Ionicons as Icon } from "@expo/vector-icons";
 import tw from "../lib/tailwind";
 import { ScrollView } from "react-native-gesture-handler";
-import BoxShadowView from "./BoxShadowView";
 import RippleButton, { RippleButtonProps } from "./RippleButton";
 // @ts-ignore
 import defaultHeaderImg from "../assets/images/drawer_bg.jpg";
+import appStyles from "../lib/appStyles";
 
 /** Type structure for a drawer item */
 export type DrawerItemType = {
@@ -50,7 +50,10 @@ let DrawerItem = ({
       {...otherProps}
     >
       <View
-        style={tw`w-full flex-row justify-between items-center pt-3 mb-3 bg-surface pb-3 border-b border-gray`}
+        style={[
+          tw`w-full flex-row justify-between items-center pt-3 mb-3 bg-surface pb-3`,
+          { borderBottomColor: "#eee", borderBottomWidth: 1 },
+        ]}
       >
         <View style={tw`flex-row items-center bg-surface`}>
           <Icon
@@ -69,7 +72,7 @@ let DrawerItem = ({
 
         <Icon
           name="chevron-forward"
-          color={tw.color("black")}
+          color={tw.color("gray")}
           size={22}
           style={tw`self-end`}
         />
@@ -127,14 +130,18 @@ let Drawer = ({
       accessibilityLabel={accessibilityLabel}
       {...otherProps}
     >
-      <ScrollView>
+      <ScrollView stickyHeaderIndices={[0]}>
         <ImageBackground
           source={defaultHeaderImg}
-          style={{ width: "100%", height: showAvatar ? 181 : "auto" }}
+          style={{ width: "100%", height: "auto" }}
         >
-          <BoxShadowView
+          <View
             accessibilityLabel="drawer header"
-            containerStyle={tw.style("bg-primary p-3", { opacity: 0.87 })}
+            style={tw.style(
+              "bg-primary p-3",
+              { opacity: 0.87 },
+              appStyles.boxShadow
+            )}
           >
             {showAvatar ? (
               <RippleButton
@@ -152,7 +159,7 @@ let Drawer = ({
                   <Avatar.Icon
                     accessibilityLabel="profile image"
                     icon="account"
-                    style={tw`text-white bg-white`}
+                    style={tw`text-on-primary bg-surface`}
                     size={80}
                   />
                 )}
@@ -163,7 +170,7 @@ let Drawer = ({
               <Text
                 type="title"
                 accessibilityLabel="account name"
-                style={tw`text-white text-left pl-2 mt-4`}
+                style={tw`text-on-primary text-left pl-2 mt-4`}
               >
                 {headerTitle}
               </Text>
@@ -171,13 +178,14 @@ let Drawer = ({
 
             {headerSubTitle ? (
               <Text
+                type="body2"
                 accessibilityLabel="account email"
-                style={tw`text-gray-300 text-left pl-2`}
+                style={tw`text-on-primary text-left pl-2`}
               >
                 {headerSubTitle}
               </Text>
             ) : null}
-          </BoxShadowView>
+          </View>
         </ImageBackground>
 
         <View style={tw`mt-14 px-4 bg-surface`}>
