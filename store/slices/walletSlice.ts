@@ -3,6 +3,7 @@ import { DispatchPayloads as Payloads, RootState } from "../../types";
 
 type WalletSlice = RootState["wallet"];
 
+// adds given amount to wallet
 const addMoneyReducer = (
   state: WalletSlice,
   action: PayloadAction<Payloads.AddMoneyPayload>
@@ -13,6 +14,7 @@ const addMoneyReducer = (
   state.balance += amount;
 };
 
+// removes given amount from wallet
 const removeMoneyReducer = (
   state: WalletSlice,
   action: PayloadAction<Payloads.RemoveMoneyPayload>
@@ -34,6 +36,18 @@ const removeMoneyReducer = (
   state.balance -= amount;
 };
 
+// sets wallet balance to a given amount
+const setMoneyReducer = (
+  state: WalletSlice,
+  action: PayloadAction<Payloads.AddMoneyPayload>
+) => {
+  const amount = action.payload;
+  if (!amount || typeof amount !== "number" || !state) return;
+
+  state.balance = amount;
+};
+
+// resets wallet to default
 const resetWalletReducer = (
   state: WalletSlice,
   action: PayloadAction<Payloads.ResetWalletPayload>
@@ -67,12 +81,13 @@ const walletSlice = createSlice({
   reducers: {
     addMoney: addMoneyReducer,
     removeMoney: removeMoneyReducer,
+    setMoney: setMoneyReducer,
     resetWallet: resetWalletReducer,
     updateAccountInfo: updateAccountInfoReducer,
   },
 });
 
-export const { addMoney, removeMoney, resetWallet, updateAccountInfo } =
+export const { addMoney, removeMoney, resetWallet, updateAccountInfo, setMoney } =
   walletSlice.actions;
 
 export const balanceSelector = (state: RootState) => state.wallet.balance;
