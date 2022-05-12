@@ -49,7 +49,7 @@ const generateProvidersParams =
 
 const theme: Theme = {
   colors: {
-    background: "rgb(242, 242, 242)",
+    background: "#F8F8F8",
     border: "rgb(216, 216, 216)",
     card: tw.color("primary") as string,
     notification: tw.color("secondary") as string,
