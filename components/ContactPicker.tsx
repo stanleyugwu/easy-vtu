@@ -16,6 +16,7 @@ import Modal from "react-native-modal";
 import Layout from "../constants/Layout";
 import { Ionicons as Icon } from "@expo/vector-icons";
 import Button from "./Button";
+import appStyles from "../lib/appStyles";
 
 export type ContactPickerProps = {
   /** Function to be called when a contact is selected.\
@@ -151,6 +152,7 @@ const ContactPicker = React.forwardRef(
             style={[
               tw`py-3 pl-4 rounded-lg max-w-md bg-white`,
               { width: "90%" },
+              appStyles.boxShadow
             ]}
             onChangeText={handleTextInputChange}
           />

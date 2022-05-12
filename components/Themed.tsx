@@ -8,7 +8,6 @@ import React from 'react';
  import Colors from '../constants/Colors';
  import useColorScheme from '../hooks/useColorScheme';
  import {typeStyle} from '../lib/appStyles';
-import tw from '../lib/tailwind';
  
  export function useThemeColor(
    props: { light?: string; dark?: string },
