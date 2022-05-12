@@ -24,7 +24,7 @@ import { TailwindConfig, TailwindThemeFontSizes } from "tailwindcss/tailwind-con
   "secondary-dark": "#F66900",
   "on-secondary": "#ffffff",
 
-  background: "#F5F5F5",
+  background: "#F8F8F8",
   "on-background": "#444444",
 
   surface: "#ffffff",
