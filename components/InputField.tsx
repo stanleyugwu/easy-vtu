@@ -139,7 +139,7 @@ const InputField = React.forwardRef(
     /** input field button */
     const Button = React.useMemo(
       () => (
-        <PressResizerView style={tw`mt-3`}>
+        <PressResizerView style={tw`mt-3 bg-transparent`}>
           <Pressable
             onPress={onButtonPress}
             accessibilityLabel={"button input field"}
@@ -153,8 +153,8 @@ const InputField = React.forwardRef(
             {...extraButtonProps}
           >
             <>
-              <View style={tw`flex-row items-center justify-between`}>
-                <View accessibilityLabel="button-input-field left element">
+              <View style={tw`flex-row items-center justify-between bg-transparent`}>
+                <View accessibilityLabel="button-input-field left element" style={{backgroundColor:'transparent'}}>
                   {leftElement}
                 </View>
                 <Text
@@ -164,7 +164,7 @@ const InputField = React.forwardRef(
                   {value}
                 </Text>
               </View>
-              <View accessibilityLabel="button-input-field right element">
+              <View accessibilityLabel="button-input-field right element" style={{backgroundColor:'transparent'}}>
                 {rightElement}
               </View>
             </>
@@ -249,7 +249,7 @@ const InputField = React.forwardRef(
       <View
         style={tw.style(
           ["max-w-md my-2 p-3.5 rounded-lg bg-surface"],
-          appStyles.boxShadow,
+          appStyles.boxShadowSmall,
           style
         )}
         accessibilityLabel={accessibilityLabel}
