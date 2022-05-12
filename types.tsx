@@ -167,6 +167,13 @@ export namespace RemoteConfig {
   };
 }
 
+// structure of airtime history
+export type AirtimeHistoryData = {
+  networkName:NetworkCarriers;
+  phoneNumber: string;
+  date: number;
+}
+
 /** Corresponsing state slices for app redux store */
 export namespace AppStateSlices {
   export type UserSlice = {
@@ -208,6 +215,10 @@ export namespace AppStateSlices {
      * This is neccessary to avoid frequent pop-ups
      */
     announcementModalLastSeen: number;
+    /**
+   * stores numbers, meter no, IUC, and other transaction preferences for easier transaction
+   */
+  history: {airtime:AirtimeHistoryData[], data:AirtimeHistoryData[], cable:string[], electricity:string[]}
   };
 }
 
@@ -282,6 +293,16 @@ export namespace DispatchPayloads {
    * It should be a timestamp in milliseconds
    */
   export type AnnouncementModalLastSeenPayload = number;
+
+  /**
+   * Payload for saving airtime transaction details to history
+   */
+  export type AirtimeHistoryPayload = AirtimeHistoryData;
+
+  /**
+   * Payload for saving data transaction details to history
+   */
+  export type DataHistoryPayload = AirtimeHistoryPayload;
 }
 
 /**
@@ -304,7 +325,6 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ImageSourcePropType } from "react-native";
 
 declare global {
   namespace ReactNavigation {
@@ -318,6 +338,14 @@ export type productType =
   | "electricity"
   | "cable"
   | "scratchCard";
+
+export enum NetworkCarriers {
+  Unknown,
+  Mtn,
+  Airtel,
+  Glo,
+  Etisalat,
+}
 
 export type RootStackParamList = {
   UserScreenNavigation: NavigatorScreenParams<RootTabParamList> | undefined;
