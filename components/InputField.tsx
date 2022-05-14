@@ -145,7 +145,8 @@ const InputField = React.forwardRef(
             accessibilityLabel={"button input field"}
             style={[
               tw.style(
-                `flex-row border-b border-primary justify-between items-center h-12 p-1 max-h-14`
+                `flex-row border-b justify-between items-center h-12 p-1 max-h-14`,
+                {borderBottomColor:'#bbb'}
               ),
               buttonStyle,
             ]}
@@ -184,7 +185,7 @@ const InputField = React.forwardRef(
     /** input field TextInput */
     const textInput = (
       <View
-        style={tw`pl-1.5 border-b border-primary bg-transparent mt-2 items-center flex-row`}
+        style={[tw`pl-1.5 border-b bg-transparent mt-2 items-center flex-row`,{borderBottomColor:'#bbb'}]}
       >
         {leftElement ? (
           <View
@@ -204,6 +205,7 @@ const InputField = React.forwardRef(
           multiline={inputLines ? true : false}
           onChangeText={onChangeText}
           value={value}
+          placeholderTextColor={tw.color("gray")}
           outlineColor={tw.color("surface")}
           placeholder={placeholder}
           underlineColor="transparent"
@@ -248,7 +250,7 @@ const InputField = React.forwardRef(
     return (
       <View
         style={tw.style(
-          ["max-w-md my-2 p-3.5 rounded-lg bg-surface"],
+          ["max-w-md my-2 p-3 rounded-lg bg-surface"],
           appStyles.boxShadowSmall,
           style
         )}
@@ -256,7 +258,7 @@ const InputField = React.forwardRef(
         {...otherProps}
       >
         <View
-          style={tw`flex-row items-center mb-1.5 bg-transparent`}
+          style={tw`flex-row items-center mb-0 bg-transparent`}
           testID={"label wrapper"}
         >
           <Icon
