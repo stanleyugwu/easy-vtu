@@ -8,7 +8,6 @@ import {
 import { useSelector } from "react-redux";
 import Text, { View } from "./Themed";
 import tw from "../lib/tailwind";
-import ModalWrapper, { ModalWrapperProps } from "./ModalWrapper";
 import PressResizerView from "./PressResizerView";
 import RippleButton, { RippleButtonProps } from "./RippleButton";
 import remoteConfig from "@react-native-firebase/remote-config";
@@ -21,6 +20,8 @@ import defaultPaymentMethodImage from "../assets/images/wallet_img.png";
 //@ts-ignore
 import cardImg from "../assets/images/card_img.png";
 import appStyles from "../lib/appStyles";
+import ReactNativeModal, { ModalProps } from "react-native-modal";
+import Layout from "../constants/Layout";
 
 export type PaymentMethods = "wallet" | "card" | "transfer" | "bitcoin";
 
@@ -68,21 +69,29 @@ const PaymentMethodButton = ({
 };
 
 export type PaymentMethodPicker = {
+  isVisible: boolean;
+  /**
+   * Function to be called when Android back button is pressed
+   */
+  onBackButtonPress?: () => void;
+  /** Function to call when the area around the modal is touched */
+  onBackdropTouch?: () => void;
   /** Function to call when a method is selected.
    * This method will be called with `wallet` or `card` or `transfer`representing the method selected
    */
   onMethodSelect: (selectedMethod: PaymentMethods) => void;
-} & ModalWrapperProps;
+} & ModalProps;
 
 /**
  * Renders a modal for choosing the payment method for a service
  */
 const PaymentMethodPicker = ({
   onMethodSelect,
-  onRequestClose,
-  onBackgroundTouch,
+  isVisible = false,
+  onBackdropPress,
+  onBackButtonPress,
 }: PaymentMethodPicker) => {
-  const isSignedIn = useSelector((state:RootState) => state.user?.isSignedIn);
+  const isSignedIn = useSelector((state: RootState) => state.user?.isSignedIn);
 
   // Remote config params
   const activePaymentMethods = JSON.parse(
@@ -103,14 +112,39 @@ const PaymentMethodPicker = ({
   }, []);
 
   return (
-    <ModalWrapper
-      visible={true}
-      modalPosition="bottom"
-      style={tw`p-0`}
-      onRequestClose={onRequestClose}
-      onBackgroundTouch={onBackgroundTouch}
+    <ReactNativeModal
+      isVisible={isVisible}
+      onBackButtonPress={onBackButtonPress}
+      onBackdropPress={onBackdropPress}
+      onSwipeComplete={onBackdropPress}
+      swipeDirection="down"
+      animationInTiming={500}
+      animationOutTiming={500}
+      deviceHeight={Layout.screen.height}
+      deviceWidth={Layout.screen.width}
+      backdropTransitionInTiming={800}
+      supportedOrientations={["portrait", "landscape"]}
+      backdropTransitionOutTiming={500}
+      animationIn={"slideInUp"}
+      animationOut={"slideOutDown"}
+      style={{
+        justifyContent: "flex-end",
+        margin: 0,
+        alignSelf: "center",
+        width: "100%",
+      }}
     >
       <View style={tw`p-4 rounded-t-2xl bg-secondary`}>
+        <View
+          style={{
+            margin: "auto",
+            alignSelf: "center",
+            height: 4,
+            width: 50,
+            borderRadius: 9999,
+            backgroundColor: tw.color("on-surface"),
+          }}
+        />
         <Text
           type="title"
           style={tw`self-center my-auto text-lg text-on-surface my-8`}
@@ -144,11 +178,11 @@ const PaymentMethodPicker = ({
           <PaymentMethodButton
             label="Pay Through Bitcoin"
             imageSource={cardImg}
-            onPress={handleBankSelect}
+            onPress={handleBtcSelect}
           />
         ) : null}
       </View>
-    </ModalWrapper>
+    </ReactNativeModal>
   );
 };
 
