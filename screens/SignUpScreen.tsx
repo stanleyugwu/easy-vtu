@@ -4,24 +4,17 @@ import { Divider, Snackbar } from "react-native-paper";
 import {
   LayoutAnimation,
   BackHandler,
-  Dimensions,
   Platform,
   UIManager,
-  TextInput,
 } from "react-native";
-import PhoneInput from "react-native-phone-input";
 import Text, { View } from "../components/Themed";
 import { AxiosResponse } from "axios";
-import CountryPickerModal from "../components/CountryPickerModal";
 import InputField from "../components/InputField";
 import { useFormik } from "formik";
 import LoaderModal from "../components/LoaderModal";
 import withTile from "../hooks/withTile";
 import type { FormFieldsTypes, RootStackScreenProps, Server } from "../types";
 import SafeAreaView from "../components/CustomSafeAreaView";
-import { Ionicons as Icon } from "@expo/vector-icons";
-import PressResizerView from "../components/PressResizerView";
-import RippleButton from "../components/RippleButton";
 import FadeInView from "../components/FadeInView";
 import * as Yup from "yup";
 import myAxios from "../adapters/instance";
@@ -48,6 +41,9 @@ const SignupSchema = Yup.object().shape({
       if (username && SignupSchema.fields.username.isValidSync(username))
         return schema.required("You didn't enter any e-mail address");
     }),
+  mobileNumber: Yup.string()
+    .matches(/^0(7|8|9)(0|1)[0-9]{8}$/, "That mobile number is invalid")
+    .required("You didn't enter any mobile number"),
 
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")
@@ -71,14 +67,17 @@ const SignupSchema = Yup.object().shape({
 });
 
 export type FormikSignupValuesTypes = Record<
-  "username" | "password" | "emailAddress" | "confirmPassword" | "referrer",
+  | "username"
+  | "password"
+  | "emailAddress"
+  | "mobileNumber"
+  | "confirmPassword"
+  | "referrer",
   string
 >;
 
 const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
   const [formStep, setFormStep] = React.useState(1);
-  const [countryModalVisible, setCountryModalVisible] = React.useState(false);
-  const [mobileNumberError, setMobileNumberError] = React.useState("");
   const [requestError, setRequestError] = React.useState("");
   const [statusModalVisible, setStatusModalVisible] = React.useState(false);
   let controller = new AbortController(); //controller for terminating requests
@@ -90,24 +89,6 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
     isMounted = false;
     controller.abort(); //cancel any axios request using `controller` token
   });
-
-  //mobile number input component ref
-  const phoneInputRef = React.useRef<PhoneInput<typeof TextInput>>(null);
-
-  // Country modal event handlers and callback
-  const onCountrySelectCb = React.useCallback((country) => {
-    phoneInputRef.current?.selectCountry(country.iso2);
-    setCountryModalVisible(false);
-  }, []);
-  const closeCountryModal = React.useCallback(() => {
-    setCountryModalVisible(false);
-  }, []);
-
-  //memoized function to be called on flag press, so to avoid rerender of `PhoneInput`
-  // incase its performance optimisation is relying on referential equality
-  const openCountryModal = React.useCallback(() => {
-    setCountryModalVisible(true);
-  }, []);
 
   // custom variable to track is form is submitting
   // formik.isSubmitting fails when you schedule a setTimeout with its value
@@ -137,7 +118,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
           password: values.password,
           password_confirmation: values.confirmPassword,
           username: values.username,
-          phone: phoneInputRef.current?.getValue() as string,
+          phone: values.mobileNumber,
           referrer: values.referrer,
         },
         {
@@ -157,12 +138,13 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
       .catch((error: Server.RequestError) => {
         /**
          * Incase of error from the server, we'll check the error string and
-         * try to see if the error is about `email` or `username` so we can move user to
+         * try to see if the error is about `email` or `username` or `mobile number` so we can move user to
          * step 1 where the email and username fields are
          */
         if (
           error.message?.includes("email") ||
-          error.message.includes("username")
+          error.message?.includes("username") ||
+          error.message?.includes("number")
         ) {
           LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
           setFormStep(1);
@@ -177,6 +159,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
     initialValues: {
       username: "",
       emailAddress: "",
+      mobileNumber: "",
       password: "",
       confirmPassword: "",
       referrer: "",
@@ -219,16 +202,6 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
 
       // if in step 1
       if (formStep == 1) {
-        // we're wrapping this in a try-catch if not `isValidNumber` might throw when number is invalid
-        // instead of only returning boolean
-        try {
-          var numberValid;
-          numberValid = phoneInputRef.current?.isValidNumber?.(); //validate number
-        } catch (error) {}
-
-        if (!numberValid)
-          return setMobileNumberError("Mobile number is invalid"); //dont continue when number is invalid
-
         /*=> at this point, number is valid. <= */
         if (noError) {
           // check if there's no error and go to next step
@@ -239,7 +212,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
         }
 
         // there's error, check if it's not in step 1 and move to step 2
-        if (!errors.username && !errors.emailAddress) {
+        if (!errors.username && !errors.emailAddress && !errors.mobileNumber) {
           LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
           return setFormStep(2);
         }
@@ -284,7 +257,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
           placeholder="Enter Username"
           onChangeText={formik.handleChange("username")}
           fieldLabelIcon="person-sharp"
-          extraInputProps={{ autoFocus: true }}
+          extraInputProps={{ autoFocus: true, textContentType:"username" }}
         />
         {formik.errors.username ? (
           <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
@@ -294,7 +267,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
       </View>
 
       {/* email field */}
-      <View style={tw`bg-transparent`}>
+      <View style={tw`bg-transparent mt-3 mb-3`}>
         <InputField
           fieldType="input"
           fieldLabel="Email Address"
@@ -304,6 +277,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
           placeholder="Enter Email Address"
           onChangeText={formik.handleChange("emailAddress")}
           fieldLabelIcon="ios-mail-sharp"
+          extraInputProps={{textContentType:"emailAddress",keyboardType:"email-address"}}
         />
         {formik.errors.emailAddress ? (
           <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
@@ -317,30 +291,16 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
         fieldType="input"
         fieldLabel="Mobile Number"
         style={{ backgroundColor: "#eee" }}
+        textInputStyle={{ backgroundColor: "#eee" }}
         fieldLabelIcon="ios-phone-portrait"
-      >
-        <PhoneInput
-          initialCountry="ng"
-          ref={phoneInputRef}
-          allowZeroAfterCountryCode={true}
-          offset={10}
-          textStyle={tw.style("text-base")}
-          onPressFlag={openCountryModal}
-          onChangePhoneNumber={() => setMobileNumberError("")}
-          textProps={{
-            multiline: false,
-            placeholder: "Enter Mobile Number",
-            style: tw`text-base text-black font-sans-semibold`,
-          }}
-          style={[
-            tw`px-4 h-12 mt-3 border-b border-primary`,
-            { backgroundColor: "#eee" },
-          ]}
-        />
-      </InputField>
-      {mobileNumberError ? (
+        value={formik.values.mobileNumber}
+        onChangeText={formik.handleChange("mobileNumber")}
+        placeholder="Enter Mobile Number"
+        extraInputProps={{ textContentType: "telephoneNumber", keyboardType:"number-pad" }}
+      />
+      {formik.errors.mobileNumber ? (
         <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
-          {mobileNumberError}
+          {formik.errors.mobileNumber}
         </Text>
       ) : null}
     </View>
@@ -412,17 +372,6 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
       </View>
     </View>
   );
-
-  //memoize countryModal component for performance
-  const countryModal = React.useMemo(() => {
-    return (
-      <CountryPickerModal
-        onRequestClose={closeCountryModal}
-        onCountrySelect={onCountrySelectCb}
-        onBackgroundTouch={closeCountryModal}
-      />
-    );
-  }, []);
 
   const loaderModal = React.useMemo(
     () => <LoaderModal loadingText="Signing Up" />,
@@ -506,7 +455,6 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
           disabled={formik.isValidating || formik.isSubmitting}
         />
       </View>
-      {countryModalVisible ? countryModal : null}
       {formik.isSubmitting ? loaderModal : null}
       {statusModalVisible ? statusModal : null}
       {/* Below snack will be used to show server request errors */}
