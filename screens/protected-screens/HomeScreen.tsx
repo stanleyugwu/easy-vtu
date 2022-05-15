@@ -16,10 +16,12 @@ import { signOut } from "../../store/slices/userSlice";
 import Layout from "../../constants/Layout";
 import syncProfile from "../../utils/keepProfileInSync";
 import { useNetInfo } from "@react-native-community/netinfo";
+import { balanceSelector } from "../../store/slices/walletSlice";
 
 const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
   //profile selector
   const profile = useSelector((state: RootState) => state.user?.profile);
+  const balance = useSelector(balanceSelector);
   const dispatch = useDispatch();
   const netinfo = useNetInfo();
 
@@ -172,7 +174,7 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
           </FadeInView>
           <FadeInView slideUp delay={600}>
             <WalletCard
-              balance={20000}
+              balance={balance}
               style={{ marginTop: 10 }}
               onAddCallback={walletAddCallback}
             />
