@@ -70,6 +70,7 @@
     "react-native-screens": "^3.6.0",
     "react-native-select-contact": "^1.6.3",
     "react-native-spinkit": "^1.5.1",
+    "react-native-svg": "^12.3.0",
     "react-native-unimodules": "0.14.10",
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.5",
@@ -92,6 +93,7 @@
     "@types/tailwindcss": "^3.0.9",
     "jest-expo": "^42.1.0",
     "prop-types": "^15.7.2",
+    "react-native-svg-transformer": "^1.0.0",
     "react-test-renderer": "16.13",
     "ts-node": "^10.7.0"
   },
