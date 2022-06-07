@@ -6,7 +6,7 @@ import {
   GestureResponderEvent,
 } from "react-native";
 import { useSelector } from "react-redux";
-import Text, { View } from "./Themed";
+import Text, { View, ViewProps } from "./Themed";
 import tw from "../lib/tailwind";
 import PressResizerView from "./PressResizerView";
 import RippleButton, { RippleButtonProps } from "./RippleButton";
@@ -75,12 +75,12 @@ export type PaymentMethodPicker = {
    */
   onBackButtonPress?: () => void;
   /** Function to call when the area around the modal is touched */
-  onBackdropTouch?: () => void;
+  onBackdropPress?: () => void;
   /** Function to call when a method is selected.
    * This method will be called with `wallet` or `card` or `transfer`representing the method selected
    */
   onMethodSelect: (selectedMethod: PaymentMethods) => void;
-} & ModalProps;
+} & ViewProps;
 
 /**
  * Renders a modal for choosing the payment method for a service
@@ -90,7 +90,9 @@ const PaymentMethodPicker = ({
   isVisible = false,
   onBackdropPress,
   onBackButtonPress,
+  ...otherProps
 }: PaymentMethodPicker) => {
+  if (!isVisible) return null;
   const isSignedIn = useSelector((state: RootState) => state.user?.isSignedIn);
 
   // Remote config params
@@ -100,16 +102,16 @@ const PaymentMethodPicker = ({
 
   const handleWalletSelect = React.useCallback(() => {
     onMethodSelect("wallet");
-  }, []);
+  }, [onMethodSelect]);
   const handleCardSelect = React.useCallback(() => {
     onMethodSelect("card");
-  }, []);
+  }, [onMethodSelect]);
   const handleBankSelect = React.useCallback(() => {
     onMethodSelect("transfer");
-  }, []);
+  }, [onMethodSelect]);
   const handleBtcSelect = React.useCallback(() => {
     onMethodSelect("bitcoin");
-  }, []);
+  }, [onMethodSelect]);
 
   return (
     <ReactNativeModal
@@ -134,7 +136,7 @@ const PaymentMethodPicker = ({
         width: "100%",
       }}
     >
-      <View style={tw`p-4 rounded-t-2xl bg-secondary`}>
+      <View style={tw`p-4 rounded-t-2xl bg-secondary`} {...otherProps}>
         <View
           style={{
             margin: "auto",
@@ -186,4 +188,9 @@ const PaymentMethodPicker = ({
   );
 };
 
-export { PaymentMethodPicker as default, PaymentMethodButton };
+export default React.memo(
+  PaymentMethodPicker,
+  (prev, next) => prev.isVisible === next.isVisible
+);
+
+export { PaymentMethodButton };
