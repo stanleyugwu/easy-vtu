@@ -17,6 +17,16 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you update your profile image",
+          "cameraPermission": "Allow EasyVtu to access your camera",
+          "microphonePermission": false
+        }
+      ]
+    ],
     "ios": {
       "supportsTablet": true,
       "appStoreUrl": "https://apps.apple.com/app/apple-store/id123456789?action=write-review"
