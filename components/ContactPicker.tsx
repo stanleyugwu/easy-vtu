@@ -82,6 +82,7 @@ const ContactPicker = React.forwardRef(
     }: ContactPickerProps,
     ref: React.ForwardedRef<any>
   ) => {
+    if (!isVisible) return null;
     const [loadingContacts, setContactsLoading] = React.useState(true);
     const [deniedContactsPermission, setDeniedContactsPermission] =
       React.useState(false);
@@ -93,7 +94,8 @@ const ContactPicker = React.forwardRef(
      * @returns array of users contacts
      */
     const loadUserContacts = React.useCallback(async () => {
-      const { status, granted, canAskAgain } = await Contacts.requestPermissionsAsync();
+      const { status, granted, canAskAgain } =
+        await Contacts.requestPermissionsAsync();
       if (status === "granted") {
         setDeniedContactsPermission(false);
         let { data } = await Contacts.getContactsAsync({
@@ -102,31 +104,29 @@ const ContactPicker = React.forwardRef(
         });
         setContactsLoading(false);
         setContacts(filterContacts(data));
-        completeContacts.current = contacts;
+        completeContacts.current = filterContacts(data);
         return;
-      } else if(!granted || !canAskAgain){
+      } else if (!granted || !canAskAgain) {
         setDeniedContactsPermission(true);
       }
-    },[]);
+    }, []);
 
     React.useEffect(() => {
       loadUserContacts();
     }, []);
 
-    const handleTextInputChange = React.useCallback(
-      debounce((query: string) => {
-        if (!completeContacts.current) return undefined;
+    const handleTextInputChange = debounce((query: string) => {
+      if (!completeContacts.current) return;
+      query = query.toLowerCase();
 
-        let filtered = completeContacts.current.filter((contact) => {
-          return (
-            contact.name.indexOf(query) > -1 ||
-            contact.phoneNumber.toString().indexOf(query) > -1
-          );
-        });
-        setContacts(filtered);
-      }),
-      []
-    );
+      let filtered = completeContacts.current.filter((contact) => {
+        return (
+          contact.name.toLowerCase().indexOf(query) > -1 ||
+          contact.phoneNumber.toString().indexOf(query) > -1
+        );
+      });
+      setContacts(filtered);
+    });
 
     const handleGrantContactPermission = async () => {
       await Linking.openSettings();
@@ -152,7 +152,7 @@ const ContactPicker = React.forwardRef(
             style={[
               tw`py-3 pl-4 rounded-lg max-w-md bg-white`,
               { width: "90%" },
-              appStyles.boxShadow
+              appStyles.boxShadow,
             ]}
             onChangeText={handleTextInputChange}
           />
