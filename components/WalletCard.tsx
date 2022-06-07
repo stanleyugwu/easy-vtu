@@ -30,7 +30,7 @@ const WalletCard = ({
   return (
     <View
       style={[
-        tw`flex-row justify-between border border-white items-center w-80 max-w-md mx-auto rounded-3xl bg-primary p-3`,
+        tw`flex-row justify-between border border-white items-center w-5/6 max-w-xl mx-auto rounded-3xl bg-primary p-3`,
         Platform.OS == "ios"
           ? {
               shadowColor: tw.color("secondary"),
