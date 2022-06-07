@@ -47,9 +47,7 @@ const Services = () => {
           iconSrc={data}
           style={tw`my-3`}
           onPress={(_) =>
-            navigation.navigate("NetworkProviders", {
-              serviceType: "Data",
-            })
+            navigation.navigate("DataScreen")
           }
         />
       ) : null}
