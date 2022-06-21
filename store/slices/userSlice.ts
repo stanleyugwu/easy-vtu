@@ -28,7 +28,10 @@ const signOutReducer = (
   state: UserSlice,
   action: PayloadAction<Payloads.SignOut>
 ) => {
-  state = initialState; // clear state
+  // clear state
+  state.accessToken = null;
+  state.isSignedIn = false;
+  state.profile = null; 
 };
 
 /** Reducer for updating profile */
