@@ -7,7 +7,6 @@ import withTile from "../hooks/withTile";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 import type { RootStackScreenProps } from "../types";
-import Announcement from "../components/Announcement";
 import RatingModal from "../components/RatingModal";
 import checkAppUpdates from "../utils/checkAppUpdates";
 
@@ -40,7 +39,6 @@ const QuickSubHomeScreen = ({
       </Text>
       <RatingModal/>
       <Services />
-      <Announcement/>
     </ScreenContainer>
   );
 };

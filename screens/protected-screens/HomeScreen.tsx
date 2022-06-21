@@ -8,7 +8,6 @@ import { DrawerLayout, ScrollView } from "react-native-gesture-handler";
 import Drawer, { DrawerItemType } from "../../components/Drawer";
 import { RootState, RootTabScreenProps } from "../../types";
 import SafeArea from "../../components/CustomSafeAreaView";
-import Announcement from "../../components/Announcement";
 import checkAppUpdates from "../../utils/checkAppUpdates";
 import WalletCard from "../../components/WalletCard";
 import FadeInView from "../../components/FadeInView";
@@ -179,7 +178,6 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
             />
           </FadeInView>
           <Services />
-          <Announcement />
         </ScrollView>
       </DrawerLayout>
     </SafeArea>

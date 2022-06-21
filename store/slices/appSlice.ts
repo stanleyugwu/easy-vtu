@@ -13,16 +13,6 @@ const setRatingModalLastSeenReducer = (
   state.ratingModalLastSeen = timestamp;
 };
 
-const setAnnouncementModalLastSeenReducer = (
-  state: AppSlice,
-  action: PayloadAction<Payloads.AnnouncementModalLastSeenPayload>
-) => {
-  const timestamp = action.payload;
-
-  if (!timestamp || typeof timestamp != "number") return;
-  state.announcementModalLastSeen = timestamp;
-};
-
 const saveToHistoryAirtimeReducer = (
   state: AppSlice,
   action: PayloadAction<Payloads.AirtimeHistoryPayload>
@@ -74,7 +64,6 @@ const saveToHistoryDataReducer = (
 }
 
 const initialState: RootState["app"] = {
-  announcementModalLastSeen: 0,
   ratingModalLastSeen: 0,
   history:{airtime:[{networkName:1,phoneNumber:"08066413705",date:Date.now()},{networkName:1,phoneNumber:"08066413705",date:Date.now()},{networkName:1,phoneNumber:"08066413705",date:Date.now()},{networkName:1,phoneNumber:"08066413705",date:Date.now()},{networkName:1,phoneNumber:"08066413705",date:Date.now()},{networkName:1,phoneNumber:"08066413705",date:Date.now()},{networkName:1,phoneNumber:"08066413705",date:Date.now()},{networkName:1,phoneNumber:"08066413705",date:Date.now()},{networkName:1,phoneNumber:"08066413705",date:Date.now()}],data:[],cable:[],electricity:[]}
 };
@@ -84,13 +73,12 @@ const appSlice = createSlice({
   initialState,
   reducers: {
     setRatingModalLastSeen: setRatingModalLastSeenReducer,
-    setAnnouncementModalLastSeen: setAnnouncementModalLastSeenReducer,
     saveToHistoryAirtime:saveToHistoryAirtimeReducer,
     saveToHistoryData:saveToHistoryDataReducer,
   },
 });
 
-export const { setRatingModalLastSeen, setAnnouncementModalLastSeen, saveToHistoryAirtime, saveToHistoryData } =
+export const { setRatingModalLastSeen, saveToHistoryAirtime, saveToHistoryData } =
   appSlice.actions;
 
 export default appSlice.reducer
