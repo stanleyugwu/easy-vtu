@@ -24,7 +24,7 @@ const syncProfile = () => {
           email: profile.email,
           emailVerifiedAt: profile.email_verified_at,
           image: profile.image,
-          isAdmin: profile.isAdmin,
+          isAdmin: Boolean(+profile.isAdmin),
           isVerified: Boolean(+profile.isVerified),
           noOfReferrals: +profile.no_of_referrals,
           phone: profile.phone,
