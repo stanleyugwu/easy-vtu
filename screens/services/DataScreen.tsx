@@ -21,6 +21,7 @@ import PaymentMethodPicker, {
 } from "../../components/PaymentMethodPicker";
 import RippleButton from "../../components/RippleButton";
 import SavedHistory from "../../components/SavedHistory";
+import SmartTextInput from "../../components/SmartTextInput";
 import StatusModal from "../../components/StatusModal";
 import Text, { View } from "../../components/Themed";
 import tw from "../../lib/tailwind";
@@ -154,6 +155,13 @@ const DataScreen = ({
   /****************************
    * DATA PLAN SELECTION HANDLERS
    ****************************/
+  const handleSelectPlanButton = () => {
+    // do nothing if invalid provider was selected, else open dataplans modal
+    if (formik.values.provider === NetworkCarriers.Unknown)
+      return formik.validateField("provider");
+    setDataPlansModalVisible(true);
+  }
+
   const [dataPlansModalVisible, setDataPlansModalVisible] =
     React.useState(false);
   const planInfo = React.useRef<{
@@ -375,6 +383,7 @@ const DataScreen = ({
             rightInputNode={phoneInputRightIcons}
             extraInputProps={{
               keyboardType: "number-pad",
+              textContentType:"telephoneNumber",
               maxLength: 20,
               accessibilityLabel: "multi-number recipients input",
               accessibilityRole: "text",
@@ -385,26 +394,24 @@ const DataScreen = ({
 
         {/* PANE TO SELECT DATA PLAN */}
         <View style={tw.style(`mt-5 bg-transparent`)}>
-          <InputField
+          <SmartTextInput
             fieldType="button"
+            buttonStyle={{marginTop:7}}
+            leftInputIcon="options-outline"
             value={
               formik.values.plan.length == 0
-                ? `Select${
+                ? `Choose${
                     formik.values.provider != NetworkCarriers.Unknown
                       ? " " + NetworkCarriers[formik.values.provider]
                       : ""
                   } Plan`
                 : formik.values.plan
             }
+            error={!!formik.errors.plan}
             fieldLabel="Data plan:"
-            fieldRequired={false}
-            onButtonPress={() => {
-              // do nothing if invalid provider was selected, else open dataplans modal
-              if (formik.values.provider === NetworkCarriers.Unknown)
-                return formik.validateField("provider");
-              setDataPlansModalVisible(true);
-            }}
+            onButtonPress={handleSelectPlanButton}
             rightInputIcon="chevron-down"
+            onRightInputIconPress={handleSelectPlanButton}
           />
           <ErrorText error={formik.errors.plan} />
         </View>
