@@ -19,7 +19,6 @@ import CableScreen from "../screens/services/CableScreen";
 import ScratchCardScreen from "../screens/services/ScratchCardScreen";
 
 //util screens
-import NetworkProvidersScreen from "../screens/services/NetworkProvidersScreen";
 import TransactionReviewScreen from "../screens/TransactionReviewScreen";
 import BankTransferScreen from "../screens/BankTransferScreen";
 
@@ -107,11 +106,6 @@ const Navigation = () => {
             animationTypeForReplace: "push",
           }}
         >
-          <Stack.Screen
-            name="NetworkProviders"
-            component={NetworkProvidersScreen}
-            options={generateProvidersParams("Network Providers")}
-          />
           <Stack.Screen
             name="AirtimeScreen"
             component={AirtimeScreen}
