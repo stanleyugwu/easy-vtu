@@ -1,12 +1,11 @@
 import React from "react";
 import {
-  TextInput,
-  TouchableOpacity,
   Image,
   Platform,
   UIManager,
   LayoutAnimation,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import Text, { View } from "../../components/Themed";
 import CustomSafeAreaView from "../../components/CustomSafeAreaView";
@@ -34,7 +33,7 @@ import * as FileSystem from "expo-file-system";
 import myAxios from "../../adapters/instance";
 import { Snackbar } from "react-native-paper";
 import { AxiosResponse } from "axios";
-import { updateProfile } from "../../store/slices/userSlice";
+import { signOut, updateProfile } from "../../store/slices/userSlice";
 import store from "../../store";
 
 if (Platform.OS === "android") {
@@ -198,6 +197,7 @@ const ProfileScreen = ({ navigation }: RootTabScreenProps<"Profile">) => {
     setEditingProfile(true);
   };
   const handleChangeProfilePic = async () => {
+    if (!editingProfile) setEditingProfile(true);
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -235,20 +235,38 @@ const ProfileScreen = ({ navigation }: RootTabScreenProps<"Profile">) => {
           style={{
             flexDirection: "row",
             marginBottom: 12,
-            alignItems: "stretch",
+            justifyContent: "space-between",
+            alignItems: "center",
             marginLeft: 10,
           }}
         >
-          <Icon
-            name="arrow-back"
-            size={25}
-            onPress={() => {
-              navigation.goBack();
-            }}
-          />
-          <Text type="heading" style={tw`font-sans-bold p-1.5 ml-2`}>
-            {editingProfile ? "Edit Profile" : "Profile"}
-          </Text>
+          <View style={tw`flex-row items-center justify-center`}>
+            <Icon
+              name="arrow-back"
+              size={25}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+            <Text type="heading" style={tw`font-sans-bold p-1.5 ml-2 mt-2`}>
+              {editingProfile ? "Edit Profile" : "Profile"}
+            </Text>
+          </View>
+          {!editingProfile ? (
+            <TouchableOpacity
+              activeOpacity={0.7}
+              style={tw`bg-primary flex-row p-1 px-2 rounded-md items-center`}
+              onPress={handleStartEditing}
+            >
+              <Icon
+                name="pencil-sharp"
+                style={tw`text-secondary items-center justify-center text-lg`}
+              />
+              <Text type="subTitle" style={tw`text-secondary `}>
+                Edit profile
+              </Text>
+            </TouchableOpacity>
+          ) : null}
         </View>
         <View
           style={{
@@ -281,10 +299,8 @@ const ProfileScreen = ({ navigation }: RootTabScreenProps<"Profile">) => {
             }}
           />
           <Icon
-            name={editingProfile ? "camera-outline" : "pencil-sharp"}
-            onPress={
-              editingProfile ? handleChangeProfilePic : handleStartEditing
-            }
+            name={"camera-outline"}
+            onPress={handleChangeProfilePic}
             style={tw`absolute bottom-1 right-1 bg-secondary rounded-full p-1.5`}
             size={22}
           />
