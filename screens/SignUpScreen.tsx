@@ -22,6 +22,8 @@ import StatusModal from "../components/StatusModal";
 import Layout from "../constants/Layout";
 import { StatusBar } from "expo-status-bar";
 import Button from "../components/Button";
+import SmartTextInput from "../components/SmartTextInput";
+import ErrorText from "../components/ErrorText";
 
 if (Platform.OS === "android") {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -37,10 +39,7 @@ const SignupSchema = Yup.object().shape({
 
   emailAddress: Yup.string()
     .email("That e-mail address is invalid!")
-    .when("username", (username, schema) => {
-      if (username && SignupSchema.fields.username.isValidSync(username))
-        return schema.required("You didn't enter any e-mail address");
-    }),
+    .required("You didn't enter any e-mail address"),
   mobileNumber: Yup.string()
     .matches(/^0(7|8|9)(0|1)[0-9]{8}$/, "That mobile number is invalid")
     .required("You didn't enter any mobile number"),
@@ -244,7 +243,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
     >
       {/* username field */}
       <View style={tw`bg-transparent`}>
-        <InputField
+        <SmartTextInput
           fieldType="input"
           fieldLabel="Username"
           style={{
@@ -252,57 +251,60 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
             borderTopLeftRadius: 30,
             borderTopRightRadius: 30,
           }}
+          error={!!formik.errors.username}
           textInputStyle={{ backgroundColor: "#eee" }}
           value={formik.values.username}
           placeholder="Enter Username"
           onChangeText={formik.handleChange("username")}
-          fieldLabelIcon="person-sharp"
-          extraInputProps={{ autoFocus: true, textContentType:"username" }}
+          leftInputIcon="person-outline"
+          extraInputProps={{ autoFocus: true, textContentType: "username" }}
         />
-        {formik.errors.username ? (
-          <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
-            {formik.errors.username}
-          </Text>
-        ) : null}
+        <ErrorText error={formik.errors.username} color={tw.color("red-400")} />
       </View>
 
       {/* email field */}
-      <View style={tw`bg-transparent mt-3 mb-3`}>
-        <InputField
+      <View style={tw`bg-transparent my-2`}>
+        <SmartTextInput
           fieldType="input"
           fieldLabel="Email Address"
           value={formik.values.emailAddress}
           style={{ backgroundColor: "#eee" }}
+          error={!!formik.errors.emailAddress}
           textInputStyle={{ backgroundColor: "#eee" }}
           placeholder="Enter Email Address"
           onChangeText={formik.handleChange("emailAddress")}
-          fieldLabelIcon="ios-mail-sharp"
-          extraInputProps={{textContentType:"emailAddress",keyboardType:"email-address"}}
+          leftInputIcon="ios-mail-outline"
+          extraInputProps={{
+            textContentType: "emailAddress",
+            keyboardType: "email-address",
+          }}
         />
-        {formik.errors.emailAddress ? (
-          <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
-            &gt; {formik.errors.emailAddress}
-          </Text>
-        ) : null}
+        <ErrorText
+          error={formik.errors.emailAddress}
+          color={tw.color("red-400")}
+        />
       </View>
 
       {/* phone field */}
-      <InputField
+      <SmartTextInput
         fieldType="input"
         fieldLabel="Mobile Number"
         style={{ backgroundColor: "#eee" }}
         textInputStyle={{ backgroundColor: "#eee" }}
-        fieldLabelIcon="ios-phone-portrait"
+        leftInputIcon="call-outline"
+        error={!!formik.errors.mobileNumber}
         value={formik.values.mobileNumber}
         onChangeText={formik.handleChange("mobileNumber")}
         placeholder="Enter Mobile Number"
-        extraInputProps={{ textContentType: "telephoneNumber", keyboardType:"number-pad" }}
+        extraInputProps={{
+          textContentType: "telephoneNumber",
+          keyboardType: "number-pad",
+        }}
       />
-      {formik.errors.mobileNumber ? (
-        <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
-          {formik.errors.mobileNumber}
-        </Text>
-      ) : null}
+      <ErrorText
+        error={formik.errors.mobileNumber}
+        color={tw.color("red-400")}
+      />
     </View>
   );
 
@@ -314,61 +316,58 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
     >
       {/* password field */}
       <View style={tw`bg-transparent`}>
-        <InputField
+        <SmartTextInput
           fieldType="input"
           fieldLabel="Password"
           style={{ backgroundColor: "#eee" }}
           textInputStyle={{ backgroundColor: "#eee" }}
           value={formik.values.password}
           onChangeText={formik.handleChange("password")}
-          fieldLabelIcon="md-key-sharp"
+          leftInputIcon="key-outline"
+          error={!!formik.errors.password}
           placeholder="Enter password"
+          extraInputProps={{ textContentType: "password" }}
         />
-        {formik.errors.password ? (
-          <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
-            &gt; {formik.errors.password}
-          </Text>
-        ) : null}
+        <ErrorText error={formik.errors.password} color={tw.color("red-400")} />
       </View>
 
       {/* confirm password field */}
-      <View style={tw`my-3 bg-transparent`}>
-        <InputField
+      <View style={tw`my-2 bg-transparent`}>
+        <SmartTextInput
           fieldType="input"
           fieldLabel="Confirm Password"
           style={{ backgroundColor: "#eee" }}
           textInputStyle={{ backgroundColor: "#eee" }}
           value={formik.values.confirmPassword}
           onChangeText={formik.handleChange("confirmPassword")}
-          fieldLabelIcon="md-key-sharp"
+          leftInputIcon={"key-sharp"}
           placeholder="Re-Enter password"
-          extraInputProps={{ error: !!formik.errors.confirmPassword }}
+          error={!!formik.errors.confirmPassword}
         />
-        {formik.errors.confirmPassword && formik.values.password ? (
-          <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
-            &gt; {formik.errors.confirmPassword}
-          </Text>
-        ) : null}
+        <ErrorText
+          error={
+            formik.errors.confirmPassword && formik.values.password
+              ? formik.errors.confirmPassword
+              : ""
+          }
+          color={tw.color("red-400")}
+        />
       </View>
 
-      {/* referrer field */}
+      {/* TODO: verify if referral system is integrated. referrer field */}
       <View style={tw`bg-transparent`}>
-        <InputField
+        <SmartTextInput
           fieldType="input"
           style={{ backgroundColor: "#eee" }}
           textInputStyle={{ backgroundColor: "#eee" }}
           fieldLabel="Who Reffered You? (optional)"
           value={formik.values.referrer}
+          error={!!formik.errors.referrer}
           onChangeText={formik.handleChange("referrer")}
-          fieldLabelIcon="md-key-sharp"
+          leftInputIcon="link-outline"
           placeholder="Referrer ID"
-          fieldRequired={false}
         />
-        {formik.errors.referrer ? (
-          <Text style={tw`text-red-400 pl-1 text-sm text-left font-sans`}>
-            {formik.errors.referrer}
-          </Text>
-        ) : null}
+        <ErrorText error={formik.errors.referrer} color={tw.color("red-400")} />
       </View>
     </View>
   );
@@ -398,7 +397,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
           padding: 0,
           backgroundColor: tw.color("background"),
           height: Layout.window.height,
-          justifyContent: "space-between",
+          justifyContent: "center",
         },
       }}
     >
@@ -411,7 +410,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
       <FadeInView
         slideUp
         delay={400}
-        style={tw`w-full mb-0 bg-transparent mt-10`}
+        style={tw`w-full mb-0 bg-transparent mt-20`}
       >
         <Text
           type="heading"
@@ -432,6 +431,7 @@ const SignUpScreen = ({ navigation }: RootStackScreenProps<"Sign-Up">) => {
         style={tw.style("mx-auto w-full px-4 pt-7 pb-4 bg-primary-dark", {
           borderTopLeftRadius: 60,
           borderTopRightRadius: 60,
+          flex: 1,
         })}
       >
         {/* Views corresponding to form steps */}
