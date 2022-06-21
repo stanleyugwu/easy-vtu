@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Services from "../../components/Services";
 import Header from "../../components/Header";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import tw from "../../lib/tailwind";
 import { DrawerLayout, ScrollView } from "react-native-gesture-handler";
 import Drawer, { DrawerItemType } from "../../components/Drawer";
@@ -17,6 +17,8 @@ import Layout from "../../constants/Layout";
 import syncProfile from "../../utils/keepProfileInSync";
 import { useNetInfo } from "@react-native-community/netinfo";
 import { balanceSelector } from "../../store/slices/walletSlice";
+import fetchDataPlans from "../../utils/fetchDataPlans";
+import { StatusBar } from "expo-status-bar";
 
 const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
   //profile selector
@@ -31,14 +33,16 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
   React.useEffect(() => {
     // check for and download app updates
     checkAppUpdates();
+    // try get data plans
+    fetchDataPlans();
   }, []);
 
   // Update local user profile details with server profile details
   React.useEffect(() => {
-    if(netinfo.isInternetReachable){
+    if (netinfo.isInternetReachable) {
       syncProfile();
     }
-  },[netinfo])
+  }, [netinfo]);
 
   // register refs
   const screenWidth = React.useRef(Layout.window.width).current;
@@ -68,20 +72,6 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
         label: "Profile",
         onItemPress: function () {
           navigation.navigate("Profile");
-        },
-      },
-      {
-        iconName: "wallet-sharp",
-        label: "Wallet",
-        onItemPress() {
-          navigation.navigate("Wallet");
-        },
-      },
-      {
-        iconName: "ios-swap-horizontal",
-        label: "Transactions",
-        onItemPress() {
-          navigation.navigate("Home");
         },
       },
       { iconName: "ios-call", label: "Contact Us", onItemPress: () => null },
@@ -114,7 +104,15 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
 
   /** callback to be invoked when user presses on sign out*/
   const handleSignOut = () => {
-    dispatch(signOut());
+    Alert.alert("Sign out", "Are you sure you want to sign out of the app", [
+      { text: "NO", style: "cancel" },
+      {
+        text: "SIGN OUT",
+        onPress: () => {
+          dispatch(signOut());
+        },
+      },
+    ]);
   };
 
   /** memoized Drawer component */
@@ -143,6 +141,7 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
         backgroundColor: tw.color("primary-dark"),
       }}
     >
+      <StatusBar style="light" backgroundColor={tw.color("primary-dark")} />
       <DrawerLayout
         renderNavigationView={drawer}
         statusBarAnimation="fade"
