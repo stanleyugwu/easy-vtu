@@ -45,6 +45,7 @@
     "crypto-js": "3.1.9-1",
     "expo": "~42.0.1",
     "expo-contacts": "~9.2.5",
+    "expo-image-picker": "~10.2.2",
     "expo-linear-gradient": "~9.2.0",
     "expo-linking": "~2.3.1",
     "expo-react-native-shadow": "^1.0.3",
@@ -64,12 +65,14 @@
     "react-native-gesture-handler": "~1.10.2",
     "react-native-modal": "^13.0.1",
     "react-native-paper": "^4.12.0",
+    "react-native-paper-onboarding": "^1.0.2",
     "react-native-phone-input": "^1.1.0",
     "react-native-reanimated": "^2.3.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.6.0",
     "react-native-select-contact": "^1.6.3",
     "react-native-spinkit": "^1.5.1",
+    "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^12.3.0",
     "react-native-unimodules": "0.14.10",
     "react-native-web": "~0.13.12",
@@ -80,8 +83,7 @@
     "tailwind-react-native-classnames": "^1.4.3",
     "tailwindcss": "^2.2.9",
     "typescript": "^4.6.2",
-    "yup": "^0.32.11",
-    "expo-image-picker": "~10.2.2"
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

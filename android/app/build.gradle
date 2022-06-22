@@ -137,6 +137,7 @@ android {
         applicationId 'com.devvie.easyvtu'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        vectorDrawables.useSupportLibrary = true
         versionCode 1
         versionName "1.0.0"
     }
