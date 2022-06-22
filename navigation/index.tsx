@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 
 //Screens
 import SignUpScreen from "../screens/SignUpScreen";
-import SplashScreen from "../screens/SplashScreen/index";
+import SplashScreen from "../screens/onboarding";
+import LandingScreen from "../screens/onboarding/LandingScreen";
 import SignInScreen from "../screens/SignInScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import UserScreenNavigation from "../screens/protected-screens/UserScreenNavigation";
@@ -24,7 +25,7 @@ import BankTransferScreen from "../screens/BankTransferScreen";
 
 import tw from "../lib/tailwind";
 import { Image } from "react-native";
-import * as ExpoNativeSplashScreen from 'expo-splash-screen';
+import NativeSplashScreen from 'react-native-splash-screen';
 
 import type { RootStackParamList, RootState } from "../types";
 import { Theme } from "@react-navigation/native";
@@ -67,7 +68,7 @@ const Navigation = () => {
      * Because this component takes time to render, especially when user is logged in, 
      * we'll only hide the splash screen when this component's children are rendered
      */
-    ExpoNativeSplashScreen.hideAsync();
+    NativeSplashScreen.hide();
   }, [])
 
   return (
@@ -82,6 +83,7 @@ const Navigation = () => {
         ) : (
           <Stack.Group screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Splash" component={SplashScreen} />
+            <Stack.Screen name="Landing" component={LandingScreen} />
             <Stack.Screen name="Sign-Up" component={SignUpScreen} />
             <Stack.Screen name="Sign-In" component={SignInScreen} />
             <Stack.Screen

@@ -1,6 +1,5 @@
 import { FontAwesome } from "@expo/vector-icons";
 import * as Font from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import {
   OpenSans_400Regular,
@@ -15,8 +14,6 @@ export default function useCachedResources() {
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        SplashScreen.preventAutoHideAsync();
-
         // Load fonts
         await Font.loadAsync({
           ...FontAwesome.font,
@@ -34,7 +31,7 @@ export default function useCachedResources() {
          * time (2s) to fully render, we'll hide the splash-screen in the `useEffect` of `Navigation` component
          * that will keep the splash-screen visible until all screens have been rendered
          */
-        // SplashScreen.hideAsync();
+        // SplashScreen.hide();
       }
     }
 

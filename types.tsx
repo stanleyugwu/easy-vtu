@@ -156,23 +156,22 @@ export namespace RemoteConfig {
   export type SupportedDataNetworkProviders = string[];
   export type SupportedAirtimeNetworkProviders = string[];
   export type ActiveServices = Record<services, boolean>;
-  export type Announcement = {
-    title: null | string;
-    message: null | string;
-    /**
-     * Where the app will redirect to when the button in announcement modal is pressed.
-     * Absence of the field will make the button invisible all-together
-     */
-    buttonUrl: null | string;
-  };
 }
 
 // structure of airtime history
 export type AirtimeHistoryData = {
-  networkName:NetworkCarriers;
+  networkName: NetworkCarriers;
   phoneNumber: string;
   date: number;
-}
+};
+
+// structure for data plans coming from server
+export type DataPlan = {
+  variation_code: string;
+  name: string;
+  variation_amount: string;
+  fixedPrice: string;
+};
 
 /** Corresponsing state slices for app redux store */
 export namespace AppStateSlices {
@@ -211,14 +210,24 @@ export namespace AppStateSlices {
     /** Will store the date app-rating dialog was shown to user last */
     ratingModalLastSeen: number;
     /**
-     *  Will store the date announcement dialog was shown to user last.
-     * This is neccessary to avoid frequent pop-ups
+     * stores numbers, meter no, IUC, and other transaction preferences for easier transaction
      */
-    announcementModalLastSeen: number;
-    /**
-   * stores numbers, meter no, IUC, and other transaction preferences for easier transaction
-   */
-  history: {airtime:AirtimeHistoryData[], data:AirtimeHistoryData[], cable:string[], electricity:string[]}
+    history: {
+      airtime: AirtimeHistoryData[];
+      data: AirtimeHistoryData[];
+      cable: string[];
+      electricity: string[];
+    };
+  };
+  export type DataPlansSlice = {
+    mtn?: DataPlan[];
+    glo?: DataPlan[];
+    airtel?: DataPlan[];
+    etisalat?: DataPlan[];
+  };
+
+  export type TransactionsSlice = {
+    transactions: Transaction[] | undefined;
   };
 }
 
@@ -232,19 +241,6 @@ export namespace DispatchPayloads {
   /** Payload for signing out */
   export type SignOut = undefined;
 
-  export type updateProfilePayloadKeys =
-    | "username"
-    | "email"
-    | "phone"
-    | "image"
-    | "isVerified"
-    | "emailVerifiedAt"
-    | "isAdmin"
-    | "referredBy"
-    | "noOfReferrals"
-    | "createdAt"
-    | "updatedAt";
-
   /**
    * Payload for updating profile.
    * This will be used for both when the user edits his profile and when the
@@ -255,9 +251,8 @@ export namespace DispatchPayloads {
    * `verifiedAt` fields in the dispatch payload. The reducer will take care of merging the payload with existing state.
    * @example dispatch(updateProfile({verified:true, verifiedAt: 1244534}))
    */
-  export type UpdateProfile = Pick<
-    AppStateSlices.UserSlice["profile"],
-    updateProfilePayloadKeys
+  export type UpdateProfile = Partial<
+    AppStateSlices.UserSlice["profile"]
   >;
 
   /**
@@ -289,12 +284,6 @@ export namespace DispatchPayloads {
   export type RatingModalLastSeenPayload = number;
 
   /**
-   * Payload for setting the last seen of annoncement modal.
-   * It should be a timestamp in milliseconds
-   */
-  export type AnnouncementModalLastSeenPayload = number;
-
-  /**
    * Payload for saving airtime transaction details to history
    */
   export type AirtimeHistoryPayload = AirtimeHistoryData;
@@ -303,6 +292,17 @@ export namespace DispatchPayloads {
    * Payload for saving data transaction details to history
    */
   export type DataHistoryPayload = AirtimeHistoryPayload;
+
+  /**
+   * Payload for adding data plans of any provider to state
+   */
+  export type DataPlansPayload = {
+    provider: NetworkProvidersNames;
+    plans: DataPlan[];
+  };
+
+  export type AddTransactionPayload = Transaction | Transaction[];
+  export type RemoveTransactionPayload = Transaction["id"];
 }
 
 /**
@@ -313,6 +313,8 @@ export type RootState = {
   user: AppStateSlices.UserSlice;
   wallet: AppStateSlices.WalletSlice;
   app: AppStateSlices.AppSlice;
+  dataPlans: AppStateSlices.DataPlansSlice;
+  transactions: AppStateSlices.TransactionsSlice;
 };
 
 /**
@@ -325,6 +327,7 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { NetworkProvidersNames } from "./utils/detectCarrierFromNumber";
 
 declare global {
   namespace ReactNavigation {
@@ -350,6 +353,7 @@ export enum NetworkCarriers {
 export type RootStackParamList = {
   UserScreenNavigation: NavigatorScreenParams<RootTabParamList> | undefined;
   Splash: { activeScreen: 1 | 2 | 3 };
+  Landing: undefined;
   "Sign-Up": undefined;
   "Sign-In": undefined;
   "Forgot-Password": undefined;
@@ -378,7 +382,9 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
 // Screens for BottomTab (i.e after logging in)
 export type RootTabParamList = {
   Home: undefined;
-  Wallet: undefined;
+  Wallet: {
+    quickAction?: "deposit" | "withdraw";
+  };
   Transactions: undefined;
   Profile: undefined;
 };
@@ -388,6 +394,27 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     BottomTabScreenProps<RootTabParamList, Screen>,
     NativeStackScreenProps<RootStackParamList>
   >;
+
+/**
+ * Server-defined service id types
+ */
+export type NetworkServiceId =
+  | "glo-data"
+  | "mtn-data"
+  | "airtel-data"
+  | "etisalat-data";
+
+// server-defined transaction structure
+export type Transaction = {
+  id: number;
+  user_id: string;
+  trans_no: string;
+  service: string;
+  amount: number;
+  payment_method: string;
+  created_at: string;
+  updated_at: string;
+};
 
 /**
  * Types for the form fields of different forms used in the app.
@@ -407,10 +434,35 @@ export namespace FormFieldsTypes {
     phone: string;
     referrer: string;
   };
+
+  export type TopupAirtime = {
+    amount: number;
+    service_id: "glo" | "mtn" | "airtel" | "etisalat";
+    phone: string;
+  };
+
+  export type TopupData = {
+    serviceID: NetworkServiceId;
+    variation_code: string;
+    phone: string;
+    amount: string;
+  };
+
+  // TODO: Contact backend dev to make service_id field value match the service_id
+  // of network providers response "mtn" instead of "mtn-data"
+  export type GetDataPlans = {
+    serviceID: NetworkServiceId;
+  };
+
+  export type UpdateProfile = {
+    username: string;
+    email: string;
+    phone: string;
+  };
 }
 
 /**
- * TYPES FOR RESPONSE PAYLOADS COMING FROM THE SERVER
+ * TYPES FOR SERVER-DEFINED RESPONSE PAYLOADS
  */
 export namespace Server {
   export type Response = {
@@ -461,6 +513,37 @@ export namespace Server {
     };
   };
 
+  export type TopupAirtime = {
+    status: true;
+    message: string;
+    data: {
+      trans_id: number;
+      user_id: string;
+      amount: string;
+      network: string;
+      phone: string;
+      status: string;
+      updated_at: string;
+      created_at: string;
+    };
+  };
+
+  export type DataPlans = {
+    status: true;
+    message: string;
+    data: {
+      service_name: string;
+      variations: DataPlan[];
+    };
+  };
+
+  export type TopupData = {
+    status: boolean;
+    message: string;
+    data: any;
+    // TODO: make this type complete and correspondng to server definition
+  };
+
   export type ErrorResponse = {
     status: false;
     message: string | { [field: string]: string[] };
@@ -470,5 +553,17 @@ export namespace Server {
   export type RequestError = {
     message: string;
     _error: object | string;
+  };
+
+  export type GetTransactions = {
+    status: true;
+    message: string;
+    data: Transaction[];
+  };
+
+  export type UpdateProfile = {
+    status: true;
+    message: "Profile Updated Successfully";
+    data: LoginResponse['data'] & {image:string}
   };
 }
