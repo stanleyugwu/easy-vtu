@@ -7,8 +7,7 @@ import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
-import expo.modules.splashscreen.singletons.SplashScreen;
-import expo.modules.splashscreen.SplashScreenImageResizeMode;
+import org.devio.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends ReactActivity {
   @Override
@@ -17,9 +16,10 @@ public class MainActivity extends ReactActivity {
     // coloring the background, status bar, and navigation bar.
     // This is required for expo-splash-screen.
     setTheme(R.style.AppTheme);
+    SplashScreen.show(this,R.style.SplashScreen_Alias,true);
     super.onCreate(null);
 // @generated begin expo-splash-screen-mainActivity-onCreate-show-splash - expo prebuild (DO NOT MODIFY) sync-ac77211afc0d4d694d8aa502d057bd234773c363
-    SplashScreen.show(this, SplashScreenImageResizeMode.COVER, ReactRootView.class, false);
+    // SplashScreen.show(this, SplashScreenImageResizeMode.COVER, ReactRootView.class, false);
 // @generated end expo-splash-screen-mainActivity-onCreate-show-splash
     // SplashScreen.show(...) has to be called after super.onCreate(...)
     // Below line is handled by '@expo/configure-splash-screen' command and it's discouraged to modify it manually
