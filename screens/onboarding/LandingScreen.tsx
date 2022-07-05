@@ -6,7 +6,6 @@ import FadeInView from "../../components/FadeInView";
 import tw from "../../lib/tailwind";
 
 // @ts-ignore
-import splashImg from "../../assets/images/splash-images/get_started.png";
 import splashBg from "../../assets/images/splash-bg.jpg";
 import { ScrollView } from "react-native-gesture-handler";
 import { RootStackScreenProps } from "../../types";
