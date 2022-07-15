@@ -8,7 +8,8 @@ import appStyles from "../lib/appStyles";
 import type { ViewProps } from "./Themed";
 // @ts-ignore
 import walletImage from "../assets/images/wallet_img.png";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import formatAmt from "../utils/formatAmt";
 
 export type WalletCardProps = {
   /** Amount to display as balance */
@@ -48,8 +49,9 @@ const WalletCard = ({
       ]}
       accessibilityLabel={accessibilityLabel}
     >
-      <View
-        style={tw`flex-col justify-between pl-2 bg-transparent justify-center`}
+      <ScrollView
+        horizontal
+        contentContainerStyle={tw`flex-col justify-between pl-2 bg-transparent justify-center border w-3/4`}
       >
         <View
           style={tw`flex-row bg-transparent items-center`}
@@ -67,12 +69,15 @@ const WalletCard = ({
 
         <Text
           accessibilityLabel="wallet-balance"
-          style={tw`text-3xl font-sans-semibold text-on-dark my-2`}
+          style={[
+            tw`text-3xl font-sans-semibold text-on-dark my-2`,
+            { overflow: "scroll" },
+          ]}
         >
           {"\u20A6"}
-          {balance}
+          {formatAmt(balance)}
         </Text>
-      </View>
+      </ScrollView>
 
       <TouchableOpacity
         activeOpacity={0.6}
