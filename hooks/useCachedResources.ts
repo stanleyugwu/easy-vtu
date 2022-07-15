@@ -2,10 +2,10 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { useEffect, useState } from "react";
 import {
-  OpenSans_400Regular,
-  OpenSans_600SemiBold,
-  OpenSans_700Bold,
-} from "@expo-google-fonts/open-sans";
+  Lato_400Regular,
+  Lato_700Bold,
+  Lato_900Black,
+} from "@expo-google-fonts/lato";
 
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -17,9 +17,9 @@ export default function useCachedResources() {
         // Load fonts
         await Font.loadAsync({
           ...FontAwesome.font,
-          "open-sans": OpenSans_400Regular,
-          "open-sans-semibold": OpenSans_600SemiBold,
-          "open-sans-bold": OpenSans_700Bold,
+          "open-sans": Lato_400Regular,
+          "open-sans-semibold": Lato_700Bold,
+          "open-sans-bold": Lato_900Black,
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
