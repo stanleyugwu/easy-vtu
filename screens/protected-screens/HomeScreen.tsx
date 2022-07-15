@@ -177,7 +177,9 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<"Home">) => {
               onAddCallback={walletAddCallback}
             />
           </FadeInView>
-          <Services />
+          <View style={{ paddingBottom: 20 }}>
+            <Services />
+          </View>
         </ScrollView>
       </DrawerLayout>
     </SafeArea>
