@@ -13,15 +13,19 @@ import checkAppUpdates from "../utils/checkAppUpdates";
 const QuickSubHomeScreen = ({
   navigation,
 }: RootStackScreenProps<"QuickSub">) => {
- 
   React.useEffect(() => {
     // check for and download app updates
     checkAppUpdates();
-  },[]);
-  
+  }, []);
+
   return (
     <ScreenContainer style={tw.style(`p-0 h-full`)}>
-      <View style={tw.style("w-full bg-primary py-1",{borderBottomLeftRadius:50,borderBottomRightRadius:50})}>
+      <View
+        style={tw.style("w-full bg-primary py-1", {
+          borderBottomLeftRadius: 40,
+          borderBottomRightRadius: 40,
+        })}
+      >
         <Icon
           name="arrow-left"
           style={tw`text-on-primary text-2xl absolute top-1/4 left-6 z-40`}
@@ -37,7 +41,7 @@ const QuickSubHomeScreen = ({
       <Text type="title" style={tw`mt-10 mb-5 text-center text-on-background`}>
         What do you want to do?
       </Text>
-      <RatingModal/>
+      <RatingModal />
       <Services />
     </ScreenContainer>
   );
